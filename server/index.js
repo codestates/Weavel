@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: ["https://localhost:3000"],
     credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "OPTIONS"],
   }),
 );
 //라우터 경로
@@ -40,5 +40,4 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
 } else {
   server = app.listen(HTTPS_PORT);
 }
-
 module.exports = server;
