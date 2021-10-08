@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import {
   LoginContainer,
   LoginText,
@@ -20,6 +22,9 @@ function LoginPage() {
   const [isValid, setIsValid] = useState(null);
 
   const handleInputId = (e) => {
+    if (e.key === "Enter") {
+      handleLoginButton(e);
+    }
     setInputId(e.target.value);
 
     if (inputId.length > 0 && inputPw.length > 0) {
@@ -27,31 +32,49 @@ function LoginPage() {
     } else {
       setIsDisabled(true);
     }
-    if (window.event.keyCode === 13) {
-      // return handleLoginButton(e);
-    }
     setIsValid(false);
   };
+
   const handleInputPw = (e) => {
+    if (e.key === "Enter") {
+      handleLoginButton(e);
+    }
     setInputPw(e.target.value);
     if (inputId.length > 0 && inputPw.length > 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-    if (window.event.keyCode === 13) {
-      // return handleLoginButton(e);
-    }
     setIsValid(false);
+  };
+
+  const handleLoginButton = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://localhost:4000/user/login",
+        {
+          email: inputId,
+          password: inputPw,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(`signin error: ${err.message}`);
+        setIsValid(true);
+      });
   };
 
   return (
     <LoginContainer>
       <LoginText>로그인</LoginText>
       <InputLabel>이메일</InputLabel>
-      <EmailInput value={inputId} onChange={handleInputId} />
+      <EmailInput onKeyUp={(e) => handleInputId(e)} />
       <InputLabel>비밀번호</InputLabel>
-      <PasswordInput type="password" value={inputPw} onChange={handleInputPw} />
+      <PasswordInput type="password" onKeyUp={(e) => handleInputPw(e)} />
       <MiddleContainer>
         {!isValid ? (
           ""
@@ -62,7 +85,9 @@ function LoginPage() {
           </AlertBox>
         )}
       </MiddleContainer>
-      <LoginButton disabled={isdisabled}>로그인</LoginButton>
+      <LoginButton disabled={isdisabled} onClick={(e) => handleLoginButton(e)}>
+        로그인
+      </LoginButton>
       <GoSignup>아직 이메일이 없으신가요? 회원가입 하러가기</GoSignup>
     </LoginContainer>
   );
