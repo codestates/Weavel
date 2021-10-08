@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   user_weather.init(
     {
-      userId: DataTypes.STRING,
-      weatherId: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+      weatherId: DataTypes.INTEGER,
     },
     {
       sequelize,
