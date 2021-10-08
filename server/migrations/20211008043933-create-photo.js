@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("user_weather", {
+    await queryInterface.createTable("photo", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,7 +11,16 @@ module.exports = {
       userId: {
         type: Sequelize.STRING,
       },
-      weatherId: {
+      image: {
+        type: Sequelize.STRING,
+      },
+      weather: {
+        type: Sequelize.STRING,
+      },
+      date: {
+        type: Sequelize.STRING,
+      },
+      area: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -25,6 +34,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("user_weather");
+    await queryInterface.dropTable("photo");
   },
 };
