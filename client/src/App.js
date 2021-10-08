@@ -11,7 +11,7 @@ import Modal from "./components/Modal/Modal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage";
 import MyPage from "./pages/MyPage";
-import SignupPage from "./pages/SignupPage";
+import SignupPage from "./pages/SignupPage/SignupPage";
 import {
   Container,
   Header,
