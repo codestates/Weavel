@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import Modal from "./components/Modal/Modal";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage";
 import MyPage from "./pages/MyPage";
-import SignupPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (

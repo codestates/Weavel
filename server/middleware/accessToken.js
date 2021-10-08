@@ -11,7 +11,7 @@ module.exports = {
       const token = authHeader.split(" ")[1];
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
 
-      const userInfo = await users.findOne({
+      const userInfo = await user.findOne({
         where: { id: data.id },
       });
       console.log("userInfo===============", userInfo);
