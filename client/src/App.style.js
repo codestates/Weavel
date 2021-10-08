@@ -2,29 +2,39 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   flex-direction: column;
   font-family: "Roboto";
   justify-content: center;
-  align-items: center;
+  align-items: space-between;
 `;
 
 export const Header = styled.div`
-  flex: 1;
+  height: 80px;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
   span {
+    width: 70px;
     margin: 0 40.5px 0 40.5px;
     color: #444444;
   }
 `;
 
+export const HeaderContents = styled.div`
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const Logo = styled.img`
   width: 40px;
-  margin-right: 459.5px;
+  margin-left: 19.7%;
 `;
 
 export const LoginButton = styled.button`
@@ -38,17 +48,21 @@ export const LoginButton = styled.button`
   font-family: "Roboto";
   font-weight: 500;
   font-size: 14px;
-  margin-left: 417.5px;
+  margin-right: 19.7%;
 `;
 
 export const Body = styled.div`
-  flex: 7.5;
+  height: 100vh;
   width: 100vw;
+  padding: 60px 0 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
 `;
 
 export const Footer = styled.div`
-  flex: 1.5;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,6 +103,7 @@ export const FooterProjectLink = styled.div`
     padding-top: 2px;
   }
 `;
+
 export const FooterTeamLink = styled.div`
   display: flex;
   justify-content: space-between;
