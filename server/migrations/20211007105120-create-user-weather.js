@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       userId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
-      weaterId: {
-        type: Sequelize.STRING,
+      weatherId: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
