@@ -52,9 +52,8 @@ export const LoginButton = styled.button`
 `;
 
 export const Body = styled.div`
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
-  padding: 60px 0 60px 0;
   display: flex;
   justify-content: center;
   align-items: center;
