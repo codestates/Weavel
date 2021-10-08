@@ -1,7 +1,7 @@
 import React from "react";
 
 function LogoutModal() {
-  return <div>L</div>;
+  return <div>Logout</div>;
 }
 
 export default LogoutModal;
