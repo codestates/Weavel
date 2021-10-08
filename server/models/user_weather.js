@@ -14,11 +14,12 @@ module.exports = (sequelize, DataTypes) => {
   user_weather.init(
     {
       userId: DataTypes.STRING,
-      weaterId: DataTypes.STRING,
+      weatherId: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "user_weather",
+      freezeTableName: true,
     },
   );
   return user_weather;
