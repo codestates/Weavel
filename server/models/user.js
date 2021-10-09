@@ -9,19 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user.hasMany(models.user_weather, {
+        foreignKey: "userId",
+      });
     }
   }
   user.init(
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
+      salt: DataTypes.STRING,
       password: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "user",
       freezeTableName: true,
-    },
+    }
   );
   return user;
 };
