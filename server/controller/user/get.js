@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     });
 
     if (!findUser) {
-      return res.status(404).json({ message: "해당 유저를 찾을 수 없습니다." });
+      return res.status(403).json({ message: "해당 유저를 찾을 수 없습니다." });
     } else {
       const userInfo = await user.findAll({
         where: { id: id },
