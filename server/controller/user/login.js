@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
     // 이메일이 없을 때
     if (!findUser) {
-      return res.status(403).json({ message: "잘못된 정보입니다." });
+      return res.status(404).json({ message: "회원울 찾을수 없습니다." });
     }
 
     const dbPassword = findUser.password;
@@ -20,10 +20,9 @@ module.exports = async (req, res) => {
     const hashedPassword = crypto
       .pbkdf2Sync(password, salt, 9999, 64, "sha512")
       .toString("base64");
-    console.log(`hashedPassword`, hashedPassword);
 
     if (hashedPassword !== dbPassword) {
-      return res.status(400).json({ message: "비밀번호가 틀렸습니다." });
+      return res.status(403).json({ message: "비밀번호가 틀렸습니다." });
     } else {
       const payload = {
         id: findUser.id,

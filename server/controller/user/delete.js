@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   try {
     const header = req.headers;
     if (!header) {
-      res.status(400).json({ message: "잘못된 요청입니다." });
+      res.status(403).json({ message: "잘못된 요청입니다." });
     } else {
       const id = req.userId;
       await user_weather.destroy({ where: { userId: id } });
@@ -14,6 +14,5 @@ module.exports = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(501).json({ message: "잘못된 요청입니다." });
   }
 };
