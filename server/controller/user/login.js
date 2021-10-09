@@ -1,11 +1,12 @@
 const { user } = require("../../models");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 module.exports = async (req, res) => {
   try {
     const { email, password } = req.body;
     const findUser = await user.findOne({
-      where: { email: email, password: password },
+      where: { email: email },
     });
 
     // 이메일이 없을 때
@@ -13,21 +14,33 @@ module.exports = async (req, res) => {
       return res.status(403).json({ message: "잘못된 정보입니다." });
     }
 
-    const payload = {
-      id: findUser.id,
-      email: findUser.email,
-      createdAt: findUser.createdAt,
-      updatedAt: findUser.updatedAt,
-    };
+    const dbPassword = findUser.password;
+    const salt = findUser.salt;
 
-    const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
-      expiresIn: "1d",
-    });
+    const hashedPassword = crypto
+      .pbkdf2Sync(password, salt, 9999, 64, "sha512")
+      .toString("base64");
+    console.log(`hashedPassword`, hashedPassword);
 
-    res
-      .status(200)
-      .json({ data: { accessToken }, message: "로그인에 성공하였습니다." });
+    if (hashedPassword !== dbPassword) {
+      return res.status(400).json({ message: "비밀번호가 틀렸습니다." });
+    } else {
+      const payload = {
+        id: findUser.id,
+        email: findUser.email,
+        createdAt: findUser.createdAt,
+        updatedAt: findUser.updatedAt,
+      };
+
+      const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
+        expiresIn: "1d",
+      });
+
+      res
+        .status(200)
+        .json({ data: { accessToken }, message: "로그인에 성공하였습니다." });
+    }
   } catch (err) {
-    console.log("err");
+    console.log(err);
   }
 };

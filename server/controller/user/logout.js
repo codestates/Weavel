@@ -9,6 +9,6 @@ module.exports = async (req, res) => {
       res.status(200).json({ message: "로그아웃 되었습니다." });
     }
   } catch (err) {
-    console.log("err");
+    console.log(err);
   }
 };

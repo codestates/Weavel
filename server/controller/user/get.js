@@ -2,8 +2,6 @@ const { user } = require("../../models");
 const { user_weather } = require("../../models");
 
 module.exports = async (req, res) => {
-  // dataValue를 볼 수 있는 코드
-  // const result = userInfo.get({ plain: true });
   try {
     const id = req.userId;
     const findUser = await user.findOne({
