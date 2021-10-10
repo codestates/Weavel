@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
     // 이메일이 없을 때
     if (!findUser) {
-      return res.status(404).json({ message: "회원울 찾을수 없습니다." });
+      return res.status(404).json({ message: "회원을 찾을수 없습니다." });
     }
 
     const dbPassword = findUser.password;
