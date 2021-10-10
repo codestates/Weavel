@@ -5,12 +5,13 @@ import {
   Switch,
   useHistory,
   Redirect,
+  Link,
 } from "react-router-dom";
 import axios from "axios";
 import Modal from "./components/Modal/Modal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage";
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import {
   Container,
@@ -37,29 +38,36 @@ function App() {
       history.push("/");
     });
   };
+
   return (
     <BrowserRouter>
       <Container>
         <Header>
           <Logo src="./images/logo.svg"></Logo>
           <div>
-            <span>홈</span>
-            <span>마이페이지</span>
+            <Link to="/">
+              <span>홈</span>
+            </Link>
+            <Link to="/mypage">
+              <span>마이페이지</span>
+            </Link>
           </div>
-          <LoginButton>로그인</LoginButton>
+          <Link to="/login">
+            <LoginButton>로그인</LoginButton>
+          </Link>
         </Header>
         <Body>
           <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
             {/* <Route exact path="/">
               <MainPage />
             </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route> */}
             <Route exact path="/">
               <SignupPage />
-            </Route>
-            <Route path="/mypage">
+            </Route> */}
+            <Route exact path="/">
               <MyPage />
             </Route>
           </Switch>
