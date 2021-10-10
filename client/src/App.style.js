@@ -21,6 +21,7 @@ export const Header = styled.div`
     width: 70px;
     margin: 0 40.5px 0 40.5px;
     color: #444444;
+    cursor: pointer;
   }
 `;
 
@@ -35,6 +36,7 @@ export const HeaderContents = styled.div`
 export const Logo = styled.img`
   width: 40px;
   margin-left: 19.7%;
+  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`
@@ -49,15 +51,22 @@ export const LoginButton = styled.button`
   font-weight: 500;
   font-size: 14px;
   margin-right: 19.7%;
+  cursor: pointer;
 `;
 
 export const Body = styled.div`
-  height: 90vh;
+  height: 100%;
   width: 100vw;
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+  background: linear-gradient(
+      0deg,
+      rgba(128, 185, 239, 0.1),
+      rgba(128, 185, 239, 0.1)
+    ),
+    #fbfbfb;
 `;
 
 export const Footer = styled.div`
@@ -68,13 +77,23 @@ export const Footer = styled.div`
 `;
 
 export const FooterLine = styled.div`
-  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+  background: linear-gradient(
+      0deg,
+      rgba(128, 185, 239, 0.1),
+      rgba(128, 185, 239, 0.1)
+    ),
+    #fbfbfb;
   width: 100vw;
   div {
     margin: 0 auto;
     height: 1px;
     border-bottom: 1px solid #dcdcdc;
-    background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+    background: linear-gradient(
+        0deg,
+        rgba(128, 185, 239, 0.1),
+        rgba(128, 185, 239, 0.1)
+      ),
+      #fbfbfb;
     width: 1260px;
   }
 `;

@@ -11,6 +11,7 @@ export const ModalContainer = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  margin-top: 18vh;
 `;
 
 export const ModalMessage = styled.div`
