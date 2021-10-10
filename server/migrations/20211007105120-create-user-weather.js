@@ -10,10 +10,19 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
+        field: "userId",
+        references: {
+          model: "user",
+          key: "id",
+        },
       },
       weatherId: {
         type: Sequelize.INTEGER,
-
+        field: "weatherId",
+        references: {
+          model: "weather",
+          key: "id",
+        },
       },
       createdAt: {
         allowNull: false,

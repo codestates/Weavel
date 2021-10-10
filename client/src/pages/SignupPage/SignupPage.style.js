@@ -32,7 +32,7 @@ export const NameContainer = styled.div`
   width: 396px;
   display: flex;
   flex-direction: column;
-  justify content : start;
+  justify-content: start;
   margin-top: 34px;
 `;
 
@@ -52,7 +52,7 @@ export const EmailContainer = styled.div`
   width: 396px;
   display: flex;
   flex-direction: column;
-  justify content : start;
+  justify-content: start;
   margin-top: 31px;
 `;
 
@@ -90,14 +90,20 @@ export const EmailConfirmMessage = styled.div`
   height: 26px;
   font-size: 14px;
   color: ${(props) =>
-    props.isSuccess ? "#4D70FF" : props.isFail ? "#F44336" : props.isEmail ? "" : "#F44336"};
+    props.isSuccess
+      ? "#4D70FF"
+      : props.isFail
+      ? "#F44336"
+      : props.isEmail
+      ? ""
+      : "#F44336"};
 `;
 
 export const WeatherContainer = styled.div`
   width: 396px;
   display: flex;
   flex-direction: column;
-  justify content : start;
+  justify-content: start;
 `;
 
 export const WeatherChoiceBox = styled.div`
@@ -162,8 +168,8 @@ export const PasswordContainer = styled.div`
   width: 396px;
   display: flex;
   flex-direction: column;
-  justify content : start;
-  margin-top: 31px;
+  justify-content: start;
+  margin-top: ${(props) => props.margin || "31px"};
 `;
 
 export const PasswordInput = styled.input`
@@ -179,7 +185,8 @@ export const PasswordInput = styled.input`
 `;
 
 export const PasswordMessage = styled.div`
-  margin: 5px 0 0 11px;
+  margin: 5px 0 0 0;
+  margin-left: ${(props) => props.margin || "11px"};
   height: 26px;
   font-size: 14px;
   color: ${(props) => (props.isPassword ? "#4D70FF" : "#E34A49")};
@@ -189,7 +196,7 @@ export const PasswordConfirmContainer = styled.div`
   width: 396px;
   display: flex;
   flex-direction: column;
-  justify content : start;
+  justify-content: start;
 `;
 
 export const PasswordConfirmInput = styled.input`
@@ -205,7 +212,8 @@ export const PasswordConfirmInput = styled.input`
 `;
 
 export const PasswordConfirmMessage = styled.div`
-  margin: 5px 0 9px 11px;
+  margin: 5px 0 9px 0;
+  margin-left: ${(props) => props.margin || "11px"};
   height: 26px;
   font-size: 14px;
   color: ${(props) => (props.isPasswordConfirm ? "#4D70FF" : "#E34A49")};

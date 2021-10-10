@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, useHistory, Redirect } from "react-router-dom";
+
+import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "./components/Modal/Modal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage";
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import {
   Container,
@@ -34,6 +35,7 @@ function App() {
       history.push("/");
     });
   };
+
   return (
     <BrowserRouter>
       <Container>

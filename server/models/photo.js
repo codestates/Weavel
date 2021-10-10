@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       weather: DataTypes.STRING,
       date: DataTypes.STRING,
       area: DataTypes.STRING,
+      filename: DataTypes.STRING,
     },
     {
       sequelize,

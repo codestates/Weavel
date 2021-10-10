@@ -6,13 +6,13 @@ import {
   ConfirmButton,
   CancelButton,
 } from "./Modal.style";
-function Modal() {
+function Modal({ message, openCloseModalHandler }) {
   return (
-    <ModalContainer>
-      <ModalMessage>로그아웃 하시겠습니까?</ModalMessage>
+    <ModalContainer onClick={(e) => e.stopPropagation()}>
+      <ModalMessage>{message}</ModalMessage>
       <ButtonContainer>
         <ConfirmButton>확인</ConfirmButton>
-        <CancelButton>취소</CancelButton>
+        <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
       </ButtonContainer>
     </ModalContainer>
   );

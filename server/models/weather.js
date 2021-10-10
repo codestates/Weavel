@@ -9,14 +9,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      weather.hasMany(models.user_weather, {
+        foreignKey: "weatherId",
+      });
     }
-  };
-  weather.init({
-    weather: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'weather',
-    freezeTableName: true,
-  });
+  }
+  weather.init(
+    {
+      weather: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "weather",
+      freezeTableName: true,
+    }
+  );
   return weather;
 };

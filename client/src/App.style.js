@@ -17,6 +17,7 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
+<<<<<<< HEAD
 `;
 
 export const HeaderBox = styled.div`
@@ -44,6 +45,7 @@ export const HeaderContents = styled.div`
 
 export const Logo = styled.img`
   width: 40px;
+  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`
@@ -57,13 +59,17 @@ export const LoginButton = styled.button`
   font-family: "Roboto";
   font-weight: 500;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 export const Body = styled.div`
-  height: 90vh;
+  height: 100%;
   width: 100vw;
   display: flex;
+  flex-grow: 1;
   justify-content: center;
+
+  align-items: center;
   background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
 `;
 
