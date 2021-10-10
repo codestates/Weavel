@@ -88,9 +88,9 @@ function SignupPage() {
       isCheckInput.isPassword &&
       isCheckInput.isPasswordConfirm
     ) {
-      setIsSubmitValid(true);
-    } else {
       setIsSubmitValid(false);
+    } else {
+      setIsSubmitValid(true);
     }
   }, [isCheckInput, name]);
 
@@ -150,7 +150,7 @@ function SignupPage() {
             onChange={(e) => inputValueHandle(e)}
             onKeyUp={(e) => inputValidHandle(e)}
           />
-          <CheckEmail disabled={isCheckInput.isEmail} isButtonValid={isCheckInput.isEmail}>
+          <CheckEmail disabled={!isCheckInput.isEmail} isButtonValid={!isCheckInput.isEmail}>
             중복 확인
           </CheckEmail>
         </EmailInputBox>
