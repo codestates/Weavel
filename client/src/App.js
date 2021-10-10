@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  useHistory,
-  Redirect,
-  Link,
-} from "react-router-dom";
+
+import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "./components/Modal/Modal";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -16,6 +10,9 @@ import SignupPage from "./pages/SignupPage/SignupPage";
 import {
   Container,
   Header,
+  HeaderBox,
+  MenuContainer,
+  Menu,
   Logo,
   LoginButton,
   Body,
@@ -43,31 +40,29 @@ function App() {
     <BrowserRouter>
       <Container>
         <Header>
-          <Logo src="./images/logo.svg"></Logo>
-          <div>
-            <Link to="/">
-              <span>홈</span>
-            </Link>
-            <Link to="/mypage">
-              <span>마이페이지</span>
-            </Link>
-          </div>
-          <Link to="/login">
+          <HeaderBox logo={"logo"}>
+            <Logo src="./images/logo.svg"></Logo>
+          </HeaderBox>
+          <MenuContainer>
+            <Menu>홈</Menu>
+            <Menu>마이페이지</Menu>
+          </MenuContainer>
+          <HeaderBox>
             <LoginButton>로그인</LoginButton>
-          </Link>
+          </HeaderBox>
         </Header>
         <Body>
           <Switch>
+            <Route exact path="/">
+              <MainPage />
+            </Route>
             <Route path="/login">
               <LoginPage />
             </Route>
-            {/* <Route exact path="/">
-              <MainPage />
-            </Route>
-            <Route exact path="/">
+            <Route path="/signup">
               <SignupPage />
-            </Route> */}
-            <Route exact path="/">
+            </Route>
+            <Route path="/mypage">
               <MyPage />
             </Route>
           </Switch>
