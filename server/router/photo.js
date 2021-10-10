@@ -1,33 +1,27 @@
 var express = require("express");
 var router = express.Router();
+
 const { accessToken } = require("../middleware/accessToken");
 const { photoController } = require("../controller");
+const { upload } = require("../middleware/multer");
 
-//! multer 미들웨어 시작
-const multer = require("multer");
+// GET	/photo 사진 조회하기
+router.get("/", accessToken, photoController.get);
 
-var storage = multer.diskStorage({
-  // 경로 설정 함수
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // cb 콜백함수를 통해 경로 설정
-  },
-  // 이름 설정 함수
-  filename: function (req, file, cb) {
-    cb(null, file.originalname + "(" + Date.now() + ")");
-    //cb 콜백함수를 통해 이름 설정
-  },
-});
-var upload = multer({ storage: storage });
-//! multer 미들웨어 끝
-
-// GET	/photo 사진 불러오기
-router.get("/", express.static("uploads"), photoController.get);
+// GET	/photo 사진정보 불러오기
+router.get("/info", accessToken, photoController.info_get);
 
 // POST	/photo 사진 저장
-router.post("/", upload.single("image"), photoController.post);
+router.post("/", accessToken, upload.single("image"), photoController.post);
+
+// POST	/photo/info 사진 정보 저장
+router.post("/info", accessToken, photoController.info_post);
 
 // PUT	/photo	사진 수정
-router.put("/", accessToken, photoController.put);
+router.put("/", accessToken, upload.single("image"), photoController.put);
+
+// PUT	/photo/info 사진 정보 수정
+router.put("/info", accessToken, photoController.info_put);
 
 // DELETE	/photo	사진 삭제
 router.delete("/", accessToken, photoController.delete);
