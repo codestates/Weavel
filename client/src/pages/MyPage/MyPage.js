@@ -8,7 +8,7 @@ import PhotoUploadModal from "../../components/PhotoUploadModal/PhotoUploadModal
 import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
 import Modal from "../../components/Modal/Modal";
 
-function MyPage() {
+function MyPage({ loginUserInfo }) {
   const [isModal, setIsModal] = useState({
     photoUpload: false,
     editUserInfo: false,
@@ -53,7 +53,10 @@ function MyPage() {
 
   return (
     <MyPageContainer>
-      <MyPageTop openCloseModalHandler={openCloseModalHandler} />
+      <MyPageTop
+        loginUserInfo={loginUserInfo}
+        openCloseModalHandler={openCloseModalHandler}
+      />
       <MyPageMiddle />
       <MyPagePhotos openCloseModalHandler={openCloseModalHandler} />
       {isModal.photoUpload ? (
@@ -66,6 +69,7 @@ function MyPage() {
       {isModal.editUserInfo ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <EditUserInfoModal
+            loginUserInfo={loginUserInfo}
             openCloseModalHandler={openCloseModalHandler}
           ></EditUserInfoModal>
         </ModalContainer>

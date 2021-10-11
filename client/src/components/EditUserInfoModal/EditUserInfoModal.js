@@ -28,7 +28,7 @@ import {
   PasswordConfirmMessage,
 } from "../../pages/SignupPage/SignupPage.style";
 
-function EditUserInfoModal({ openCloseModalHandler }) {
+function EditUserInfoModal({ openCloseModalHandler, loginUserInfo }) {
   const weatherbuttontext = ["맑음", "구름", "비", "눈"];
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -90,9 +90,9 @@ function EditUserInfoModal({ openCloseModalHandler }) {
       <HeadText>회원정보 수정</HeadText>
       <EditInfoContainer margin={"30px"}>
         <InputLabel>이름</InputLabel>
-        <FixedDiv>코드몬</FixedDiv>
+        <FixedDiv>{loginUserInfo.name}</FixedDiv>
         <InputLabel>이메일</InputLabel>
-        <FixedDiv>codemon@gmail.com</FixedDiv>
+        <FixedDiv>{loginUserInfo.email}</FixedDiv>
         <InputLabel>좋아하는 날씨</InputLabel>
         <div>
           <WeatherButtonContainer>
