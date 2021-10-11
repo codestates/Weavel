@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   flex-direction: column;
   font-family: "Roboto";
   justify-content: center;
@@ -17,12 +17,22 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
-  span {
-    width: 70px;
-    margin: 0 40.5px 0 40.5px;
-    color: #444444;
-    cursor: pointer;
-  }
+<<<<<<< HEAD
+`;
+
+export const HeaderBox = styled.div`
+  margin-left: ${(props) => (props.logo ? "19.7%" : "0")};
+  margin-right: ${(props) => (props.logo ? "0" : "19.7%")};
+`;
+
+export const MenuContainer = styled.div`
+  display: flex;
+`;
+
+export const Menu = styled.div`
+  width: 70px;
+  margin: 0 40.5px 0 40.5px;
+  color: #444444;
 `;
 
 export const HeaderContents = styled.div`
@@ -35,7 +45,6 @@ export const HeaderContents = styled.div`
 
 export const Logo = styled.img`
   width: 40px;
-  margin-left: 19.7%;
   cursor: pointer;
 `;
 
@@ -50,7 +59,6 @@ export const LoginButton = styled.button`
   font-family: "Roboto";
   font-weight: 500;
   font-size: 14px;
-  margin-right: 19.7%;
   cursor: pointer;
 `;
 
@@ -60,13 +68,9 @@ export const Body = styled.div`
   display: flex;
   flex-grow: 1;
   justify-content: center;
+
   align-items: center;
-  background: linear-gradient(
-      0deg,
-      rgba(128, 185, 239, 0.1),
-      rgba(128, 185, 239, 0.1)
-    ),
-    #fbfbfb;
+  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
 `;
 
 export const Footer = styled.div`
@@ -77,23 +81,13 @@ export const Footer = styled.div`
 `;
 
 export const FooterLine = styled.div`
-  background: linear-gradient(
-      0deg,
-      rgba(128, 185, 239, 0.1),
-      rgba(128, 185, 239, 0.1)
-    ),
-    #fbfbfb;
+  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
   width: 100vw;
   div {
     margin: 0 auto;
     height: 1px;
     border-bottom: 1px solid #dcdcdc;
-    background: linear-gradient(
-        0deg,
-        rgba(128, 185, 239, 0.1),
-        rgba(128, 185, 239, 0.1)
-      ),
-      #fbfbfb;
+    background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
     width: 1260px;
   }
 `;

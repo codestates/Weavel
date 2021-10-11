@@ -11,6 +11,7 @@ export const SignupContainer = styled.main`
   align-items: center;
   font-family: "Roboto";
   color: #444444;
+  margin-top: 50px;
   a {
     text-decoration: none;
     color: #4d70ff;
@@ -221,7 +222,7 @@ export const PasswordConfirmMessage = styled.div`
 export const SubmitSignup = styled.button`
   width: 398px;
   height: 49px;
-  background: ${(props) => (props.isButtonValid ? "#4D70FF" : "#c0cbf7 ")};
+  background: ${(props) => (props.isButtonValid ? "#c0cbf7 " : "#4D70FF")};
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   border: none;
@@ -229,5 +230,5 @@ export const SubmitSignup = styled.button`
   font-weight: 500;
   color: #ffffff;
   margin-bottom: 13px;
-  cursor: ${(props) => (props.isButtonValid ? "pointer" : "")};
+  cursor: ${(props) => (props.isButtonValid ? "" : "pointer")};
 `;
