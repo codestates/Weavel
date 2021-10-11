@@ -79,16 +79,15 @@ function LoginPage() {
   const getUserInfo = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/user/userinfo",
+      url: "http://localhost:4000/user",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       withCredentials: true,
     }).then((res) => {
-      console.log("ddd", res.data.data);
-      const { id, email } = res.data.data;
-      setLoginUserInfo({ id, email });
+      const { id, email, name, weather } = res.data.data;
+      setLoginUserInfo({ id, email, name, weather });
     });
   };
 
@@ -96,7 +95,7 @@ function LoginPage() {
     <>
       {isLogin ? (
         <>
-          <MyPage />
+          <MyPage loginUserInfo={loginUserInfo} />
         </>
       ) : (
         <LoginContainer>

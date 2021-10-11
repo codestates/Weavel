@@ -16,13 +16,17 @@ import {
   FavWeathersContainer,
   MyPageTopContainer,
 } from "./MyPageTop.style";
-function MyPageTop({ openCloseModalHandler }) {
+function MyPageTop({ openCloseModalHandler, loginUserInfo }) {
   return (
     <MyPageTopContainer>
       <UserInfoContainer>
         <div className="container">
-          <ContainerFirstText>코드몬님</ContainerFirstText>
-          <UserEmail>codemon@gmail.com</UserEmail>
+          <ContainerFirstText>
+            {loginUserInfo ? loginUserInfo.name : "코드몬"}님
+          </ContainerFirstText>
+          <UserEmail>
+            {loginUserInfo ? loginUserInfo.email : "로그인 해주세요"}
+          </UserEmail>
           <UploadPhotoText>
             오늘의 기록하고 싶은 날씨를 사진 한장으로 남겨보세요
           </UploadPhotoText>

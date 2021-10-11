@@ -58,16 +58,16 @@ function App() {
         </Header>
         <Body>
           <Switch>
-            <Route path="/login">
+            <Route exact path="/login">
               <LoginPage />
             </Route>
-            {/* <Route exact path="/">
+            <Route path="/mainpage">
               <MainPage />
             </Route>
-            <Route exact path="/">
+            <Route path="/signuppage">
               <SignupPage />
-            </Route> */}
-            <Route exact path="/">
+            </Route>
+            <Route path="/mypage">
               <MyPage />
             </Route>
           </Switch>
