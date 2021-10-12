@@ -3,7 +3,7 @@ import { Path } from "./MapIndex.style";
 
 function Map15({ pickMap }) {
   return (
-    <svg width="800" height="600" viewBox="50 0 900 850">
+    <svg width="800" height="600" viewBox="50 0 900 850" cursor="pointer">
       <Path
         id={0}
         onClick={(e) => pickMap("15", e)}
@@ -109,6 +109,15 @@ function Map15({ pickMap }) {
         onClick={(e) => pickMap("15", e)}
         d="M 318 411 l 5 3 3 8 4 5 2 1 3 10 -6 2 -6 -7 -6 3 -5 0 0 2 -4 3 -6 0 1 -2 -6 3 -5 -2 -5 -5 0 0 3 -6 7 -9 -3 -6 15 -5 z "
       />
+      <text x="320" y="200" fill="#B0AFAF">
+        영광군
+      </text>
+      <text x="350" y="270" fill="#B0AFAF">
+        함평군
+      </text>
+      <text x="350" y="270" fill="#B0AFAF">
+        함평군
+      </text>
     </svg>
   );
 }

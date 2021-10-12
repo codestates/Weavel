@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AlbumContainer,
   PhotoContainer,
@@ -11,12 +11,39 @@ import {
   PhotoButton,
   PhotoInfoContainer,
   ButtonContainer,
+  PhotoClickContainer,
 } from "./MyPagePhotos.style";
-import { PhotoUploadButton } from "../MyPageTop/MyPageTop.style";
+
+import { ModalContainer } from "../../pages/MyPage/MyPage.style";
+
 function MyPagePhotos({ openCloseModalHandler, token }) {
+  const [isModal, setIsModal] = useState({
+    photoClickModal: false,
+  });
+
+  const openCloseModalHandlerPhoto = (e) => {
+    let newIsModal = { ...isModal };
+
+    if (e.target.name === "photoClickModal") {
+      newIsModal.photoClickModal = !newIsModal.photoClickModal;
+    } else {
+      if (isModal.photoClickModal) {
+        newIsModal.photoClickModal = !newIsModal.photoClickModal;
+      }
+    }
+    setIsModal(newIsModal);
+  };
+
+  const { photoClickModal } = isModal;
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = photoClickModal ? "hidden" : "auto";
+  }, [photoClickModal]);
+
   return (
     <AlbumContainer>
-      <PhotoContainer>
+      <PhotoContainer onClick={(e) => openCloseModalHandlerPhoto(e)}>
         <Photo src="../../images/photo_example1.jpg" />
         <PhotoInfoContainer>
           <PhotoDate>2021.10.03</PhotoDate>
