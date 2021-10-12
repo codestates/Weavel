@@ -170,11 +170,7 @@ function SignupPage() {
             : "올바른 이메일을 입력해주세요."}
         </EmailConfirmMessage>
       </EmailContainer>
-      <WeatherContainer
-        isSuccess={isEmailResponse.isSuccess}
-        isFail={isEmailResponse.isFail}
-        isEmail={isCheckInput.isEmail}
-      >
+      <WeatherContainer>
         <span>좋아하는 날씨</span>
         <WeatherChoiceBox>
           <Sunny isSunny={isWeather.sunny} id="0" onClick={(e) => weatherCheckHandle(e)}>

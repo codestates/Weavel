@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-
 import axios from "axios";
 import Modal from "./components/Modal/Modal";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/MyPage/MyPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import {
@@ -48,7 +48,9 @@ function App() {
             <Menu>마이페이지</Menu>
           </MenuContainer>
           <HeaderBox>
-            <LoginButton>로그인</LoginButton>
+            <Link to="/signup">
+              <LoginButton>로그인</LoginButton>
+            </Link>
           </HeaderBox>
         </Header>
         <Body>

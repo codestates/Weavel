@@ -11,7 +11,7 @@ export const SignupContainer = styled.main`
   align-items: center;
   font-family: "Roboto";
   color: #444444;
-  margin-top: 50px;
+  margin: 55px 0 55px 0;
   a {
     text-decoration: none;
     color: #4d70ff;
@@ -90,13 +90,7 @@ export const EmailConfirmMessage = styled.div`
   height: 26px;
   font-size: 14px;
   color: ${(props) =>
-    props.isSuccess
-      ? "#4D70FF"
-      : props.isFail
-      ? "#F44336"
-      : props.isEmail
-      ? ""
-      : "#F44336"};
+    props.isSuccess ? "#4D70FF" : props.isFail ? "#F44336" : props.isEmail ? "" : "#F44336"};
 `;
 
 export const WeatherContainer = styled.div`

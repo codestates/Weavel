@@ -19,14 +19,21 @@ import Map17 from "./Map17";
 import { MapContainer } from "./MapIndex.style";
 import { area } from "./MapData";
 
-function MapIndex({ showArea }) {
+function MapIndex({ isShowWeatherInfo, showArea, searchWeatherHandle, changeAreaHandle }) {
+  let showMap;
   const pickMap = (pickArea, e) => {
     const idx = e.target.id;
+    if (area[pickArea][idx].name === showMap) {
+      searchWeatherHandle(!isShowWeatherInfo);
+    } else {
+      searchWeatherHandle(true);
+    }
+    showMap = area[pickArea][idx].name;
+    changeAreaHandle(area[pickArea][idx].name, area[pickArea][idx].x, area[pickArea][idx].y);
     console.log("nx: ", area[pickArea][idx].x);
     console.log("ny: ", area[pickArea][idx].y);
     console.log("어디?: ", area[pickArea][idx].name);
   };
-  console.log(area);
 
   return (
     <MapContainer>
