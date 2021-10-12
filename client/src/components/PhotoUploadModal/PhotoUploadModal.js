@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  ConfirmButton,
-  CancelButton,
-  ButtonContainer,
-} from "../Modal/Modal.style";
+import { ConfirmButton, CancelButton, ButtonContainer } from "../Modal/Modal.style";
 
 import axios from "axios";
 
@@ -12,12 +8,7 @@ import { InputLabel, EmailInput } from "../../pages/LoginPage/LoginPage.style";
 import { area } from "./SearchData";
 
 import AutoComplete from "./AutoComplete";
-import {
-  Sunny,
-  Cloud,
-  Rain,
-  Snow,
-} from "../../pages/SignupPage/SignupPage.style";
+import { Sunny, Cloud, Rain, Snow } from "../../pages/SignupPage/SignupPage.style";
 
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
 import { PhotoUploadContainer } from "./PhotoUploadModal.style";
@@ -92,6 +83,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   formData.append("filename", fileInfo.filename);
 
   const handlePhotoUpload = (e) => {
+    e.preventDefault();
     axios
       .post(
         "http://localhost:4000/photo/",
@@ -102,7 +94,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
             "Content-Type": "multipart/form-data",
           },
         },
-        { withCredentials: true }
+        { withCredentials: true },
       )
       .then((res) => {
         console.log(res.data.message);
@@ -118,6 +110,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   };
 
   const handlePhotoInfoUpload = (e, photo) => {
+    e.preventDefault();
     axios
       .post(
         "http://localhost:4000/photo/info",
@@ -132,7 +125,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
             "Content-Type": "application/json",
           },
         },
-        { withCredentials: true }
+        { withCredentials: true },
       )
       .then((res) => {
         console.log(res);
@@ -145,70 +138,32 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
 
   return (
     <PhotoUploadContainer onClick={(e) => e.stopPropagation()}>
-      <PhotoUpload
-        fileInfo={fileInfo}
-        setFileHandle={setFileHandle}
-        token={token}
-        loginUserInfo={loginUserInfo}
-      />
+      <PhotoUpload fileInfo={fileInfo} setFileHandle={setFileHandle} token={token} loginUserInfo={loginUserInfo} />
       <EditInfoContainer margin={"270px"}>
         <InputLabel>날짜</InputLabel>
-        <EmailInput
-          name="date"
-          onChange={(e) => commentHandler(e)}
-          placeholder="YYYYMMDD 형식으로 숫자만 입력해주세요"
-          maxLength="10"
-        />
+        <EmailInput name="date" onChange={(e) => commentHandler(e)} placeholder="YYYYMMDD 형식으로 숫자만 입력해주세요" maxLength="10" />
         <InputLabel>지역</InputLabel>
-        <AutoComplete
-          photoInfo={photoInfo}
-          name="area"
-          suggestions={area}
-          commentHandler={(e) => commentHandler(e)}
-        />
+        <AutoComplete photoInfo={photoInfo} name="area" suggestions={area} commentHandler={(e) => commentHandler(e)} />
         <InputLabel>날씨</InputLabel>
         <WeatherBox margin={"0 10px 15px 34px"}>
-          <Sunny
-            isSunnyPhoto={isPhotoWeather.sunny}
-            id="1"
-            onClick={(e) => weatherButtonHandler(e)}
-          >
+          <Sunny isSunnyPhoto={isPhotoWeather.sunny} id="1" onClick={(e) => weatherButtonHandler(e)}>
             맑음
           </Sunny>
-          <Cloud
-            isCloudPhoto={isPhotoWeather.cloud}
-            id="2"
-            onClick={(e) => weatherButtonHandler(e)}
-          >
+          <Cloud isCloudPhoto={isPhotoWeather.cloud} id="2" onClick={(e) => weatherButtonHandler(e)}>
             구름
           </Cloud>
-          <Rain
-            isRainPhoto={isPhotoWeather.rain}
-            id="3"
-            onClick={(e) => weatherButtonHandler(e)}
-          >
+          <Rain isRainPhoto={isPhotoWeather.rain} id="3" onClick={(e) => weatherButtonHandler(e)}>
             비
           </Rain>
-          <Snow
-            isSnowPhoto={isPhotoWeather.snow}
-            id="4"
-            onClick={(e) => weatherButtonHandler(e)}
-          >
+          <Snow isSnowPhoto={isPhotoWeather.snow} id="4" onClick={(e) => weatherButtonHandler(e)}>
             눈
           </Snow>
         </WeatherBox>
         <InputLabel>코멘트</InputLabel>
-        <EmailInput
-          name="comment"
-          onChange={(e) => commentHandler(e)}
-          placeholder="25글자 이내로 남기고 싶은 코멘트를 적어주세요"
-          maxLength="25"
-        />
+        <EmailInput name="comment" onChange={(e) => commentHandler(e)} placeholder="25글자 이내로 남기고 싶은 코멘트를 적어주세요" maxLength="25" />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>
-              업로드
-            </ConfirmButton>
+            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>업로드</ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
           </ButtonContainer>
         </span>
