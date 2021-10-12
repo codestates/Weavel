@@ -6,7 +6,7 @@ import {
   AutoCompleteInput,
 } from "./AutoComplete.style";
 
-const AutoComplete = ({ suggestions }) => {
+const AutoComplete = ({ suggestions, photoInfo }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [input, setInput] = useState("");
@@ -26,6 +26,7 @@ const AutoComplete = ({ suggestions }) => {
     setFilteredSuggestions([]);
     setInput(e.target.innerText);
     setShowSuggestions(false);
+    photoInfo.area = e.target.innerText;
   };
 
   const SuggestionsListComponent = () => {
@@ -48,6 +49,7 @@ const AutoComplete = ({ suggestions }) => {
   return (
     <>
       <AutoCompleteInput
+        name="area"
         type="text"
         onChange={onChange}
         value={input}
