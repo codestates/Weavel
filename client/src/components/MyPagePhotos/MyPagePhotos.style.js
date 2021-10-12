@@ -3,14 +3,15 @@ import styled from "styled-components";
 export const AlbumContainer = styled.div`
   display: flex;
   margin-top: 45px;
-  width: 1300px;
+  width: 1260px;
   flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 export const PhotoContainer = styled.div`
   display: flex;
-  margin: 0 36px 36px 0;
   justify-content: space-evenly;
+  margin-bottom: 32px;
 `;
 
 export const Photo = styled.img`

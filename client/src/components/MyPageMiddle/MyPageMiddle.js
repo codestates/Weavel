@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { FooterProjectLink } from "../../App.style";
 import {
   MiddleBar,
-  WeatherButtonContainer,
-  WeatherButton,
   AreaSearchBar,
   AreaSearchInput,
   AreaSearchIcon,
   SearchList,
 } from "./MyPageMiddle.style";
 
-function MyPageMiddle() {
+import {
+  Sunny,
+  Cloud,
+  Rain,
+  Snow,
+} from "../../pages/SignupPage/SignupPage.style";
+
+import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
+
+function MyPageMiddle({ isWeather, weatherCheckHandle }) {
   const [hasText, setHasText] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const weatherbuttontext = ["맑음", "구름", "비", "눈"];
   const [selected, setSelected] = useState(-1);
 
   useEffect(() => {
@@ -101,11 +106,36 @@ function MyPageMiddle() {
 
   return (
     <MiddleBar>
-      <WeatherButtonContainer>
-        {weatherbuttontext.map((weather, idx) => (
-          <WeatherButton key={idx}>{weather}</WeatherButton>
-        ))}
-      </WeatherButtonContainer>
+      <WeatherBox margin={"0"}>
+        <Sunny
+          isSunny={isWeather.sunny}
+          id="0"
+          onClick={(e) => weatherCheckHandle(e)}
+        >
+          맑음
+        </Sunny>
+        <Cloud
+          isCloud={isWeather.cloud}
+          id="1"
+          onClick={(e) => weatherCheckHandle(e)}
+        >
+          구름
+        </Cloud>
+        <Rain
+          isRain={isWeather.rain}
+          id="2"
+          onClick={(e) => weatherCheckHandle(e)}
+        >
+          비
+        </Rain>
+        <Snow
+          isSnow={isWeather.snow}
+          id="3"
+          onClick={(e) => weatherCheckHandle(e)}
+        >
+          눈
+        </Snow>
+      </WeatherBox>
       <AreaSearchBar>
         <AreaSearchInput
           value={keyword}

@@ -8,7 +8,7 @@ export const EditModalContainer = styled.div`
   background: #fbfbfb;
   border-radius: 4px;
   filter: drop-shadow(0px 0px 11px rgba(0, 0, 0, 0.1));
-  margin-top: 18vh;
+  margin-top: 11vh;
 `;
 
 export const HeadText = styled.div`
@@ -18,7 +18,8 @@ export const HeadText = styled.div`
   line-height: 28px;
   color: #000000;
   text-align: center;
-  margin-top: 45px;
+  margin-top: 38px;
+  margin-bottom: 43px;
 `;
 
 export const EditInfoContainer = styled.div`
@@ -27,13 +28,8 @@ export const EditInfoContainer = styled.div`
   width: 429px;
   height: 500px;
   justify-content: center;
-  margin-left: 80px;
+  margin-left: 100px;
   margin-top: ${(props) => props.margin || "0"};
-
-  div {
-    padding-left: 18.6px;
-    width: 500px;
-  }
 `;
 
 export const FixedDiv = styled.span`
@@ -43,7 +39,7 @@ export const FixedDiv = styled.span`
   border: 1px solid #dcdcdc;
   box-sizing: border-box;
   border-radius: 4px;
-  margin: 0 0 18px 36px;
+  margin: ${(props) => props.margin || "0 0 18px 36px"};
   padding: 15px;
   color: #b0afaf;
 `;
@@ -51,4 +47,12 @@ export const FixedDiv = styled.span`
 export const AllPasswordContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const WeatherBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 396px;
+  margin: ${(props) => props.margin || "10px 0 0 0"};
 `;

@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const PhotoUploadContainer = styled.div`
   width: 612px;
-  height: 700px;
+  padding-right: 45px;
+  height: 800px;
   background: #fbfbfb;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
   align-content: space-evenly;
-  margin-top: 18vh;
+  margin-top: 10vh;
   span {
     display: flex;
     margin-top: 10px;

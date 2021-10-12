@@ -8,7 +8,14 @@ import PhotoUploadModal from "../../components/PhotoUploadModal/PhotoUploadModal
 import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
 import Modal from "../../components/Modal/Modal";
 
-function MyPage({ loginUserInfo }) {
+function MyPage({
+  loginUserInfo,
+  putUserInfo,
+  isLogin,
+  isWeather,
+  weatherHandle,
+  token,
+}) {
   const [isModal, setIsModal] = useState({
     photoUpload: false,
     editUserInfo: false,
@@ -34,7 +41,7 @@ function MyPage({ loginUserInfo }) {
         newIsModal.deleteAccount = !newIsModal.deleteAccount;
       } else if (isModal.deletePhoto) {
         newIsModal.deletePhoto = !newIsModal.deletePhoto;
-      } else {
+      } else if (isModal.editUserInfo) {
         newIsModal.editUserInfo = !newIsModal.editUserInfo;
       }
     }
@@ -51,17 +58,64 @@ function MyPage({ loginUserInfo }) {
         : "auto";
   }, [photoUpload, editUserInfo, deleteAccount, deletePhoto]);
 
+  // const weatherDataHandle = () => {
+  //   loginUserInfo.weather.map((weatherNum) => {
+  //     if (weatherNum === 1) {
+  //       isWeather.sunny = true;
+  //     } else if (weatherNum === 2) {
+  //       isWeather.cloud = true;
+  //     } else if (weatherNum === 3) {
+  //       isWeather.rain = true;
+  //     } else if (weatherNum === 4) {
+  //       isWeather.snow = true;
+  //     }
+  //   });
+  //   weatherHandle({ ...isWeather });
+  // };
+
+  const weatherCheckHandle = (e) => {
+    let newWeather = { ...isWeather };
+    if (e.target.id === "0") {
+      newWeather.sunny = !newWeather.sunny;
+      weatherHandle(newWeather);
+    }
+    if (e.target.id === "1") {
+      newWeather.cloud = !newWeather.cloud;
+      weatherHandle(newWeather);
+    }
+    if (e.target.id === "2") {
+      newWeather.rain = !newWeather.rain;
+      weatherHandle(newWeather);
+    }
+    if (e.target.id === "3") {
+      newWeather.snow = !newWeather.snow;
+      weatherHandle(newWeather);
+    }
+  };
+
   return (
     <MyPageContainer>
       <MyPageTop
+        isLogin={isLogin}
+        isWeather={isWeather}
         loginUserInfo={loginUserInfo}
         openCloseModalHandler={openCloseModalHandler}
       />
-      <MyPageMiddle />
-      <MyPagePhotos openCloseModalHandler={openCloseModalHandler} />
+      <MyPageMiddle
+        isWeather={isWeather}
+        weatherCheckHandle={weatherCheckHandle}
+      />
+      <MyPagePhotos
+        token={token}
+        openCloseModalHandler={openCloseModalHandler}
+      />
       {isModal.photoUpload ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <PhotoUploadModal
+            token={token}
+            loginUserInfo={loginUserInfo}
+            isWeather={isWeather}
+            weatherCheckHandle={weatherCheckHandle}
             openCloseModalHandler={openCloseModalHandler}
           ></PhotoUploadModal>
         </ModalContainer>
@@ -69,6 +123,9 @@ function MyPage({ loginUserInfo }) {
       {isModal.editUserInfo ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <EditUserInfoModal
+            putUserInfo={putUserInfo}
+            isWeather={isWeather}
+            weatherCheckHandle={weatherCheckHandle}
             loginUserInfo={loginUserInfo}
             openCloseModalHandler={openCloseModalHandler}
           ></EditUserInfoModal>
