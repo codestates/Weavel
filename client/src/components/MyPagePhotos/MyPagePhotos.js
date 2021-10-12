@@ -13,7 +13,7 @@ import {
   ButtonContainer,
 } from "./MyPagePhotos.style";
 import { PhotoUploadButton } from "../MyPageTop/MyPageTop.style";
-function MyPagePhotos({ openCloseModalHandler }) {
+function MyPagePhotos({ openCloseModalHandler, token }) {
   return (
     <AlbumContainer>
       <PhotoContainer>
@@ -198,6 +198,7 @@ function MyPagePhotos({ openCloseModalHandler }) {
           </ButtonContainer>
         </PhotoInfoContainer>
       </PhotoContainer>
+
       {/* <NoPhotoContainer>
         <NoPhotoTextContainer>
           기록하고 싶은 날씨가 있으신가요? <div></div>사진을 찍어 올려보세요

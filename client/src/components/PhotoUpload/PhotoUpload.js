@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import { Redirect } from "react-router";
 import { PhotoBackground } from "./PhotoUpload.style";
@@ -35,9 +36,15 @@ const dropzone = {
   position: "relative",
 };
 
-function Previews(props) {
+function Previews(props, loginUserInfo, token) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
+  const [fileInfo, setFileInfo] = useState({
+    userId: loginUserInfo.id,
+    image: null,
+    filename: null,
+  });
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
@@ -60,21 +67,56 @@ function Previews(props) {
     </div>
   ));
 
-  useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
-      setFile(true);
-    },
-    [files]
-  );
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks
+    files.forEach((file) => URL.revokeObjectURL(file.preview));
+    setFile(true);
+    if (files[0]) {
+      fileInfo.image = files[0].path;
+      fileInfo.filename = files[0].name;
+      setFileInfo(fileInfo);
+      handlePhotoUpload();
+    }
+    console.log(fileInfo);
+    console.log(loginUserInfo);
+    console.log(token);
+  }, [files]);
+
+  const handlePhotoUpload = () => {
+    axios(
+      {
+        method: "post",
+        url: "http://localhost:4000/photo",
+        data: {
+          userId: 4,
+          image: fileInfo.image,
+          filename: fileInfo.filename,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      { withCredentials: true }
+    )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(`signin error: ${err.message}`);
+      });
+  };
 
   return (
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>
       <input {...getInputProps()} />
       <PhotoBackground>
         {!file ? (
-          <img src="./images/upload.svg"></img>
+          <>
+            <img src="./images/upload.svg"></img>
+            <div>
+              <b>Drag&Drop</b>도 가능합니다
+            </div>
+          </>
         ) : (
           <aside style={thumbsContainer}>{thumbs}</aside>
         )}

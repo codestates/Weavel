@@ -11,11 +11,13 @@ export const SignupContainer = styled.main`
   align-items: center;
   font-family: "Roboto";
   color: #444444;
-  margin: 55px 0 55px 0;
+  margin-top: 50px;
+  margin-bottom: 120px;
   a {
     text-decoration: none;
     color: #4d70ff;
     font-family: "Roboto";
+    cursor: pointer;
   }
 `;
 
@@ -94,7 +96,7 @@ export const EmailConfirmMessage = styled.div`
 `;
 
 export const WeatherContainer = styled.div`
-  width: 396px;
+  width: ${(props) => props.margin || "396px"};
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -104,6 +106,7 @@ export const WeatherChoiceBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
+  flex-wrap: nowrap;
 `;
 
 export const Sunny = styled.div`

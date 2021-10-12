@@ -30,6 +30,10 @@ export const Menu = styled.div`
   width: 70px;
   margin: 0 40.5px 0 40.5px;
   color: #444444;
+  cursor: pointer;
+  :active {
+    color: 4d70ff;
+  }
 `;
 
 export const HeaderContents = styled.div`
@@ -75,6 +79,7 @@ export const Footer = styled.div`
 
 export const FooterLine = styled.div`
   background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+
   div {
     margin: 0 auto;
     height: 1px;

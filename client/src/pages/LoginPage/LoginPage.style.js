@@ -23,7 +23,7 @@ export const InputLabel = styled.label`
   font-size: 16px;
   line-height: 19px;
   font-weight: normal;
-  margin: 0 0 6px 36px;
+  margin: ${(props) => props.margin || "0 0 6px 36px"};
   margin-top: ${(props) => props.margin || ""};
 `;
 export const EmailInput = styled.input`
@@ -89,6 +89,11 @@ export const GoSignup = styled.div`
   color: #4d70ff;
   text-align: center;
   cursor: pointer;
+`;
+export const UnderLine = styled.span`
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 export const AlertBox = styled.div`

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   EditModalContainer,
   HeadText,
   EditInfoContainer,
   FixedDiv,
   AllPasswordContainer,
+  WeatherBox,
 } from "./EditUserInfoModal.style";
 import {
   ConfirmButton,
@@ -15,9 +17,11 @@ import {
 import { InputLabel } from "../../pages/LoginPage/LoginPage.style";
 
 import {
-  WeatherButtonContainer,
-  WeatherButton,
-} from "../MyPageMiddle/MyPageMiddle.style";
+  Sunny,
+  Cloud,
+  Rain,
+  Snow,
+} from "../../pages/SignupPage/SignupPage.style";
 
 import {
   PasswordContainer,
@@ -28,22 +32,50 @@ import {
   PasswordConfirmMessage,
 } from "../../pages/SignupPage/SignupPage.style";
 
-function EditUserInfoModal({ openCloseModalHandler }) {
-  const weatherbuttontext = ["맑음", "구름", "비", "눈"];
+function EditUserInfoModal({
+  openCloseModalHandler,
+  loginUserInfo,
+  putUserInfo,
+  isWeather,
+  weatherCheckHandle,
+}) {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isSubmitValid, setIsSubmitValid] = useState(false);
+
   const isValidInput = {
     isPassword: null,
     isPasswordConfirm: null,
   };
+
   const [isCheckInput, SetIsCheckInput] = useState(isValidInput);
+
   const inputValueHandle = (e) => {
     if (e.target.id === "password") {
       setPassword(e.target.value);
     } else if (e.target.id === "passwordConfirm") {
       setPasswordConfirm(e.target.value);
     }
+  };
+
+  const editInfohandler = (e) => {
+    let arrEditWeather = [];
+    if (isWeather.sunny) {
+      arrEditWeather.push(1);
+    }
+    if (isWeather.cloud) {
+      arrEditWeather.push(2);
+    }
+    if (isWeather.rain) {
+      arrEditWeather.push(3);
+    }
+    if (isWeather.snow) {
+      arrEditWeather.push(4);
+    }
+    if (password === passwordConfirm) {
+      putUserInfo(arrEditWeather, password, loginUserInfo.email);
+    }
+    openCloseModalHandler(e);
   };
 
   useEffect(() => {
@@ -88,19 +120,42 @@ function EditUserInfoModal({ openCloseModalHandler }) {
   return (
     <EditModalContainer onClick={(e) => e.stopPropagation()}>
       <HeadText>회원정보 수정</HeadText>
-      <EditInfoContainer margin={"30px"}>
-        <InputLabel>이름</InputLabel>
-        <FixedDiv>코드몬</FixedDiv>
-        <InputLabel>이메일</InputLabel>
-        <FixedDiv>codemon@gmail.com</FixedDiv>
-        <InputLabel>좋아하는 날씨</InputLabel>
-        <div>
-          <WeatherButtonContainer>
-            {weatherbuttontext.map((weather, idx) => (
-              <WeatherButton key={idx}>{weather}</WeatherButton>
-            ))}
-          </WeatherButtonContainer>
-        </div>
+      <EditInfoContainer>
+        <InputLabel margin={"0 0 5px 0"}>이름</InputLabel>
+        <FixedDiv margin={"0 0 20px 0"}>{loginUserInfo.name} </FixedDiv>
+        <InputLabel margin={"0 0 5px 0"}>이메일</InputLabel>
+        <FixedDiv margin={"0 0 20px 0"}>{loginUserInfo.email}</FixedDiv>
+        <span>좋아하는 날씨</span>
+        <WeatherBox>
+          <Sunny
+            isSunny={isWeather.sunny}
+            id="0"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
+            맑음
+          </Sunny>
+          <Cloud
+            isCloud={isWeather.cloud}
+            id="1"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
+            구름
+          </Cloud>
+          <Rain
+            isRain={isWeather.rain}
+            id="2"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
+            비
+          </Rain>
+          <Snow
+            isSnow={isWeather.snow}
+            id="3"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
+            눈
+          </Snow>
+        </WeatherBox>
         <AllPasswordContainer>
           <PasswordContainer margin={"20px"}>
             <span>비밀번호</span>
@@ -140,7 +195,13 @@ function EditUserInfoModal({ openCloseModalHandler }) {
         </AllPasswordContainer>
       </EditInfoContainer>
       <ButtonContainer>
-        <ConfirmButton disabled={isSubmitValid} isButtonValid={isSubmitValid}>
+        <ConfirmButton
+          noSubmit={!isSubmitValid}
+          onClick={(e) => {
+            editInfohandler(e);
+          }}
+          disabled={!isSubmitValid}
+        >
           수정
         </ConfirmButton>
         <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
