@@ -24,6 +24,7 @@ import {
   PasswordConfirmMessage,
   SubmitSignup,
 } from "./SignupPage.style";
+import axios from "axios";
 
 import { UnderLine } from "../LoginPage/LoginPage.style";
 
@@ -40,8 +41,11 @@ function SignupPage() {
     isPassword: null,
     isPasswordConfirm: null,
   };
-  const isEmailResponse = { isSuccess: false, isFail: false };
-  const [isCheckEmail, SetIsCheckEmail] = useState(isEmailResponse);
+
+  const [isCheckEmail, SetIsCheckEmail] = useState({
+    isSuccess: false,
+    isFail: false,
+  });
   const [isCheckInput, SetIsCheckInput] = useState(isValidInput);
 
   const isCheckWeather = {
@@ -54,19 +58,19 @@ function SignupPage() {
   const [isWeather, setIsWeather] = useState(isCheckWeather);
   const weatherCheckHandle = (e) => {
     let newWeather = { ...isWeather };
-    if (e.target.id === "0") {
+    if (e.target.id === "1") {
       newWeather.sunny = !newWeather.sunny;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "1") {
+    if (e.target.id === "2") {
       newWeather.cloud = !newWeather.cloud;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "2") {
+    if (e.target.id === "3") {
       newWeather.rain = !newWeather.rain;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "3") {
+    if (e.target.id === "4") {
       newWeather.snow = !newWeather.snow;
       setIsWeather(newWeather);
     }
@@ -142,6 +146,70 @@ function SignupPage() {
     return password === passwordConfirm ? true : false;
   };
 
+  const editInfohandler = (e) => {
+    let arrEditWeather = [];
+    if (isWeather.sunny) {
+      arrEditWeather.push(1);
+    }
+    if (isWeather.cloud) {
+      arrEditWeather.push(2);
+    }
+    if (isWeather.rain) {
+      arrEditWeather.push(3);
+    }
+    if (isWeather.snow) {
+      arrEditWeather.push(4);
+    }
+    if (password === passwordConfirm) {
+    }
+    handlesignin(e, arrEditWeather);
+  };
+
+  const handlesignin = (e, arrEditWeather) => {
+    axios
+      .post(
+        "http://localhost:4000/user/signup",
+        {
+          name: name,
+          email: email,
+          password: password,
+          weather: arrEditWeather,
+        },
+        { withCredentials: true }
+      )
+
+      .then((res) => {
+        if (res.status === 201) {
+          // 메인 페이지로 이동
+        }
+      })
+      .catch((error) => console.log("Error", error.message));
+  };
+
+  const handleConfirmEmail = (e) => {
+    axios
+      .get(
+        `http://localhost:4000/user/email?email=${email}`,
+        {
+          email: email,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.message === "이메일이 중복되지 않습니다.") {
+          isCheckEmail.isSuccess = true;
+          isCheckEmail.isFail = false;
+        }
+        if (res.data.message === "이메일이 중복됩니다.") {
+          isCheckEmail.isFail = true;
+          isCheckEmail.isSuccess = false;
+        }
+        SetIsCheckEmail({ ...isCheckEmail });
+      })
+      .catch((error) => console.log("Error", error.message));
+  };
+
   return (
     <SignupContainer>
       <SignupTitle>회원가입</SignupTitle>
@@ -158,20 +226,21 @@ function SignupPage() {
             onKeyUp={(e) => inputValidHandle(e)}
           />
           <CheckEmail
+            onClick={(e) => handleConfirmEmail(e)}
             disabled={!isCheckInput.isEmail}
-            isButtonValid={!isCheckInput.isEmail}
+            isButtonValid={isCheckInput.isEmail}
           >
             중복 확인
           </CheckEmail>
         </EmailInputBox>
         <EmailConfirmMessage
-          isSuccess={isEmailResponse.isSuccess}
-          isFail={isEmailResponse.isFail}
+          isSuccess={isCheckEmail.isSuccess}
+          isFail={isCheckEmail.isFail}
           isEmail={isCheckInput.isEmail}
         >
-          {isEmailResponse.isSuccess
+          {isCheckEmail.isSuccess
             ? "사용 가능한 이메일입니다."
-            : isEmailResponse.isFail
+            : isCheckEmail.isFail
             ? "이미 가입 된 이메일입니다."
             : isCheckInput.isEmail === null
             ? null
@@ -185,28 +254,28 @@ function SignupPage() {
         <WeatherChoiceBox>
           <Sunny
             isSunny={isWeather.sunny}
-            id="0"
+            id="1"
             onClick={(e) => weatherCheckHandle(e)}
           >
             맑음
           </Sunny>
           <Cloud
             isCloud={isWeather.cloud}
-            id="1"
+            id="2"
             onClick={(e) => weatherCheckHandle(e)}
           >
             구름
           </Cloud>
           <Rain
             isRain={isWeather.rain}
-            id="2"
+            id="3"
             onClick={(e) => weatherCheckHandle(e)}
           >
             비
           </Rain>
           <Snow
             isSnow={isWeather.snow}
-            id="3"
+            id="4"
             onClick={(e) => weatherCheckHandle(e)}
           >
             눈
@@ -247,7 +316,11 @@ function SignupPage() {
             : "비밀번호를 다시 확인해 주세요"}
         </PasswordConfirmMessage>
       </PasswordConfirmContainer>
-      <SubmitSignup disabled={isSubmitValid} isButtonValid={isSubmitValid}>
+      <SubmitSignup
+        onClick={(e) => editInfohandler(e)}
+        disabled={isSubmitValid}
+        isButtonValid={isSubmitValid}
+      >
         가입
       </SubmitSignup>
       <Link to="/login">

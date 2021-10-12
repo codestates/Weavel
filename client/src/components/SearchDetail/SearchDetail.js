@@ -181,7 +181,11 @@ function SearchDetail({
           <SelectList>
             {daySelect.map((day) => {
               return (
-                <DayItem selectId={day.isSelect} onClick={(e) => daySelectHandle(e)} id={day.id}>
+                <DayItem
+                  selectId={day.isSelect}
+                  onClick={(e) => daySelectHandle(e)}
+                  id={day.id}
+                >
                   {day.day}
                 </DayItem>
               );
@@ -190,7 +194,11 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <ArrowPosition id={"up"} onClick={(e) => onButtonClick(e)}>
-            <img id={"up"} onClick={(e) => onButtonClick(e)} src="./images/top_arrow.svg" />
+            <img
+              id={"up"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/top_arrow.svg"
+            />
           </ArrowPosition>
           <SelectList>
             {timeSelect.map((time) => {
@@ -207,7 +215,11 @@ function SearchDetail({
             })}
           </SelectList>
           <ArrowPosition id={"down"} onClick={(e) => onButtonClick(e)}>
-            <img id={"down"} onClick={(e) => onButtonClick(e)} src="./images/bottom_arrow.svg" />
+            <img
+              id={"down"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/bottom_arrow.svg"
+            />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>

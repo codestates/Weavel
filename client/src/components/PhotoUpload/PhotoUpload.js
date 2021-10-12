@@ -48,8 +48,8 @@ function Previews({ fileInfo, setFileHandle }) {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });

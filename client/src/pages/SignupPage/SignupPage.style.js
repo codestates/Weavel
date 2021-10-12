@@ -92,7 +92,13 @@ export const EmailConfirmMessage = styled.div`
   height: 26px;
   font-size: 14px;
   color: ${(props) =>
-    props.isSuccess ? "#4D70FF" : props.isFail ? "#F44336" : props.isEmail ? "" : "#F44336"};
+    props.isSuccess
+      ? "#4D70FF"
+      : props.isFail
+      ? "#F44336"
+      : props.isEmail
+      ? ""
+      : "#F44336"};
 `;
 
 export const WeatherContainer = styled.div`
@@ -116,9 +122,12 @@ export const Sunny = styled.div`
   align-items: center;
   justify-content: center;
   background: #fbfbfb;
-  border: 1px solid ${(props) => (props.isSunny ? "#4D70FF" : "#dcdcdc")};
+  border: 1px solid
+    ${(props) =>
+      props.isSunny ? "#4D70FF" : props.isSunnyPhoto ? "#4D70FF" : "#dcdcdc"};
   border-radius: 4px;
-  color: ${(props) => (props.isSunny ? "#4D70FF" : "#b0afaf")};
+  color: ${(props) =>
+    props.isSunny ? "#4D70FF" : props.isSunnyPhoto ? "#4D70FF" : "#b0afaf"};
   cursor: pointer;
 `;
 
@@ -129,9 +138,12 @@ export const Cloud = styled.div`
   align-items: center;
   justify-content: center;
   background: #fbfbfb;
-  border: 1px solid ${(props) => (props.isCloud ? "#4D70FF" : "#dcdcdc")};
+  border: 1px solid
+    ${(props) =>
+      props.isCloud ? "#4D70FF" : props.isCloudPhoto ? "#4D70FF" : "#dcdcdc"};
   border-radius: 4px;
-  color: ${(props) => (props.isCloud ? "#4D70FF" : "#b0afaf")};
+  color: ${(props) =>
+    props.isCloud ? "#4D70FF" : props.isCloudPhoto ? "#4D70FF" : "#b0afaf"};
   cursor: pointer;
 `;
 
@@ -142,9 +154,12 @@ export const Rain = styled.div`
   align-items: center;
   justify-content: center;
   background: #fbfbfb;
-  border: 1px solid ${(props) => (props.isRain ? "#4D70FF" : "#dcdcdc")};
+  border: 1px solid
+    ${(props) =>
+      props.isRain ? "#4D70FF" : props.isRainPhoto ? "#4D70FF" : "#dcdcdc"};
   border-radius: 4px;
-  color: ${(props) => (props.isRain ? "#4D70FF" : "#b0afaf")};
+  color: ${(props) =>
+    props.isRain ? "#4D70FF" : props.isRainPhoto ? "#4D70FF" : "#b0afaf"};
   cursor: pointer;
 `;
 
@@ -155,9 +170,12 @@ export const Snow = styled.div`
   align-items: center;
   justify-content: center;
   background: #fbfbfb;
-  border: 1px solid ${(props) => (props.isSnow ? "#4D70FF" : "#dcdcdc")};
+  border: 1px solid
+    ${(props) =>
+      props.isSnow ? "#4D70FF" : props.isSnowPhoto ? "#4D70FF" : "#dcdcdc"};
   border-radius: 4px;
-  color: ${(props) => (props.isSnow ? "#4D70FF" : "#b0afaf")};
+  color: ${(props) =>
+    props.isSnow ? "#4D70FF" : props.isSnowPhoto ? "#4D70FF" : "#b0afaf"};
   cursor: pointer;
 `;
 
