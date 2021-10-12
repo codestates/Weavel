@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MyPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
+  margin-top: 30px;
 `;
 
 export const ModalContainer = styled.div`

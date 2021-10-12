@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-export const MainPageContainer = styled.div`
+export const SearchContainer = styled.div`
   padding-top: 69px;
+  height: 750px;
 `;
 
 export const SelectContainer = styled.div`

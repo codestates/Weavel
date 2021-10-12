@@ -3,14 +3,15 @@ import SearchDetail from "../SearchDetail/SearchDetail";
 import SearchInfo from "../SearchInfo/SearchInfo";
 import MapIndex from "../Map/MapIndex";
 import {
-  MainPageContainer,
+  SearchContainer,
   SelectContainer,
   SelectBoxContainer,
   SelectBox,
   SelectContents,
   WeatherSelectContainer,
 } from "./WeatherSearch.style";
-function WeatherSearch() {
+
+function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandle }) {
   const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
   const [isSelectSuccess, setIsSelectSuccess] = useState(false);
   const [allSelect, setAllSelect] = useState({
@@ -25,6 +26,7 @@ function WeatherSearch() {
     isOpen.isOpen = !isActivation.isOpen;
     isOpen.isLender = false;
     setIsActivation(isOpen);
+    searchWeatherHandle(false);
   };
 
   useEffect(() => {
@@ -56,7 +58,7 @@ function WeatherSearch() {
   };
 
   return (
-    <MainPageContainer>
+    <SearchContainer>
       <WeatherSelectContainer isActivation={isActivation}>
         <SelectContainer isActivation={isActivation.isOpen} onClick={() => activationHandle()}>
           <SelectBoxContainer>
@@ -79,7 +81,12 @@ function WeatherSearch() {
           </SelectBoxContainer>
         </SelectContainer>
         {isActivation.isLender ? (
-          <MapIndex showArea={showArea} />
+          <MapIndex
+            isShowWeatherInfo={isShowWeatherInfo}
+            searchWeatherHandle={searchWeatherHandle}
+            showArea={showArea}
+            changeAreaHandle={changeAreaHandle}
+          />
         ) : isActivation.isOpen ? (
           <SearchDetail
             setSelectTitle={setSelectTitle}
@@ -94,7 +101,7 @@ function WeatherSearch() {
           <SearchInfo />
         )}
       </WeatherSelectContainer>
-    </MainPageContainer>
+    </SearchContainer>
   );
 }
 

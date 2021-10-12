@@ -92,13 +92,7 @@ export const EmailConfirmMessage = styled.div`
   height: 26px;
   font-size: 14px;
   color: ${(props) =>
-    props.isSuccess
-      ? "#4D70FF"
-      : props.isFail
-      ? "#F44336"
-      : props.isEmail
-      ? ""
-      : "#F44336"};
+    props.isSuccess ? "#4D70FF" : props.isFail ? "#F44336" : props.isEmail ? "" : "#F44336"};
 `;
 
 export const WeatherContainer = styled.div`

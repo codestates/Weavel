@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   height: 100%;
-  width: 100vw;
   flex-direction: column;
   font-family: "Roboto";
   justify-content: center;
@@ -12,7 +11,6 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   height: 80px;
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,7 +37,6 @@ export const Menu = styled.div`
 `;
 
 export const HeaderContents = styled.div`
-  width: 100vw;
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -67,18 +64,10 @@ export const LoginButton = styled.button`
 
 export const Body = styled.div`
   height: 100%;
-  width: 100vw;
   display: flex;
   flex-grow: 1;
   justify-content: center;
-
-  align-items: center;
-  background: linear-gradient(
-      0deg,
-      rgba(128, 185, 239, 0.1),
-      rgba(128, 185, 239, 0.1)
-    ),
-    #fbfbfb;
+  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
 `;
 
 export const Footer = styled.div`
@@ -89,23 +78,13 @@ export const Footer = styled.div`
 `;
 
 export const FooterLine = styled.div`
-  background: linear-gradient(
-      0deg,
-      rgba(128, 185, 239, 0.1),
-      rgba(128, 185, 239, 0.1)
-    ),
-    #fbfbfb;
-  width: 100vw;
+  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+
   div {
     margin: 0 auto;
     height: 1px;
     border-bottom: 1px solid #dcdcdc;
-    background: linear-gradient(
-        0deg,
-        rgba(128, 185, 239, 0.1),
-        rgba(128, 185, 239, 0.1)
-      ),
-      #fbfbfb;
+    background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
     width: 1260px;
   }
 `;
