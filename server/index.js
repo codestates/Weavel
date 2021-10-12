@@ -3,9 +3,10 @@ const fs = require("fs");
 const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
+const axios = require("axios");
 const express = require("express");
 const app = express();
+const schedule = require("node-schedule");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -17,15 +18,23 @@ app.use(
     methods: ["GET", "POST", "PUT", "OPTIONS"],
   }),
 );
+
+// 날씨 API Get 요청 예약
+// schedule.scheduleJob("0 05 23 * * *", function () {
+//   axios.get("http://localhost:4000/weatherAPI?id=1");
+// });
+
 //라우터 경로
 const userrouter = require("./router/user");
 const photorouter = require("./router/photo");
 const weatherrouter = require("./router/weather");
+const weatherAPIrouter = require("./router/weatherAPI");
 
 //특정 API를 받았을 때
 app.use("/user", userrouter);
 app.use("/photo", photorouter);
 app.use("/weather", weatherrouter);
+app.use("/weatherAPI", weatherAPIrouter);
 
 //https, 서버실행
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
@@ -40,4 +49,5 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
 } else {
   server = app.listen(HTTPS_PORT);
 }
+
 module.exports = server;

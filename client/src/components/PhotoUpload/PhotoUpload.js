@@ -36,14 +36,10 @@ const dropzone = {
   position: "relative",
 };
 
-function Previews({ token, loginUserInfo }) {
+function Previews({ fileInfo, setFileHandle }) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
-  const [fileInfo, setFileInfo] = useState({
-    userId: loginUserInfo.id,
-    image: null,
-    filename: null,
-  });
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
@@ -71,38 +67,12 @@ function Previews({ token, loginUserInfo }) {
     files.forEach((file) => URL.revokeObjectURL(file.preview));
     setFile(true);
     if (files[0]) {
-      fileInfo.image = files[0];
-      fileInfo.filename = files[0].name;
-      setFileInfo(fileInfo);
-      handlePhotoUpload();
+      const newFileInfo = { ...fileInfo };
+      newFileInfo.image = files[0];
+      newFileInfo.filename = files[0].name;
+      setFileHandle(newFileInfo);
     }
   }, [files]);
-
-  const formData = new FormData();
-  formData.append("userId", loginUserInfo.id);
-  formData.append("image", fileInfo.image);
-  formData.append("filename", fileInfo.filename);
-
-  const handlePhotoUpload = () => {
-    axios
-      .post(
-        "http://localhost:4000/photo",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.error(`signin error: ${err.message}`);
-      });
-  };
 
   return (
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>

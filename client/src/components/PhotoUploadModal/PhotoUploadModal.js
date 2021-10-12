@@ -21,7 +21,7 @@ import { PhotoUploadContainer } from "./PhotoUploadModal.style";
 import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style";
 import PhotoUpload from "../PhotoUpload/PhotoUpload";
 
-function PhotoUploadModal({ openCloseModalHandler, token, loginUserInfo }) {
+function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const [photoInfo, setphotoInfo] = useState({
     id: null,
     weather: [],
@@ -85,9 +85,73 @@ function PhotoUploadModal({ openCloseModalHandler, token, loginUserInfo }) {
     // 사진 정보 저장 axios
   }
 
+  const [fileInfo, setFileInfo] = useState({
+    userId: loginUserInfo.id,
+    image: null,
+    filename: null,
+  });
+
+  const formData = new FormData();
+  formData.append("userId", loginUserInfo.id);
+  formData.append("image", fileInfo.image);
+  formData.append("filename", fileInfo.filename);
+
+  const handlePhotoUpload = () => {
+    axios
+      .post(
+        "http://localhost:4000/photo",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        handlePhotoInfoUpload(res.data.data);
+      })
+      .catch((err) => {
+        console.error(`signin error: ${err.message}`);
+      });
+  };
+
+  const setFileHandle = (file) => {
+    setFileInfo(file);
+  };
+
+  const handlePhotoInfoUpload = (photo) => {
+    axios
+      .post(
+        "http://localhost:4000/photo/info",
+        {
+          id: photo.id,
+          filename: photo.filename,
+        },
+        {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(`signin error: ${err.message}`);
+      });
+  };
+
   return (
     <PhotoUploadContainer onClick={(e) => e.stopPropagation()}>
-      <PhotoUpload token={token} loginUserInfo={loginUserInfo} />
+      <PhotoUpload
+        fileInfo={fileInfo}
+        setFileHandle={setFileHandle}
+        token={token}
+        loginUserInfo={loginUserInfo}
+      />
       <EditInfoContainer margin={"270px"}>
         <InputLabel>날짜</InputLabel>
         <EmailInput
@@ -143,7 +207,9 @@ function PhotoUploadModal({ openCloseModalHandler, token, loginUserInfo }) {
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton>업로드</ConfirmButton>
+            <ConfirmButton onClick={() => handlePhotoUpload()}>
+              업로드
+            </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
           </ButtonContainer>
         </span>

@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
   const info = await photo.destroy({ where: { id: id, userId: userId, weather: weather, date: date, area: area, filename: filename } });
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", info);
   if (!info) {
-    res.status(409).json({ massage: "이미 삭제된 정보입니다." });
+    res.status(404).json({ massage: "이미 삭제된 정보입니다." });
   }
 
   res.status(200).json({ massage: "삭제되었습니다." });
