@@ -5,7 +5,10 @@ import {
   ButtonContainer,
 } from "../Modal/Modal.style";
 
+import axios from "axios";
+
 import { InputLabel, EmailInput } from "../../pages/LoginPage/LoginPage.style";
+
 import { area } from "./SearchData";
 
 import AutoComplete from "./AutoComplete";
@@ -23,11 +26,9 @@ import PhotoUpload from "../PhotoUpload/PhotoUpload";
 
 function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const [photoInfo, setphotoInfo] = useState({
-    id: null,
     weather: [],
     date: null,
     area: null,
-    filename: null,
     comment: null,
   });
 
@@ -36,7 +37,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     cloud: false,
     rain: false,
     snow: false,
-    num: [],
+    num: null,
   });
 
   function weatherButtonHandler(e) {
@@ -45,20 +46,20 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
       cloud: false,
       rain: false,
       snow: false,
-      num: [],
+      num: null,
     };
     if (e.target.id === "1") {
       photoweather.sunny = true;
-      photoweather.num.push(1);
+      photoweather.num = "1";
     } else if (e.target.id === "2") {
       photoweather.cloud = true;
-      photoweather.num.push(2);
+      photoweather.num = "2";
     } else if (e.target.id === "3") {
       photoweather.rain = true;
-      photoweather.num.push(3);
+      photoweather.num = "3";
     } else if (e.target.id === "4") {
       photoweather.snow = true;
-      photoweather.num.push(4);
+      photoweather.num = "4";
     }
     setIsPhotoWeather({ ...photoweather });
   }
@@ -79,12 +80,6 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     console.log(newphotoInfo);
   }
 
-  function photoUploadFinalHandler() {
-    // 사진 저장 axios
-    // 사진 정보 Input값 commentHandler
-    // 사진 정보 저장 axios
-  }
-
   const [fileInfo, setFileInfo] = useState({
     userId: loginUserInfo.id,
     image: null,
@@ -96,10 +91,10 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   formData.append("image", fileInfo.image);
   formData.append("filename", fileInfo.filename);
 
-  const handlePhotoUpload = () => {
+  const handlePhotoUpload = (e) => {
     axios
       .post(
-        "http://localhost:4000/photo",
+        "http://localhost:4000/photo/",
         formData,
         {
           headers: {
@@ -110,8 +105,8 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.data);
-        handlePhotoInfoUpload(res.data.data);
+        console.log(res.data.message);
+        handlePhotoInfoUpload(e, res.data.data);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -122,22 +117,26 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     setFileInfo(file);
   };
 
-  const handlePhotoInfoUpload = (photo) => {
+  const handlePhotoInfoUpload = (e, photo) => {
     axios
       .post(
         "http://localhost:4000/photo/info",
         {
           id: photo.id,
           filename: photo.filename,
+          ...photoInfo,
         },
         {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         },
         { withCredentials: true }
       )
       .then((res) => {
         console.log(res);
+        openCloseModalHandler(e);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -207,7 +206,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={() => handlePhotoUpload()}>
+            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>
               업로드
             </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>

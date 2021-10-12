@@ -90,3 +90,11 @@ export const PhotoButton = styled.button`
   cursor: pointer;
   color: #ffffff;
 `;
+
+export const PhotoClickContainer = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
