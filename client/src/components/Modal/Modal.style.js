@@ -11,6 +11,7 @@ export const ModalContainer = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  margin-top: 18vh;
 `;
 
 export const ModalMessage = styled.div`
@@ -36,12 +37,12 @@ export const ButtonContainer = styled.div`
 export const ConfirmButton = styled.button`
   width: 85px;
   height: 47px;
-  background: #4d70ff;
+  background: ${(props) => (props.noSubmit ? "#c0cbf7" : "#4D70FF")};
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   color: #ffffff;
   border-style: none;
-  cursor: pointer;
+  cursor: ${(props) => (props.noSubmit ? "" : "pointer")};
 `;
 
 export const CancelButton = styled.button`

@@ -13,17 +13,18 @@ import {
   AlertImg,
   AlertText,
   MiddleContainer,
+  UnderLine,
 } from "./LoginPage.style";
+import { Link, Redirect } from "react-router-dom";
 
-function LoginPage() {
+function LoginPage({ handleLoginButton, isLogin, isValid, setIsValid }) {
   const [isdisabled, setIsDisabled] = useState(true);
   const [inputPw, setInputPw] = useState("");
   const [inputId, setInputId] = useState("");
-  const [isValid, setIsValid] = useState(null);
 
   const handleInputId = (e) => {
     if (e.key === "Enter") {
-      handleLoginButton(e);
+      handleLoginButton(e, inputId, inputPw);
     }
     setInputId(e.target.value);
 
@@ -37,7 +38,7 @@ function LoginPage() {
 
   const handleInputPw = (e) => {
     if (e.key === "Enter") {
-      handleLoginButton(e);
+      handleLoginButton(e, inputId, inputPw);
     }
     setInputPw(e.target.value);
     if (inputId.length > 0 && inputPw.length > 0) {
@@ -48,48 +49,43 @@ function LoginPage() {
     setIsValid(false);
   };
 
-  const handleLoginButton = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        "http://localhost:4000/user/login",
-        {
-          email: inputId,
-          password: inputPw,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.error(`signin error: ${err.message}`);
-        setIsValid(true);
-      });
-  };
-
   return (
-    <LoginContainer>
-      <LoginText>로그인</LoginText>
-      <InputLabel>이메일</InputLabel>
-      <EmailInput onKeyUp={(e) => handleInputId(e)} />
-      <InputLabel>비밀번호</InputLabel>
-      <PasswordInput type="password" onKeyUp={(e) => handleInputPw(e)} />
-      <MiddleContainer>
-        {!isValid ? (
-          ""
-        ) : (
-          <AlertBox>
-            <AlertImg src="../images/alert.svg" />
-            <AlertText>이메일과 비밀번호를 다시한번 확인해 주세요</AlertText>
-          </AlertBox>
-        )}
-      </MiddleContainer>
-      <LoginButton disabled={isdisabled} onClick={(e) => handleLoginButton(e)}>
-        로그인
-      </LoginButton>
-      <GoSignup>아직 이메일이 없으신가요? 회원가입 하러가기</GoSignup>
-    </LoginContainer>
+    <>
+      {isLogin ? (
+        <Redirect to="/"></Redirect>
+      ) : (
+        <LoginContainer>
+          <LoginText>로그인</LoginText>
+          <InputLabel>이메일</InputLabel>
+          <EmailInput onKeyUp={(e) => handleInputId(e)} />
+          <InputLabel>비밀번호</InputLabel>
+          <PasswordInput type="password" onKeyUp={(e) => handleInputPw(e)} />
+          <MiddleContainer>
+            {!isValid ? (
+              ""
+            ) : (
+              <AlertBox>
+                <AlertImg src="../images/alert.svg" />
+                <AlertText>
+                  이메일과 비밀번호를 다시한번 확인해 주세요
+                </AlertText>
+              </AlertBox>
+            )}
+          </MiddleContainer>
+          <LoginButton
+            disabled={isdisabled}
+            onClick={(e) => handleLoginButton(e, inputId, inputPw)}
+          >
+            로그인
+          </LoginButton>
+          <Link to="/signup" style={{ textDecoration: "none" }}>
+            <GoSignup>
+              아직 이메일이 없으신가요? <UnderLine>회원가입 하러가기</UnderLine>
+            </GoSignup>
+          </Link>
+        </LoginContainer>
+      )}
+    </>
   );
 }
 

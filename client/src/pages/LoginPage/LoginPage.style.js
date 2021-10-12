@@ -1,14 +1,7 @@
 import styled from "styled-components";
 
 export const LoginContainer = styled.h3`
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  margin: 150px 0 250px 0;
   display: flex;
   flex-direction: column;
   width: 468px;
@@ -30,7 +23,8 @@ export const InputLabel = styled.label`
   font-size: 16px;
   line-height: 19px;
   font-weight: normal;
-  margin: 0 0 6px 36px;
+  margin: ${(props) => props.margin || "0 0 6px 36px"};
+  margin-top: ${(props) => props.margin || ""};
 `;
 export const EmailInput = styled.input`
   background: #fbfbfb;
@@ -43,6 +37,9 @@ export const EmailInput = styled.input`
   padding-left: 10px;
   &:focus {
     outline-color: #4d70ff;
+  }
+  ::placeholder {
+    color: #b0afaf;
   }
 `;
 
@@ -92,6 +89,11 @@ export const GoSignup = styled.div`
   color: #4d70ff;
   text-align: center;
   cursor: pointer;
+`;
+export const UnderLine = styled.span`
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 export const AlertBox = styled.div`
