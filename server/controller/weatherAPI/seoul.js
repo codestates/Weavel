@@ -2,16 +2,22 @@ const request = require("request");
 const cheerio = require("cheerio");
 const moment = require("moment");
 require("moment-timezone");
+moment.tz.setDefault("Asia/Seoul");
 const dotenv = require("dotenv");
 const { seoul } = require("../../models");
 
 module.exports = (req, res) => {
   try {
+    const id = req.query.id;
+
+    // DB 특정지역 날씨 삭제
+    seoul.destroy({ where: { city: id } });
+
+    // DB 날씨 저장
+    const arr = req.body;
     const url1 = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
     const key = process.env.API_KEY;
-    moment.tz.setDefault("Asia/Seoul");
-    console.log(req.body);
-    const arr = req.body;
+
     console.log(arr);
     arr.map((el) => {
       const date = moment().format("YYYYMMDD");
@@ -35,6 +41,7 @@ module.exports = (req, res) => {
           const category = $(this).find("category").text();
           const value = $(this).find("fcstValue").text();
 
+          // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
           if (category === "POP" || category === "PTY" || category === "REH" || category === "SKY" || category === "TMP") {
             seoul.create({ city: nz, nx: x, ny: y, date: date, time: time, category: category, value: value });
           }
