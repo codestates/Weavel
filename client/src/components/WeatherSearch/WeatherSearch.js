@@ -11,7 +11,7 @@ import {
   WeatherSelectContainer,
 } from "./WeatherSearch.style";
 
-function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandle }) {
+function WeatherSearch({ chartHandle, isShowWeatherInfo, searchWeatherHandle, changeAreaHandle }) {
   const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
   const [isSelectSuccess, setIsSelectSuccess] = useState(false);
   const [allSelect, setAllSelect] = useState({
@@ -82,6 +82,7 @@ function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandl
         </SelectContainer>
         {isActivation.isLender ? (
           <MapIndex
+            chartHandle={chartHandle}
             isShowWeatherInfo={isShowWeatherInfo}
             searchWeatherHandle={searchWeatherHandle}
             showArea={showArea}

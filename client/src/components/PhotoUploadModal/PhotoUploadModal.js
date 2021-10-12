@@ -20,6 +20,9 @@ function PhotoUploadModal({
   loginUserInfo,
   token,
 }) {
+  // const [inputId, setInputId] = useState();
+  const [inputArea, setInputId] = useState();
+
   const [fileInfo, setFileInfo] = useState({
     userId: loginUserInfo.id,
     image: null,

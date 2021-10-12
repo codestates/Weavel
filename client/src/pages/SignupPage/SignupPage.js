@@ -106,9 +106,7 @@ function SignupPage() {
       isNewCheckInput.isPassword = passwordHandle(e.target.value);
       SetIsCheckInput(isNewCheckInput);
     } else if (e.target.id === "passwordConfirm") {
-      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(
-        e.target.value
-      );
+      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(e.target.value);
       SetIsCheckInput(isNewCheckInput);
     }
   };
@@ -118,7 +116,7 @@ function SignupPage() {
       return null;
     }
     let check = email.match(
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
     );
 
     return email.indexOf(".") !== -1 && check ? true : false;
@@ -129,9 +127,7 @@ function SignupPage() {
       return null;
     }
 
-    let check = password.match(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-    );
+    let check = password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
     return password.length > 7 && password.length < 17 && check ? true : false;
   };
 
@@ -157,10 +153,7 @@ function SignupPage() {
             onChange={(e) => inputValueHandle(e)}
             onKeyUp={(e) => inputValidHandle(e)}
           />
-          <CheckEmail
-            disabled={!isCheckInput.isEmail}
-            isButtonValid={!isCheckInput.isEmail}
-          >
+          <CheckEmail disabled={!isCheckInput.isEmail} isButtonValid={!isCheckInput.isEmail}>
             중복 확인
           </CheckEmail>
         </EmailInputBox>
@@ -183,32 +176,16 @@ function SignupPage() {
       <WeatherContainer>
         <span>좋아하는 날씨</span>
         <WeatherChoiceBox>
-          <Sunny
-            isSunny={isWeather.sunny}
-            id="0"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Sunny isSunny={isWeather.sunny} id="0" onClick={(e) => weatherCheckHandle(e)}>
             맑음
           </Sunny>
-          <Cloud
-            isCloud={isWeather.cloud}
-            id="1"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Cloud isCloud={isWeather.cloud} id="1" onClick={(e) => weatherCheckHandle(e)}>
             구름
           </Cloud>
-          <Rain
-            isRain={isWeather.rain}
-            id="2"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Rain isRain={isWeather.rain} id="2" onClick={(e) => weatherCheckHandle(e)}>
             비
           </Rain>
-          <Snow
-            isSnow={isWeather.snow}
-            id="3"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Snow isSnow={isWeather.snow} id="3" onClick={(e) => weatherCheckHandle(e)}>
             눈
           </Snow>
         </WeatherChoiceBox>
@@ -237,9 +214,7 @@ function SignupPage() {
           onChange={(e) => inputValueHandle(e)}
           onKeyUp={(e) => inputValidHandle(e)}
         />
-        <PasswordConfirmMessage
-          isPasswordConfirm={isCheckInput.isPasswordConfirm}
-        >
+        <PasswordConfirmMessage isPasswordConfirm={isCheckInput.isPasswordConfirm}>
           {isCheckInput.isPasswordConfirm === null
             ? null
             : isCheckInput.isPasswordConfirm

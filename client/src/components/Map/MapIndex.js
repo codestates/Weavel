@@ -19,7 +19,13 @@ import Map17 from "./Map17";
 import { MapContainer } from "./MapIndex.style";
 import { area } from "./MapData";
 
-function MapIndex({ isShowWeatherInfo, showArea, searchWeatherHandle, changeAreaHandle }) {
+function MapIndex({
+  chartHandle,
+  isShowWeatherInfo,
+  showArea,
+  searchWeatherHandle,
+  changeAreaHandle,
+}) {
   let showMap;
   const pickMap = (pickArea, e) => {
     const idx = e.target.id;
@@ -33,6 +39,7 @@ function MapIndex({ isShowWeatherInfo, showArea, searchWeatherHandle, changeArea
     console.log("nx: ", area[pickArea][idx].x);
     console.log("ny: ", area[pickArea][idx].y);
     console.log("어디?: ", area[pickArea][idx].name);
+    chartHandle(area[pickArea][idx].x, area[pickArea][idx].y);
   };
 
   return (
