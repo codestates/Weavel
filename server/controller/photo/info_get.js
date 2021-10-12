@@ -9,11 +9,11 @@ module.exports = async (req, res) => {
     const info = await photo.findAll({ where: { userId: userId } });
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", info);
 
-    // 유저정보 조회가 되지 않을시
+    // 유저사진정보 조회가 되지 않을시
     if (!info) {
       return res.status(409).json({ message: "유저의 이미지 정보가 조회되지 않습니다" });
     }
-    // 유저정보조회성공
+    // 유저사진정보조회성공
     else {
       return res.status(200).json(info);
     }
