@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+  Link,
+} from "react-router-dom";
 
 import axios from "axios";
 import Modal from "./components/Modal/Modal";
@@ -80,7 +87,7 @@ function App() {
           "Content-Type": "application/json",
         },
       },
-      { withCredentials: true },
+      { withCredentials: true }
     )
       .then((res) => {
         console.log(res);
@@ -109,7 +116,7 @@ function App() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        },
+        }
       )
       .then((res) => console.log(res));
   };
@@ -123,7 +130,7 @@ function App() {
           email: inputId,
           password: inputPw,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
         setIsLogin(true);
@@ -209,7 +216,7 @@ function App() {
         <Body>
           <Switch>
             <Route exact path="/">
-              <MainPage />
+              <MainPage isLogin={isLogin} />
             </Route>
             <Route path="/login">
               <LoginPage

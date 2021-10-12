@@ -3,7 +3,7 @@ import {
   InfoContainer,
   InfoContentsContainer,
   InfoContents,
-  LoginButton,
+  // LoginButton,
   InfoImg,
 } from "./SearchInfo.style";
 
@@ -22,7 +22,7 @@ function SearchInfo() {
             <br />
             날씨를 느끼러 떠나보세요
           </div>
-          <LoginButton>로그인</LoginButton>
+          {/* <LoginButton>로그인</LoginButton> */}
         </InfoContents>
       </InfoContentsContainer>
       <InfoImg>

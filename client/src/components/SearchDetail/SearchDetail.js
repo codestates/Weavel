@@ -77,19 +77,25 @@ function SearchDetail({
   ];
 
   const timeScroll = useRef([]);
-  const arrIdx = [0, 6, 12, 18, 23];
+  const downIdx = [12, 18, 23];
+  const upIdx = [0, 0, 5, 11];
   const [scrollIdx, setScrollIdx] = useState(0);
   const onButtonClick = (e) => {
     if (e.target.id === "up" && scrollIdx > 0) {
       setScrollIdx(scrollIdx - 1);
-    } else if (e.target.id === "down" && scrollIdx < 4) {
+      const idx = upIdx[scrollIdx];
+      timeScroll.current[idx].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    } else if (e.target.id === "down" && scrollIdx < 3) {
       setScrollIdx(scrollIdx + 1);
+      const idx = downIdx[scrollIdx];
+      timeScroll.current[idx].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
-    const idx = arrIdx[scrollIdx];
-    timeScroll.current[idx].scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
   };
 
   const [weatherSelect, setWeatherSelect] = useState(weather);
@@ -181,7 +187,11 @@ function SearchDetail({
           <SelectList>
             {daySelect.map((day) => {
               return (
-                <DayItem selectId={day.isSelect} onClick={(e) => daySelectHandle(e)} id={day.id}>
+                <DayItem
+                  selectId={day.isSelect}
+                  onClick={(e) => daySelectHandle(e)}
+                  id={day.id}
+                >
                   {day.day}
                 </DayItem>
               );
@@ -190,7 +200,11 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <ArrowPosition id={"up"} onClick={(e) => onButtonClick(e)}>
-            <img id={"up"} onClick={(e) => onButtonClick(e)} src="./images/top_arrow.svg" />
+            <img
+              id={"up"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/top_arrow.svg"
+            />
           </ArrowPosition>
           <SelectList>
             {timeSelect.map((time) => {
@@ -207,7 +221,11 @@ function SearchDetail({
             })}
           </SelectList>
           <ArrowPosition id={"down"} onClick={(e) => onButtonClick(e)}>
-            <img id={"down"} onClick={(e) => onButtonClick(e)} src="./images/bottom_arrow.svg" />
+            <img
+              id={"down"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/bottom_arrow.svg"
+            />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>
