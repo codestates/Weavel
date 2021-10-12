@@ -38,7 +38,6 @@ export const AreaSearchBar = styled.div`
   background: #fbfbfb;
   border: 1px solid #dcdcdc;
   border-radius: 23.5px;
-  margin-right: 30px;
 `;
 
 export const AreaSearchInput = styled.input`
@@ -83,7 +82,7 @@ export const SearchList = styled.ul`
     cursor: pointer;
   }
   li {
-    padding: 5px 0 5px 40px;
+    padding: 5px 0 5px 0px;
     list-style: none;
     font-weight: normal;
     font-size: 16px;
