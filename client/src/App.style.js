@@ -18,8 +18,8 @@ export const Header = styled.div`
 `;
 
 export const HeaderBox = styled.div`
-  margin-left: ${(props) => (props.logo ? "19.7%" : "0")};
-  margin-right: ${(props) => (props.logo ? "0" : "19.7%")};
+  margin-left: ${(props) => (props.logo ? "12.5%" : "0")};
+  margin-right: ${(props) => (props.logo ? "0" : "12.5%")};
 `;
 
 export const MenuContainer = styled.div`
@@ -31,8 +31,9 @@ export const Menu = styled.div`
   margin: 0 40.5px 0 40.5px;
   color: #444444;
   cursor: pointer;
+  text-align: center;
   :active {
-    color: 4d70ff;
+    color: #4d70ff;
   }
 `;
 
@@ -67,7 +68,12 @@ export const Body = styled.div`
   display: flex;
   flex-grow: 1;
   justify-content: center;
-  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+  background: linear-gradient(
+      0deg,
+      rgba(128, 185, 239, 0.1),
+      rgba(128, 185, 239, 0.1)
+    ),
+    #fbfbfb;
 `;
 
 export const Footer = styled.div`
@@ -78,13 +84,23 @@ export const Footer = styled.div`
 `;
 
 export const FooterLine = styled.div`
-  background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+  background: linear-gradient(
+      0deg,
+      rgba(128, 185, 239, 0.1),
+      rgba(128, 185, 239, 0.1)
+    ),
+    #fbfbfb;
 
   div {
     margin: 0 auto;
     height: 1px;
     border-bottom: 1px solid #dcdcdc;
-    background: linear-gradient(0deg, rgba(128, 185, 239, 0.1), rgba(128, 185, 239, 0.1)), #fbfbfb;
+    background: linear-gradient(
+        0deg,
+        rgba(128, 185, 239, 0.1),
+        rgba(128, 185, 239, 0.1)
+      ),
+      #fbfbfb;
     width: 1260px;
   }
 `;

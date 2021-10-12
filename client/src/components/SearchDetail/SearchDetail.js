@@ -77,19 +77,25 @@ function SearchDetail({
   ];
 
   const timeScroll = useRef([]);
-  const arrIdx = [0, 6, 12, 18, 23];
+  const downIdx = [12, 18, 23];
+  const upIdx = [0, 0, 5, 11];
   const [scrollIdx, setScrollIdx] = useState(0);
   const onButtonClick = (e) => {
     if (e.target.id === "up" && scrollIdx > 0) {
       setScrollIdx(scrollIdx - 1);
-    } else if (e.target.id === "down" && scrollIdx < 4) {
+      const idx = upIdx[scrollIdx];
+      timeScroll.current[idx].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    } else if (e.target.id === "down" && scrollIdx < 3) {
       setScrollIdx(scrollIdx + 1);
+      const idx = downIdx[scrollIdx];
+      timeScroll.current[idx].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
-    const idx = arrIdx[scrollIdx];
-    timeScroll.current[idx].scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
   };
 
   const [weatherSelect, setWeatherSelect] = useState(weather);
