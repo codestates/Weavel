@@ -36,14 +36,9 @@ const dropzone = {
   position: "relative",
 };
 
-function Previews(props, loginUserInfo, token) {
+function Previews({ fileInfo, setFileHandle }) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
-  const [fileInfo, setFileInfo] = useState({
-    userId: loginUserInfo.id,
-    image: null,
-    filename: null,
-  });
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -53,8 +48,8 @@ function Previews(props, loginUserInfo, token) {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
   });
@@ -72,39 +67,12 @@ function Previews(props, loginUserInfo, token) {
     files.forEach((file) => URL.revokeObjectURL(file.preview));
     setFile(true);
     if (files[0]) {
-      fileInfo.image = files[0].path;
-      fileInfo.filename = files[0].name;
-      setFileInfo(fileInfo);
-      handlePhotoUpload();
+      const newFileInfo = { ...fileInfo };
+      newFileInfo.image = files[0];
+      newFileInfo.filename = files[0].name;
+      setFileHandle(newFileInfo);
     }
-    console.log(fileInfo);
-    console.log(loginUserInfo);
-    console.log(token);
   }, [files]);
-
-  const handlePhotoUpload = () => {
-    axios(
-      {
-        method: "post",
-        url: "http://localhost:4000/photo",
-        data: {
-          userId: 4,
-          image: fileInfo.image,
-          filename: fileInfo.filename,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-      { withCredentials: true }
-    )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.error(`signin error: ${err.message}`);
-      });
-  };
 
   return (
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>
