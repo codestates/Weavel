@@ -6,4 +6,5 @@ module.exports = {
   put: require("./put"),
   email: require("./email"),
   get: require("./get"),
+  weather: require("./weather"),
 };

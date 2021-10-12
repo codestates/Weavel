@@ -19,9 +19,12 @@ router.delete("/", accessToken, usersController.delete);
 router.put("/", accessToken, usersController.put);
 
 // 이메일중복검사 GET /user/email?={email}
-router.get("/", usersController.email);
+router.get("/email", usersController.email);
 
 // 유저정보요청 GET /user
 router.get("/", accessToken, usersController.get);
+
+// 날씨정보요청 GET /user/weather
+router.get("/weather", accessToken, usersController.weather);
 
 module.exports = router;

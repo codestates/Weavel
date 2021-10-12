@@ -9,10 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       userId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        field: "userId",
+        references: {
+          model: "user",
+          key: "id",
+        },
       },
       weatherId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        field: "weatherId",
+        references: {
+          model: "weather",
+          key: "id",
+        },
       },
       createdAt: {
         allowNull: false,

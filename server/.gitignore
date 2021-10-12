@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/uploads
 
 # misc
 .DS_Store
