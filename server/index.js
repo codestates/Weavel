@@ -20,9 +20,25 @@ app.use(
 );
 
 // 날씨 API Get 요청 예약
-// schedule.scheduleJob("0 05 23 * * *", function () {
-//   axios.get("http://localhost:4000/weatherAPI?id=1");
-// });
+schedule.scheduleJob("30 15 21 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=01");
+});
+
+schedule.scheduleJob("30 16 21 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=02");
+});
+
+schedule.scheduleJob("0 20 16 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=03");
+});
+
+schedule.scheduleJob("0 20 16 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=04");
+});
+
+schedule.scheduleJob("0 20 16 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=05");
+});
 
 //라우터 경로
 const userrouter = require("./router/user");

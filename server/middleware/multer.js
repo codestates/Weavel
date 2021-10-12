@@ -18,20 +18,3 @@ const upload = multer({ storage: storage });
 module.exports = {
   upload: upload,
 };
-
-//! multer 미들웨어 시작
-// const multer = require("multer");
-
-// var storage = multer.diskStorage({
-//   // 경로 설정 함수
-//   destination: function (req, file, cb) {
-//     cb(null, "uploads/"); // cb 콜백함수를 통해 경로 설정
-//   },
-//   // 이름 설정 함수
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname + "(" + new Date() + ")");
-//     //cb 콜백함수를 통해 이름 설정
-//   },
-// });
-// var upload = multer({ storage: storage });
-//! multer 미들웨어 끝
