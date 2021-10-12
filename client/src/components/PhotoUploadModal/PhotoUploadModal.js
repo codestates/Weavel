@@ -92,6 +92,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   formData.append("filename", fileInfo.filename);
 
   const handlePhotoUpload = (e) => {
+    e.preventDefault();
     axios
       .post(
         "http://localhost:4000/photo/",
@@ -118,6 +119,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   };
 
   const handlePhotoInfoUpload = (e, photo) => {
+    e.preventDefault();
     axios
       .post(
         "http://localhost:4000/photo/info",
