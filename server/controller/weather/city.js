@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
   }
   console.log("day", dayCode);
 
-  // 날씨 코드  0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
+  // 날씨 코드  맑음(0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
   // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
   if (weather === "0") {
     SKYvalue = "1";
@@ -61,17 +61,24 @@ module.exports = async (req, res) => {
       [or]: { value: PTYvalue },
     },
   });
+  console.log("SKYvalueSKYvalueSKYvalueSKYvalue", !SKYvalue);
+  console.log("PTYvaluePTYvaluePTYvaluePTYvalue", PTYvalue);
+  console.log("day111111111111111111111", SKY);
+  console.log("day222222222222222222222", PTY);
 
   // SKY PYT 둘다 데이터가 존재 해야함.
-  if (SKYvalue) {
+  if (SKYvalue && PTYvalue) {
     if (SKY.length === 0 || PTY.length === 0) {
       return res.status(404).json({ message: "데이터가 없습니다." });
     }
   }
+  if (!SKYvalue && PTY.length === 0) {
+    return res.status(404).json({ message: "데이터가 없습니다." });
+  }
 
   // 좌표 추출
   const result = [];
-  for (let i = 0; i < SKY.length; i++) {
+  for (let i = 0; i < PTY.length; i++) {
     const xy = [];
     xy.push(PTY[i].nx);
     xy.push(PTY[i].ny);

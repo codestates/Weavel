@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       city: DataTypes.INTEGER,
       nx: DataTypes.INTEGER,
       ny: DataTypes.INTEGER,
-      data: DataTypes.STRING,
+      date: DataTypes.STRING,
       time: DataTypes.STRING,
       category: DataTypes.STRING,
       value: DataTypes.STRING,
