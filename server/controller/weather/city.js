@@ -43,46 +43,50 @@ module.exports = async (req, res) => {
     PTYvalue = ["2", "3"];
   }
 
-  const SKY = await weather_data.findAll({
+  const find = await weather_data.findAll({
     where: {
       city: city,
       date: dayCode,
       time: time,
-      category: "SKY",
-      [or]: { value: SKYvalue },
-    },
-  });
-  const PTY = await weather_data.findAll({
-    where: {
-      city: city,
-      date: dayCode,
-      time: time,
-      category: "PTY",
-      [or]: { value: PTYvalue },
-    },
-  });
-  console.log("SKYvalueSKYvalueSKYvalueSKYvalue", !SKYvalue);
-  console.log("PTYvaluePTYvaluePTYvaluePTYvalue", PTYvalue);
-  console.log("day111111111111111111111", SKY);
-  console.log("day222222222222222222222", PTY);
 
-  // SKY PYT 둘다 데이터가 존재 해야함.
-  if (SKYvalue && PTYvalue) {
-    if (SKY.length === 0 || PTY.length === 0) {
-      return res.status(404).json({ message: "데이터가 없습니다." });
-    }
-  }
-  if (!SKYvalue && PTY.length === 0) {
-    return res.status(404).json({ message: "데이터가 없습니다." });
-  }
+      [or]: [{ [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] }, { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] }],
+    },
+  });
+
+  console.log("SKYvalueSKYvalueSKYvalueSKYvalue", SKYvalue);
+  console.log("PTYvaluePTYvaluePTYvaluePTYvalue", PTYvalue);
+
+  console.log("day222222222222222222222", find);
 
   // 좌표 추출
   const result = [];
-  for (let i = 0; i < PTY.length; i++) {
+  const end = [];
+
+  for (let i = 0; i < find.length; i++) {
     const xy = [];
-    xy.push(PTY[i].nx);
-    xy.push(PTY[i].ny);
+    xy.push(find[i].nx);
+    xy.push(find[i].ny);
     result.push(xy);
   }
+
+  if (weather === "1" || weather === "0") {
+    for (let i = 0; i < result.length; i++) {
+      for (let j = i + 1; j < result.length - 1; j++) {
+        if (result[i][0] === result[j][0] && result[i][1] === result[j][1]) {
+          end.push(result[i]);
+          break;
+        }
+      }
+    }
+    if (end.length === 0) {
+      return res.status(404).json({ message: "데이터가 없습니다." });
+    }
+    return res.status(200).send(end);
+  }
+
+  if (result.length === 0) {
+    return res.status(404).json({ message: "데이터가 없습니다." });
+  }
+
   return res.status(200).send(result);
 };
