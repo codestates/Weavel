@@ -1,26 +1,17 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import Chart from "react-apexcharts";
+import styled from "styled-components";
+import { dummy } from "./data";
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 class LineChart extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      options: {
-        chart: {
-          id: "basic-bar",
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-        },
-      },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91],
-        },
-      ],
-    };
   }
 
   render() {
@@ -28,21 +19,24 @@ class LineChart extends Component {
       <div className="app">
         <div className="row">
           <div className="mixed-chart">
-            {this.props.bar ? (
-              <Chart
-                options={this.state.options}
-                series={this.state.series}
-                type="bar"
-                width="500"
-              />
-            ) : (
-              <Chart
-                options={this.state.options}
-                series={this.state.series}
-                type="line"
-                width="500"
-              />
-            )}
+            <Container>
+              {this.props.bar ? (
+                <Chart
+                  options={this.props.tem.options}
+                  series={this.props.tem.series}
+                  type="bar"
+                  width="600"
+                  
+                />
+              ) : (
+                <Chart
+                  options={this.props.tem.options}
+                  series={this.props.tem.series}
+                  type="line"
+                  width="500"
+                />
+              )}
+            </Container>
           </div>
         </div>
       </div>

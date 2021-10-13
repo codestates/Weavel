@@ -216,7 +216,7 @@ function App() {
         <Body>
           <Switch>
             <Route exact path="/">
-              <MainPage />
+              <MainPage isLogin={isLogin} />
             </Route>
             <Route path="/login">
               <LoginPage

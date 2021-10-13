@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
     return res.status(409).json({ message: "filname이 없습니다." });
   }
 
+
   // 사진이 저장된 칼럼부분을 찾아 사진정보를 저장
   const info = await photo.update({ userId: userId, weather: weather, date: date, area: area, comment: comment }, { where: { id: id, filename: filename } });
   console.log("---------------------", info);

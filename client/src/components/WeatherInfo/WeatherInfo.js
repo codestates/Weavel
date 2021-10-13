@@ -10,7 +10,7 @@ import {
   InfoItemItem,
 } from "./WeatherInfo.style";
 
-function WeatherInfo({ areaName }) {
+function WeatherInfo({ tem, chartHandle, areaName }) {
   return (
     <div>
       <WeatherInfoContainer>
@@ -22,7 +22,7 @@ function WeatherInfo({ areaName }) {
             <span>섭씨 (°C)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart></LineChart>
+            <LineChart tem={tem}></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>
@@ -32,7 +32,7 @@ function WeatherInfo({ areaName }) {
             <span>확률 (%)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart bar={true}></LineChart>
+            <LineChart tem={tem} bar={true}></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>

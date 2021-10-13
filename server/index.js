@@ -16,7 +16,7 @@ app.use(
     origin: ["http://localhost:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "OPTIONS"],
-  }),
+  })
 );
 
 // 전국 날씨 API Get 요청 예약

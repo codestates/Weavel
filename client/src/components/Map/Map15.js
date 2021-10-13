@@ -3,7 +3,7 @@ import { Path } from "./MapIndex.style";
 
 function Map15({ pickMap }) {
   return (
-    <svg width="800" height="600" viewBox="50 0 900 850">
+    <svg width="800" height="600" viewBox="50 0 900 850" cursor="pointer">
       <Path
         id={0}
         onClick={(e) => pickMap("15", e)}
@@ -109,6 +109,216 @@ function Map15({ pickMap }) {
         onClick={(e) => pickMap("15", e)}
         d="M 318 411 l 5 3 3 8 4 5 2 1 3 10 -6 2 -6 -7 -6 3 -5 0 0 2 -4 3 -6 0 1 -2 -6 3 -5 -2 -5 -5 0 0 3 -6 7 -9 -3 -6 15 -5 z "
       />
+      <text
+        id={16}
+        onClick={(e) => pickMap("15", e)}
+        x="320"
+        y="200"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        영광군
+      </text>
+      <text
+        id={15}
+        onClick={(e) => pickMap("15", e)}
+        x="350"
+        y="270"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        함평군
+      </text>
+      <text
+        id={14}
+        onClick={(e) => pickMap("15", e)}
+        x="310"
+        y="370"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        무안군
+      </text>
+      <text
+        id={19}
+        onClick={(e) => pickMap("15", e)}
+        x="170"
+        y="400"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        신안군
+      </text>
+      <text
+        id={2}
+        onClick={(e) => pickMap("15", e)}
+        x="430"
+        y="340"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        나주시
+      </text>
+      <text
+        id={15}
+        onClick={(e) => pickMap("15", e)}
+        x="550"
+        y="340"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        화순군
+      </text>
+      <text
+        id={4}
+        onClick={(e) => pickMap("15", e)}
+        x="540"
+        y="180"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        담양군
+      </text>
+      <text
+        id={5}
+        onClick={(e) => pickMap("15", e)}
+        x="670"
+        y="225"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        곡성군
+      </text>
+      <text
+        id={6}
+        onClick={(e) => pickMap("15", e)}
+        x="770"
+        y="210"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        구례군
+      </text>
+      <text
+        id={3}
+        onClick={(e) => pickMap("15", e)}
+        x="830"
+        y="320"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        광양시
+      </text>
+      <text
+        id={1}
+        onClick={(e) => pickMap("15", e)}
+        x="715"
+        y="340"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        순천시
+      </text>
+      <text
+        id={8}
+        onClick={(e) => pickMap("15", e)}
+        x="610"
+        y="440"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        보성군
+      </text>
+      <text
+        id={10}
+        onClick={(e) => pickMap("15", e)}
+        x="510"
+        y="500"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        장흥군
+      </text>
+      <text
+        id={11}
+        onClick={(e) => pickMap("15", e)}
+        x="450"
+        y="500"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        강진군
+      </text>
+      <text
+        id={13}
+        onClick={(e) => pickMap("15", e)}
+        x="400"
+        y="430"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        영암군
+      </text>
+      <text
+        id={12}
+        onClick={(e) => pickMap("15", e)}
+        x="360"
+        y="580"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        해남군
+      </text>
+      <text
+        id={18}
+        onClick={(e) => pickMap("15", e)}
+        x="220"
+        y="620"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        진도군
+      </text>
+      <text
+        id={17}
+        onClick={(e) => pickMap("15", e)}
+        x="420"
+        y="720"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        완도군
+      </text>
+      <text
+        id={7}
+        onClick={(e) => pickMap("15", e)}
+        x="680"
+        y="550"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        고흥군
+      </text>
+      <text
+        id={0}
+        onClick={(e) => pickMap("15", e)}
+        x="835"
+        y="450"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        여수시
+      </text>
+      <text
+        id={20}
+        onClick={(e) => pickMap("15", e)}
+        x="290"
+        y="430"
+        fill="#B0AFAF"
+        font-size="18"
+      >
+        목포시
+      </text>
     </svg>
   );
 }
