@@ -16,9 +16,9 @@ import {
 
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
 
-function MyPageMiddle({ isWeather, weatherCheckHandle }) {
+function MyPageMiddle({ isWeather, weatherCheckHandle, keyword, setKeyword }) {
   const [hasText, setHasText] = useState(false);
-  const [keyword, setKeyword] = useState("");
+
   const [selected, setSelected] = useState(-1);
 
   useEffect(() => {

@@ -43,6 +43,10 @@ function App() {
     name: "코드몬",
     weather: [],
   });
+
+  const [allUserWeather, setAllUserWeather] = useState(null);
+  const [allPhotoInfo, setAllPhotoInfo] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -90,7 +94,6 @@ function App() {
       { withCredentials: true }
     )
       .then((res) => {
-        console.log(res);
         setIsLogin(false);
         openCloseModalHandler(e);
         test();
@@ -136,6 +139,9 @@ function App() {
         setIsLogin(true);
         setToken(res.data.data.accessToken);
         getUserInfo(res.data.data.accessToken);
+        getPhotos(res.data.data.accessToken);
+        getAllPhotosInfo(res.data.data.accessToken);
+        getAllUserWeather(res.data.data.accessToken);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -167,6 +173,85 @@ function App() {
         }
       });
       setLoginUserInfo({ id, email, name, weather });
+    });
+  };
+
+  // const DeleteUserHandler = (token) => {
+  //   DeleteUser(token);
+  // };
+
+  // 회원 탈퇴
+  const DeleteUser = (token) => {
+    axios({
+      method: "delete",
+      url: "http://localhost:4000/user",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+
+  // 사진 정보 받기
+  const getAllPhotosInfo = (token) => {
+    axios({
+      method: "get",
+      url: "http://localhost:4000/photo/info",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      setAllPhotoInfo(res.data);
+    });
+  };
+
+  //사진 받기
+  const getPhotos = (token) => {
+    axios({
+      method: "get",
+      url: "http://localhost:4000/photo?id=1",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "image/jpg",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      setPhoto(res.data);
+    });
+  };
+
+  // 모든 회원 날씨 정보
+  const getAllUserWeather = (token) => {
+    axios({
+      method: "get",
+      url: "http://localhost:4000/user/weather",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      setAllUserWeather(res.data.data);
+    });
+  };
+
+  // 사진 삭제
+  const deletePhoto = (token) => {
+    axios({
+      method: "delete",
+      url: "http://localhost:4000/photo",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
     });
   };
 
@@ -232,10 +317,12 @@ function App() {
             </Route>
             <Route path="/mypage">
               <MyPage
-                token={token}
-                loginUserInfo={loginUserInfo}
+                allUserWeather={allUserWeather}
+                allPhotoInfo={allPhotoInfo}
                 isLogin={isLogin}
                 weatherHandle={weatherHandle}
+                loginUserInfo={loginUserInfo}
+                token={token}
                 isWeather={isWeather}
                 putUserInfo={putUserInfo}
               />
