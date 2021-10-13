@@ -35,6 +35,7 @@ function Map07({ pickMap }) {
         x="560"
         y="320"
         fill="#B0AFAF"
+        font-size="16"
       >
         남구
       </text>
@@ -44,6 +45,7 @@ function Map07({ pickMap }) {
         x="695"
         y="300"
         fill="#B0AFAF"
+        font-size="16"
       >
         동구
       </text>
@@ -53,6 +55,7 @@ function Map07({ pickMap }) {
         x="640"
         y="190"
         fill="#B0AFAF"
+        font-size="16"
       >
         북구
       </text>
@@ -62,6 +65,7 @@ function Map07({ pickMap }) {
         x="300"
         y="290"
         fill="#B0AFAF"
+        font-size="16"
       >
         울주군
       </text>
@@ -71,6 +75,7 @@ function Map07({ pickMap }) {
         x="525"
         y="245"
         fill="#B0AFAF"
+        font-size="16"
       >
         중구
       </text>

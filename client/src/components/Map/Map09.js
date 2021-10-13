@@ -19,9 +19,10 @@ function Map09({ pickMap }) {
       <text
         id={0}
         onClick={(e) => pickMap("09", e)}
-        x="385"
+        x="390"
         y="470"
         fill="#B0AFAF"
+        fontSize="9"
       >
         서귀포시
       </text>
@@ -31,6 +32,7 @@ function Map09({ pickMap }) {
         x="370"
         y="385"
         fill="#B0AFAF"
+        fontSize="9"
       >
         제주시
       </text>

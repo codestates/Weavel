@@ -35,6 +35,7 @@ function Map06({ pickMap }) {
         x="200"
         y="300"
         fill="#B0AFAF"
+        font-size="14"
       >
         광산구
       </text>
@@ -44,6 +45,7 @@ function Map06({ pickMap }) {
         x="430"
         y="440"
         fill="#B0AFAF"
+        font-size="14"
       >
         남구
       </text>
@@ -53,6 +55,7 @@ function Map06({ pickMap }) {
         x="640"
         y="400"
         fill="#B0AFAF"
+        font-size="14"
       >
         동구
       </text>
@@ -62,6 +65,7 @@ function Map06({ pickMap }) {
         x="540"
         y="200"
         fill="#B0AFAF"
+        font-size="14"
       >
         북구
       </text>
@@ -71,6 +75,7 @@ function Map06({ pickMap }) {
         x="430"
         y="340"
         fill="#B0AFAF"
+        font-size="14"
       >
         서구
       </text>

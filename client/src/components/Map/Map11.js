@@ -105,6 +105,7 @@ function Map11({ pickMap }) {
         x="600"
         y="340"
         fill="#B0AFAF"
+        font-size="14"
       >
         강릉시
       </text>
@@ -114,6 +115,7 @@ function Map11({ pickMap }) {
         x="440"
         y="120"
         fill="#B0AFAF"
+        font-size="14"
       >
         고성군
       </text>
@@ -123,6 +125,7 @@ function Map11({ pickMap }) {
         x="665"
         y="415"
         fill="#B0AFAF"
+        font-size="14"
       >
         동해시
       </text>
@@ -132,6 +135,7 @@ function Map11({ pickMap }) {
         x="700"
         y="500"
         fill="#B0AFAF"
+        font-size="14"
       >
         삼척시
       </text>
@@ -141,6 +145,7 @@ function Map11({ pickMap }) {
         x="480"
         y="185"
         fill="#B0AFAF"
+        font-size="14"
       >
         속초시
       </text>
@@ -150,6 +155,7 @@ function Map11({ pickMap }) {
         x="295"
         y="180"
         fill="#B0AFAF"
+        font-size="14"
       >
         양구군
       </text>
@@ -159,6 +165,7 @@ function Map11({ pickMap }) {
         x="510"
         y="240"
         fill="#B0AFAF"
+        font-size="14"
       >
         양양군
       </text>
@@ -168,6 +175,7 @@ function Map11({ pickMap }) {
         x="480"
         y="530"
         fill="#B0AFAF"
+        font-size="14"
       >
         영월군
       </text>
@@ -177,6 +185,7 @@ function Map11({ pickMap }) {
         x="270"
         y="480"
         fill="#B0AFAF"
+        font-size="14"
       >
         원주시
       </text>
@@ -186,6 +195,7 @@ function Map11({ pickMap }) {
         x="390"
         y="220"
         fill="#B0AFAF"
+        font-size="14"
       >
         인제군
       </text>
@@ -195,6 +205,7 @@ function Map11({ pickMap }) {
         x="545"
         y="460"
         fill="#B0AFAF"
+        font-size="14"
       >
         정선군
       </text>
@@ -204,6 +215,7 @@ function Map11({ pickMap }) {
         x="85"
         y="165"
         fill="#B0AFAF"
+        font-size="14"
       >
         철원군
       </text>
@@ -213,6 +225,7 @@ function Map11({ pickMap }) {
         x="210"
         y="280"
         fill="#B0AFAF"
+        font-size="14"
       >
         춘천시
       </text>
@@ -222,6 +235,7 @@ function Map11({ pickMap }) {
         x="645"
         y="545"
         fill="#B0AFAF"
+        font-size="14"
       >
         태백시
       </text>
@@ -231,6 +245,7 @@ function Map11({ pickMap }) {
         x="460"
         y="390"
         fill="#B0AFAF"
+        font-size="14"
       >
         평창군
       </text>
@@ -240,6 +255,7 @@ function Map11({ pickMap }) {
         x="320"
         y="320"
         fill="#B0AFAF"
+        font-size="14"
       >
         홍천군
       </text>
@@ -249,6 +265,7 @@ function Map11({ pickMap }) {
         x="200"
         y="190"
         fill="#B0AFAF"
+        font-size="14"
       >
         화천군
       </text>
@@ -258,6 +275,7 @@ function Map11({ pickMap }) {
         x="340"
         y="410"
         fill="#B0AFAF"
+        font-size="14"
       >
         횡성군
       </text>

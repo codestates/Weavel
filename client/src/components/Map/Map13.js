@@ -94,36 +94,40 @@ function Map13({ pickMap }) {
       <text
         id={0}
         onClick={(e) => pickMap("13", e)}
-        x="620"
+        x="625"
         y="395"
         fill="#B0AFAF"
+        fontSize="11"
       >
         계룡시
       </text>
       <text
         id={1}
         onClick={(e) => pickMap("13", e)}
-        x="565"
+        x="570"
         y="320"
         fill="#B0AFAF"
+        fontSize="11"
       >
         공주시
       </text>
       <text
         id={2}
         onClick={(e) => pickMap("13", e)}
-        x="715"
+        x="720"
         y="455"
         fill="#B0AFAF"
+        fontSize="11"
       >
         금산군
       </text>
       <text
         id={3}
         onClick={(e) => pickMap("13", e)}
-        x="590"
+        x="595"
         y="430"
         fill="#B0AFAF"
+        fontSize="11"
       >
         논산시
       </text>
@@ -133,15 +137,17 @@ function Map13({ pickMap }) {
         x="410"
         y="165"
         fill="#B0AFAF"
+        fontSize="11"
       >
         당진시
       </text>
       <text
         id={5}
         onClick={(e) => pickMap("13", e)}
-        x="385"
+        x="395"
         y="385"
         fill="#B0AFAF"
+        fontSize="11"
       >
         보령시
       </text>
@@ -151,33 +157,37 @@ function Map13({ pickMap }) {
         x="485"
         y="410"
         fill="#B0AFAF"
+        fontSize="11"
       >
         부여군
       </text>
       <text
         id={7}
         onClick={(e) => pickMap("13", e)}
-        x="335"
+        x="340"
         y="220"
         fill="#B0AFAF"
+        fontSize="11"
       >
         서산시
       </text>
       <text
         id={8}
         onClick={(e) => pickMap("13", e)}
-        x="430"
+        x="435"
         y="465"
         fill="#B0AFAF"
+        fontSize="11"
       >
         서천군
       </text>
       <text
         id={9}
         onClick={(e) => pickMap("13", e)}
-        x="525"
+        x="530"
         y="200"
         fill="#B0AFAF"
+        fontSize="11"
       >
         아산시
       </text>
@@ -187,6 +197,7 @@ function Map13({ pickMap }) {
         x="475"
         y="260"
         fill="#B0AFAF"
+        fontSize="11"
       >
         예산군
       </text>
@@ -196,6 +207,7 @@ function Map13({ pickMap }) {
         x="620"
         y="200"
         fill="#B0AFAF"
+        fontSize="11"
       >
         천안시
       </text>
@@ -205,15 +217,17 @@ function Map13({ pickMap }) {
         x="475"
         y="340"
         fill="#B0AFAF"
+        fontSize="11"
       >
         청양군
       </text>
       <text
         id={13}
         onClick={(e) => pickMap("13", e)}
-        x="255"
+        x="260"
         y="215"
         fill="#B0AFAF"
+        fontSize="11"
       >
         태안군
       </text>
@@ -223,6 +237,7 @@ function Map13({ pickMap }) {
         x="395"
         y="290"
         fill="#B0AFAF"
+        fontSize="11"
       >
         홍성군
       </text>

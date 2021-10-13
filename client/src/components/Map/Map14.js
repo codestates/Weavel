@@ -97,135 +97,150 @@ function Map14({ pickMap }) {
       <text
         id={0}
         onClick={(e) => pickMap("14", e)}
-        x="245"
+        x="250"
         y="420"
         fill="#B0AFAF"
+        fontSize="10"
       >
         고창군
       </text>
       <text
         id={1}
         onClick={(e) => pickMap("14", e)}
-        x="300"
+        x="305"
         y="220"
         fill="#B0AFAF"
+        fontSize="10"
       >
         군산시
       </text>
       <text
         id={2}
         onClick={(e) => pickMap("14", e)}
-        x="360"
+        x="365"
         y="270"
         fill="#B0AFAF"
+        fontSize="10"
       >
         김제시
       </text>
       <text
         id={3}
         onClick={(e) => pickMap("14", e)}
-        x="580"
+        x="585"
         y="430"
         fill="#B0AFAF"
+        fontSize="10"
       >
         남원시
       </text>
       <text
         id={4}
         onClick={(e) => pickMap("14", e)}
-        x="695"
+        x="700"
         y="225"
         fill="#B0AFAF"
+        fontSize="10"
       >
         무주군
       </text>
       <text
         id={5}
         onClick={(e) => pickMap("14", e)}
-        x="260"
+        x="265"
         y="330"
         fill="#B0AFAF"
+        fontSize="10"
       >
         부안군
       </text>
       <text
         id={6}
         onClick={(e) => pickMap("14", e)}
-        x="460"
+        x="465"
         y="435"
         fill="#B0AFAF"
+        fontSize="10"
       >
         순창군
       </text>
       <text
         id={8}
         onClick={(e) => pickMap("14", e)}
-        x="500"
+        x="505"
         y="220"
         fill="#B0AFAF"
+        fontSize="10"
       >
         완주군
       </text>
       <text
         id={8}
         onClick={(e) => pickMap("14", e)}
-        x="415"
+        x="425"
         y="265"
         fill="#B0AFAF"
+        fontSize="10"
       >
         완주군
       </text>
       <text
         id={9}
         onClick={(e) => pickMap("14", e)}
-        x="405"
+        x="410"
         y="190"
         fill="#B0AFAF"
+        fontSize="10"
       >
         익산시
       </text>
       <text
         id={10}
         onClick={(e) => pickMap("14", e)}
-        x="500"
+        x="505"
         y="360"
         fill="#B0AFAF"
+        fontSize="10"
       >
         임실군
       </text>
       <text
         id={11}
         onClick={(e) => pickMap("14", e)}
-        x="630"
+        x="635"
         y="330"
         fill="#B0AFAF"
+        fontSize="10"
       >
         장수군
       </text>
       <text
         id={12}
         onClick={(e) => pickMap("14", e)}
-        x="460"
+        x="465"
         y="270"
         fill="#B0AFAF"
+        fontSize="10"
       >
         전주시
       </text>
       <text
         id={13}
         onClick={(e) => pickMap("14", e)}
-        x="370"
+        x="375"
         y="350"
         fill="#B0AFAF"
+        fontSize="10"
       >
         정읍시
       </text>
       <text
         id={14}
         onClick={(e) => pickMap("14", e)}
-        x="575"
+        x="580"
         y="270"
         fill="#B0AFAF"
+        fontSize="10"
       >
         진안군
       </text>

@@ -101,9 +101,10 @@ function Map08({ pickMap }) {
       <text
         id={0}
         onClick={(e) => pickMap("08", e)}
-        x="315"
+        x="325"
         y="385"
         fill="#B0AFAF"
+        font-size="15"
       >
         고운동
       </text>
@@ -113,6 +114,7 @@ function Map08({ pickMap }) {
         x="430"
         y="525"
         fill="#B0AFAF"
+        font-size="15"
       >
         금남면
       </text>
@@ -122,15 +124,17 @@ function Map08({ pickMap }) {
         x="420"
         y="470"
         fill="#B0AFAF"
+        font-size="15"
       >
         보람동
       </text>
       <text
         id={5}
         onClick={(e) => pickMap("08", e)}
-        x="380"
-        y="430"
+        x="376"
+        y="435"
         fill="#B0AFAF"
+        font-size="15"
       >
         도담동
       </text>
@@ -140,6 +144,7 @@ function Map08({ pickMap }) {
         x="580"
         y="390"
         fill="#B0AFAF"
+        font-size="15"
       >
         부강면
       </text>
@@ -149,6 +154,7 @@ function Map08({ pickMap }) {
         x="345"
         y="450"
         fill="#B0AFAF"
+        font-size="15"
       >
         새롬동
       </text>
@@ -158,6 +164,7 @@ function Map08({ pickMap }) {
         x="200"
         y="35"
         fill="#B0AFAF"
+        font-size="15"
       >
         소정면
       </text>
@@ -167,6 +174,7 @@ function Map08({ pickMap }) {
         x="340"
         y="405"
         fill="#B0AFAF"
+        font-size="15"
       >
         아름동
       </text>
@@ -176,6 +184,7 @@ function Map08({ pickMap }) {
         x="420"
         y="400"
         fill="#B0AFAF"
+        font-size="15"
       >
         연기면
       </text>
@@ -185,6 +194,7 @@ function Map08({ pickMap }) {
         x="485"
         y="350"
         fill="#B0AFAF"
+        font-size="15"
       >
         연동면
       </text>
@@ -194,6 +204,7 @@ function Map08({ pickMap }) {
         x="335"
         y="280"
         fill="#B0AFAF"
+        font-size="15"
       >
         연서면
       </text>
@@ -203,6 +214,7 @@ function Map08({ pickMap }) {
         x="265"
         y="425"
         fill="#B0AFAF"
+        font-size="15"
       >
         장군면
       </text>
@@ -212,6 +224,7 @@ function Map08({ pickMap }) {
         x="335"
         y="160"
         fill="#B0AFAF"
+        font-size="15"
       >
         전동면
       </text>
@@ -221,6 +234,7 @@ function Map08({ pickMap }) {
         x="220"
         y="135"
         fill="#B0AFAF"
+        font-size="15"
       >
         전의면
       </text>
@@ -230,6 +244,7 @@ function Map08({ pickMap }) {
         x="400"
         y="235"
         fill="#B0AFAF"
+        font-size="15"
       >
         조치원읍
       </text>
@@ -239,6 +254,7 @@ function Map08({ pickMap }) {
         x="340"
         y="425"
         fill="#B0AFAF"
+        font-size="15"
       >
         종촌동
       </text>
@@ -248,6 +264,7 @@ function Map08({ pickMap }) {
         x="345"
         y="480"
         fill="#B0AFAF"
+        font-size="15"
       >
         한솔동
       </text>
