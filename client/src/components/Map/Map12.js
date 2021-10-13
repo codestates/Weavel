@@ -65,6 +65,7 @@ function Map12({ pickMap }) {
         x="310"
         y="240"
         fill="#B0AFAF"
+        ont-size="14"
       >
         괴산군
       </text>
@@ -74,6 +75,7 @@ function Map12({ pickMap }) {
         x="570"
         y="140"
         fill="#B0AFAF"
+        ont-size="14"
       >
         단양군
       </text>
@@ -83,6 +85,7 @@ function Map12({ pickMap }) {
         x="270"
         y="370"
         fill="#B0AFAF"
+        ont-size="14"
       >
         보은군
       </text>
@@ -92,6 +95,7 @@ function Map12({ pickMap }) {
         x="305"
         y="530"
         fill="#B0AFAF"
+        ont-size="14"
       >
         영동군
       </text>
@@ -101,6 +105,7 @@ function Map12({ pickMap }) {
         x="225"
         y="455"
         fill="#B0AFAF"
+        ont-size="14"
       >
         옥천군
       </text>
@@ -110,6 +115,7 @@ function Map12({ pickMap }) {
         x="210"
         y="160"
         fill="#B0AFAF"
+        ont-size="14"
       >
         음성군
       </text>
@@ -119,6 +125,7 @@ function Map12({ pickMap }) {
         x="470"
         y="120"
         fill="#B0AFAF"
+        ont-size="14"
       >
         제천시
       </text>
@@ -128,6 +135,7 @@ function Map12({ pickMap }) {
         x="205"
         y="230"
         fill="#B0AFAF"
+        ont-size="14"
       >
         증평군
       </text>
@@ -137,6 +145,7 @@ function Map12({ pickMap }) {
         x="135"
         y="200"
         fill="#B0AFAF"
+        ont-size="14"
       >
         진천군
       </text>
@@ -146,6 +155,7 @@ function Map12({ pickMap }) {
         x="155"
         y="310"
         fill="#B0AFAF"
+        ont-size="14"
       >
         청주시
       </text>
@@ -155,6 +165,7 @@ function Map12({ pickMap }) {
         x="345"
         y="120"
         fill="#B0AFAF"
+        ont-size="14"
       >
         충주시
       </text>

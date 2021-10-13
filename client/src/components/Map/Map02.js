@@ -95,6 +95,7 @@ function Map02({ pickMap }) {
         x="150"
         y="400"
         fill="#B0AFAF"
+        font-size="15"
       >
         강서구
       </text>
@@ -104,6 +105,7 @@ function Map02({ pickMap }) {
         x="455"
         y="200"
         fill="#B0AFAF"
+        font-size="15"
       >
         금정구
       </text>
@@ -113,6 +115,7 @@ function Map02({ pickMap }) {
         x="600"
         y="145"
         fill="#B0AFAF"
+        font-size="15"
       >
         기장군
       </text>
@@ -122,6 +125,7 @@ function Map02({ pickMap }) {
         x="470"
         y="390"
         fill="#B0AFAF"
+        font-size="15"
       >
         남구
       </text>
@@ -131,6 +135,7 @@ function Map02({ pickMap }) {
         x="400"
         y="380"
         fill="#B0AFAF"
+        font-size="15"
       >
         동구
       </text>
@@ -140,6 +145,7 @@ function Map02({ pickMap }) {
         x="445"
         y="270"
         fill="#B0AFAF"
+        font-size="15"
       >
         동래구
       </text>
@@ -149,6 +155,7 @@ function Map02({ pickMap }) {
         x="385"
         y="330"
         fill="#B0AFAF"
+        font-size="15"
       >
         부산진구
       </text>
@@ -158,6 +165,7 @@ function Map02({ pickMap }) {
         x="370"
         y="240"
         fill="#B0AFAF"
+        font-size="15"
       >
         북구
       </text>
@@ -167,6 +175,7 @@ function Map02({ pickMap }) {
         x="310"
         y="340"
         fill="#B0AFAF"
+        font-size="15"
       >
         사상구
       </text>
@@ -176,6 +185,7 @@ function Map02({ pickMap }) {
         x="295"
         y="440"
         fill="#B0AFAF"
+        font-size="15"
       >
         사하구
       </text>
@@ -185,6 +195,7 @@ function Map02({ pickMap }) {
         x="355"
         y="400"
         fill="#B0AFAF"
+        font-size="15"
       >
         서구
       </text>
@@ -194,6 +205,7 @@ function Map02({ pickMap }) {
         x="485"
         y="335"
         fill="#B0AFAF"
+        font-size="15"
       >
         수영구
       </text>
@@ -203,6 +215,7 @@ function Map02({ pickMap }) {
         x="450"
         y="305"
         fill="#B0AFAF"
+        font-size="15"
       >
         연제구
       </text>
@@ -212,6 +225,7 @@ function Map02({ pickMap }) {
         x="415"
         y="450"
         fill="#B0AFAF"
+        font-size="15"
       >
         영도구
       </text>
@@ -221,6 +235,7 @@ function Map02({ pickMap }) {
         x="380"
         y="420"
         fill="#B0AFAF"
+        font-size="15"
       >
         중구
       </text>
@@ -230,6 +245,7 @@ function Map02({ pickMap }) {
         x="535"
         y="300"
         fill="#B0AFAF"
+        font-size="15"
       >
         해운대구
       </text>

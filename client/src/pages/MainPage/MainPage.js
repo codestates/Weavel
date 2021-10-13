@@ -10,7 +10,9 @@ function MainPage() {
   const [areaName, setAreaName] = useState("");
   const [dateTime, setDateTime] = useState();
   const searchWeatherHandle = (boolean) => {
-    setIsShowWeatherInfo(boolean);
+    if (!isShowWeatherInfo) {
+      setIsShowWeatherInfo(boolean);
+    }
   };
   const [nowWeather, setNowWeather] = useState([]);
 
@@ -103,7 +105,9 @@ function MainPage() {
         getSearchHandle={getSearchHandle}
         nowWeather={nowWeather}
       ></WeatherSearch>
-      {isShowWeatherInfo ? <WeatherInfo tem={tem} areaName={areaName}></WeatherInfo> : null}
+      {isShowWeatherInfo ? (
+        <WeatherInfo tem={tem} areaName={areaName}></WeatherInfo>
+      ) : null}
     </MainPageContainer>
   );
 }
