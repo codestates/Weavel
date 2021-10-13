@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   SelectListContainer,
   SelectListBox,
@@ -10,14 +10,13 @@ import {
   AreaItem,
   SearchButton,
 } from "./SearchDetail.style";
+
 function SearchDetail({
   setSelectTitle,
   selectTitle,
-  isSelectSuccess,
-  allSelect,
-  setAllSelect,
   setIsActivation,
   showAreaHandle,
+  getSearchHandle,
 }) {
   const weather = [
     { id: 0, weather: "맑은 날이 좋아요", isSelect: false },
@@ -31,49 +30,49 @@ function SearchDetail({
     { id: 2, day: "모레 떠날래요", isSelect: false },
   ];
   const time = [
-    { id: 0, time: "00 시", isSelect: false },
-    { id: 1, time: "01 시", isSelect: false },
-    { id: 2, time: "02 시", isSelect: false },
-    { id: 3, time: "03 시", isSelect: false },
-    { id: 4, time: "04 시", isSelect: false },
-    { id: 5, time: "05 시", isSelect: false },
-    { id: 6, time: "06 시", isSelect: false },
-    { id: 7, time: "07 시", isSelect: false },
-    { id: 8, time: "08 시", isSelect: false },
-    { id: 9, time: "09 시", isSelect: false },
-    { id: 10, time: "10 시", isSelect: false },
-    { id: 11, time: "11 시", isSelect: false },
-    { id: 12, time: "12 시", isSelect: false },
-    { id: 13, time: "13 시", isSelect: false },
-    { id: 14, time: "14 시", isSelect: false },
-    { id: 15, time: "15 시", isSelect: false },
-    { id: 16, time: "16 시", isSelect: false },
-    { id: 17, time: "17 시", isSelect: false },
-    { id: 18, time: "18 시", isSelect: false },
-    { id: 19, time: "19 시", isSelect: false },
-    { id: 20, time: "20 시", isSelect: false },
-    { id: 21, time: "21 시", isSelect: false },
-    { id: 22, time: "22 시", isSelect: false },
-    { id: 23, time: "23 시", isSelect: false },
+    { id: "00", time: "00 시", isSelect: false },
+    { id: "01", time: "01 시", isSelect: false },
+    { id: "02", time: "02 시", isSelect: false },
+    { id: "03", time: "03 시", isSelect: false },
+    { id: "04", time: "04 시", isSelect: false },
+    { id: "05", time: "05 시", isSelect: false },
+    { id: "06", time: "06 시", isSelect: false },
+    { id: "07", time: "07 시", isSelect: false },
+    { id: "08", time: "08 시", isSelect: false },
+    { id: "09", time: "09 시", isSelect: false },
+    { id: "10", time: "10 시", isSelect: false },
+    { id: "11", time: "11 시", isSelect: false },
+    { id: "12", time: "12 시", isSelect: false },
+    { id: "13", time: "13 시", isSelect: false },
+    { id: "14", time: "14 시", isSelect: false },
+    { id: "15", time: "15 시", isSelect: false },
+    { id: "16", time: "16 시", isSelect: false },
+    { id: "17", time: "17 시", isSelect: false },
+    { id: "18", time: "18 시", isSelect: false },
+    { id: "19", time: "19 시", isSelect: false },
+    { id: "20", time: "20 시", isSelect: false },
+    { id: "21", time: "21 시", isSelect: false },
+    { id: "22", time: "22 시", isSelect: false },
+    { id: "23", time: "23 시", isSelect: false },
   ];
   const area = [
-    { id: 0, area: "서울", isSelect: false },
-    { id: 1, area: "부산", isSelect: false },
-    { id: 2, area: "인천", isSelect: false },
-    { id: 3, area: "대구", isSelect: false },
-    { id: 4, area: "대전", isSelect: false },
-    { id: 5, area: "광주", isSelect: false },
-    { id: 6, area: "울산", isSelect: false },
-    { id: 7, area: "세종", isSelect: false },
-    { id: 8, area: "제주", isSelect: false },
-    { id: 9, area: "경기", isSelect: false },
-    { id: 10, area: "강원", isSelect: false },
-    { id: 11, area: "충북", isSelect: false },
-    { id: 12, area: "충남", isSelect: false },
-    { id: 13, area: "전북", isSelect: false },
-    { id: 14, area: "전남", isSelect: false },
-    { id: 15, area: "경북", isSelect: false },
-    { id: 16, area: "경남", isSelect: false },
+    { id: "01", area: "서울", isSelect: false },
+    { id: "02", area: "부산", isSelect: false },
+    { id: "03", area: "인천", isSelect: false },
+    { id: "04", area: "대구", isSelect: false },
+    { id: "05", area: "대전", isSelect: false },
+    { id: "06", area: "광주", isSelect: false },
+    { id: "07", area: "울산", isSelect: false },
+    { id: "08", area: "세종", isSelect: false },
+    { id: "09", area: "제주", isSelect: false },
+    { id: "10", area: "경기", isSelect: false },
+    { id: "11", area: "강원", isSelect: false },
+    { id: "12", area: "충북", isSelect: false },
+    { id: "13", area: "충남", isSelect: false },
+    { id: "14", area: "전북", isSelect: false },
+    { id: "15", area: "전남", isSelect: false },
+    { id: "16", area: "경북", isSelect: false },
+    { id: "17", area: "경남", isSelect: false },
   ];
 
   const timeScroll = useRef([]);
@@ -102,6 +101,21 @@ function SearchDetail({
   const [daySelect, setDaySelect] = useState(day);
   const [timeSelect, setTimeSelect] = useState(time);
   const [areaSelect, setAreaSelect] = useState(area);
+  const [isSelectSuccess, setIsSelectSuccess] = useState(true);
+  const [allSelect, setAllSelect] = useState({
+    weather: false,
+    day: false,
+    time: false,
+    area: false,
+  });
+
+  useEffect(() => {
+    if (allSelect.weather && allSelect.day && allSelect.time && allSelect.area) {
+      setIsSelectSuccess(false);
+    } else {
+      setIsSelectSuccess(true);
+    }
+  }, [allSelect]);
 
   const allSelectHandle = (weather, day, time, area) => {
     const newAllSelect = { ...allSelect };
@@ -121,31 +135,31 @@ function SearchDetail({
   };
 
   const weatherSelectHandle = (e) => {
-    const targetId = e.target.id;
-    weather[targetId].isSelect = true;
+    // const targetId = e.target.id;
+    weather[e.target.id].isSelect = true;
     setWeatherSelect([...weather]);
-    allSelectHandle(weather[targetId].isSelect, null, null, null);
+    allSelectHandle(weather[e.target.id].isSelect, null, null, null);
   };
 
   const daySelectHandle = (e) => {
-    const targetId = e.target.id;
-    day[targetId].isSelect = true;
+    // const targetId = e.target.id;
+    day[e.target.id].isSelect = true;
     setDaySelect([...day]);
-    allSelectHandle(null, day[targetId].isSelect, null, null);
+    allSelectHandle(null, day[e.target.id].isSelect, null, null);
   };
 
   const timeSelectHandle = (e) => {
-    const targetId = e.target.id;
-    time[targetId].isSelect = true;
+    // const targetId = e.target.id;
+    time[parseInt(e.target.id)].isSelect = true;
     setTimeSelect([...time]);
-    allSelectHandle(null, null, time[targetId].isSelect, null);
+    allSelectHandle(null, null, time[parseInt(e.target.id)].isSelect, null);
   };
 
   const areaSelectHandle = (e) => {
-    const targetId = e.target.id;
-    area[targetId].isSelect = true;
+    // const targetId = e.target.id;
+    area[parseInt(e.target.id) - 1].isSelect = true;
     setAreaSelect([...area]);
-    allSelectHandle(null, null, null, area[targetId].isSelect);
+    allSelectHandle(null, null, null, area[parseInt(e.target.id) - 1].isSelect);
   };
 
   const searchButton = () => {
@@ -162,6 +176,7 @@ function SearchDetail({
       setSelectTitle({ ...selectTitle });
       setIsActivation({ isOpen: false, isLender: true });
       showAreaHandle(areaTitle.id);
+      getSearchHandle(weatherTitle.id, dayTitle.id, `${timeTitle.id}00`, areaTitle.id);
     }
   };
 
@@ -187,11 +202,7 @@ function SearchDetail({
           <SelectList>
             {daySelect.map((day) => {
               return (
-                <DayItem
-                  selectId={day.isSelect}
-                  onClick={(e) => daySelectHandle(e)}
-                  id={day.id}
-                >
+                <DayItem selectId={day.isSelect} onClick={(e) => daySelectHandle(e)} id={day.id}>
                   {day.day}
                 </DayItem>
               );
@@ -200,11 +211,7 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <ArrowPosition id={"up"} onClick={(e) => onButtonClick(e)}>
-            <img
-              id={"up"}
-              onClick={(e) => onButtonClick(e)}
-              src="./images/top_arrow.svg"
-            />
+            <img id={"up"} onClick={(e) => onButtonClick(e)} src="./images/top_arrow.svg" />
           </ArrowPosition>
           <SelectList>
             {timeSelect.map((time) => {
@@ -221,11 +228,7 @@ function SearchDetail({
             })}
           </SelectList>
           <ArrowPosition id={"down"} onClick={(e) => onButtonClick(e)}>
-            <img
-              id={"down"}
-              onClick={(e) => onButtonClick(e)}
-              src="./images/bottom_arrow.svg"
-            />
+            <img id={"down"} onClick={(e) => onButtonClick(e)} src="./images/bottom_arrow.svg" />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>
