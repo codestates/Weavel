@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Map01 from "./Map01";
 import Map02 from "./Map02";
 import Map03 from "./Map03";
@@ -20,11 +20,11 @@ import { MapContainer } from "./MapIndex.style";
 import { area } from "./MapData";
 
 function MapIndex({
-  chartHandle,
   isShowWeatherInfo,
   showArea,
   searchWeatherHandle,
   changeAreaHandle,
+  nowWeather,
 }) {
   let showMap;
   const pickMap = (pickArea, e) => {
@@ -39,9 +39,27 @@ function MapIndex({
     console.log("nx: ", area[pickArea][idx].x);
     console.log("ny: ", area[pickArea][idx].y);
     console.log("어디?: ", area[pickArea][idx].name);
-    chartHandle(area[pickArea][idx].x, area[pickArea][idx].y);
   };
 
+  const [showMap01, setShowMap01] = useState(area["01"]);
+  const [showMap02, setShowMap02] = useState(area["02"]);
+  const [showMap03, setShowMap03] = useState(area["03"]);
+  const [showMap04, setShowMap04] = useState(area["04"]);
+  const [showMap05, setShowMap05] = useState(area["05"]);
+  const [showMap06, setShowMap06] = useState(area["06"]);
+  const [showMap07, setShowMap07] = useState(area["07"]);
+  const [showMap08, setShowMap08] = useState(area["08"]);
+  const [showMap09, setShowMap09] = useState(area["09"]);
+  const [showMap10, setShowMap10] = useState(area["10"]);
+  const [showMap11, setShowMap11] = useState(area["11"]);
+  const [showMap12, setShowMap12] = useState(area["12"]);
+  const [showMap13, setShowMap13] = useState(area["13"]);
+  const [showMap14, setShowMap14] = useState(area["14"]);
+  const [showMap15, setShowMap15] = useState(area["15"]);
+  const [showMap16, setShowMap16] = useState(area["16"]);
+  const [showMap17, setShowMap17] = useState(area["17"]);
+
+  console.log(showMap01);
   return (
     <MapContainer>
       {showArea === "01" ? <Map01 pickMap={pickMap} /> : null}
