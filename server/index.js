@@ -8,15 +8,16 @@ const express = require("express");
 const app = express();
 const schedule = require("node-schedule");
 
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: ["https://localhost:3000"],
+    origin: ["http://localhost:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "OPTIONS"],
-  }),
+  })
 );
 
 // 날씨 API Get 요청 예약
