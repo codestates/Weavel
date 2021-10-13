@@ -22,13 +22,23 @@ module.exports = async (req, res) => {
     }
 
     // 사진이 저장된 칼럼부분을 찾아 사진정보를 저장
-    const info = await photo.update({ userId: userId, weather: weather, date: date, area: area, comment: comment }, { where: { id: id, filename: filename } });
-    if (info) {
+    const info = await photo.update(
+      {
+        userId: userId,
+        weather: weather,
+        date: date,
+        area: area,
+        comment: comment,
+      },
+      { where: { id: id, filename: filename } }
+    );
+    if (info[0] === 0) {
       res.status(404).json({ message: "저장된 사진을 찾을 수 없습니다." });
+    } else {
+      console.log(info);
+      res.status(200).json({ message: "사진정보가 저장완료 되었습니다." });
     }
-    console.log(info);
-    return res.status(200).json({ message: "사진정보가 저장완료 되었습니다." });
   } catch (err) {
-    console.log("err");
+    console.log(err);
   }
 };

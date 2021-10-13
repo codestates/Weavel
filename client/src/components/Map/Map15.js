@@ -118,6 +118,21 @@ function Map15({ pickMap }) {
       <text x="350" y="270" fill="#B0AFAF">
         함평군
       </text>
+      <text x="310" y="370" fill="#B0AFAF">
+        무안군
+      </text>
+      <text x="170" y="400" fill="#B0AFAF">
+        신안군
+      </text>
+      <text x="430" y="340" fill="#B0AFAF">
+        나주시
+      </text>
+      <text x="550" y="340" fill="#B0AFAF">
+        화순군
+      </text>
+      <text x="540" y="180" fill="#B0AFAF">
+        담양군
+      </text>
     </svg>
   );
 }
