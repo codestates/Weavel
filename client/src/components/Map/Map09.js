@@ -1,7 +1,7 @@
 import React from "react";
 import { Path } from "./MapIndex.style";
 
-function Map09({ pickMa, lenderMap }) {
+function Map09({ pickMap, lenderMap }) {
   return (
     <svg width="900" height="600" viewBox="100 200 600 400" cursor="pointer">
       <Path

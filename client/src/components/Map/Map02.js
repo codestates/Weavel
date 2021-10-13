@@ -112,53 +112,53 @@ function Map02({ pickMap, lenderMap }) {
         x="150"
         y="400"
         fill="#B0AFAF"
-        font-size="15"
+        fontSize="15"
       >
         강서구
       </text>
-      <text id={2} onClick={(e) => pickMap("02", e)} x="455" y="200" fill="#B0AFAF" font-size="15">
+      <text id={2} onClick={(e) => pickMap("02", e)} x="455" y="200" fill="#B0AFAF" fontSize="15">
         금정구
       </text>
-      <text id={3} onClick={(e) => pickMap("02", e)} x="600" y="145" fill="#B0AFAF" font-size="15">
+      <text id={3} onClick={(e) => pickMap("02", e)} x="600" y="145" fill="#B0AFAF" fontSize="15">
         기장군
       </text>
-      <text id={4} onClick={(e) => pickMap("02", e)} x="470" y="390" fill="#B0AFAF" font-size="15">
+      <text id={4} onClick={(e) => pickMap("02", e)} x="470" y="390" fill="#B0AFAF" fontSize="15">
         남구
       </text>
-      <text id={5} onClick={(e) => pickMap("02", e)} x="400" y="380" fill="#B0AFAF" font-size="15">
+      <text id={5} onClick={(e) => pickMap("02", e)} x="400" y="380" fill="#B0AFAF" fontSize="15">
         동구
       </text>
-      <text id={6} onClick={(e) => pickMap("02", e)} x="445" y="270" fill="#B0AFAF" font-size="15">
+      <text id={6} onClick={(e) => pickMap("02", e)} x="445" y="270" fill="#B0AFAF" fontSize="15">
         동래구
       </text>
-      <text id={7} onClick={(e) => pickMap("02", e)} x="385" y="330" fill="#B0AFAF" font-size="15">
+      <text id={7} onClick={(e) => pickMap("02", e)} x="385" y="330" fill="#B0AFAF" fontSize="15">
         부산진구
       </text>
-      <text id={8} onClick={(e) => pickMap("02", e)} x="370" y="240" fill="#B0AFAF" font-size="15">
+      <text id={8} onClick={(e) => pickMap("02", e)} x="370" y="240" fill="#B0AFAF" fontSize="15">
         북구
       </text>
-      <text id={9} onClick={(e) => pickMap("02", e)} x="310" y="340" fill="#B0AFAF" font-size="15">
+      <text id={9} onClick={(e) => pickMap("02", e)} x="310" y="340" fill="#B0AFAF" fontSize="15">
         사상구
       </text>
-      <text id={10} onClick={(e) => pickMap("02", e)} x="295" y="440" fill="#B0AFAF" font-size="15">
+      <text id={10} onClick={(e) => pickMap("02", e)} x="295" y="440" fill="#B0AFAF" fontSize="15">
         사하구
       </text>
-      <text id={11} onClick={(e) => pickMap("02", e)} x="355" y="400" fill="#B0AFAF" font-size="15">
+      <text id={11} onClick={(e) => pickMap("02", e)} x="355" y="400" fill="#B0AFAF" fontSize="15">
         서구
       </text>
-      <text id={12} onClick={(e) => pickMap("02", e)} x="485" y="335" fill="#B0AFAF" font-size="15">
+      <text id={12} onClick={(e) => pickMap("02", e)} x="485" y="335" fill="#B0AFAF" fontSize="15">
         수영구
       </text>
-      <text id={13} onClick={(e) => pickMap("02", e)} x="450" y="305" fill="#B0AFAF" font-size="15">
+      <text id={13} onClick={(e) => pickMap("02", e)} x="450" y="305" fill="#B0AFAF" fontSize="15">
         연제구
       </text>
-      <text id={14} onClick={(e) => pickMap("02", e)} x="415" y="450" fill="#B0AFAF" font-size="15">
+      <text id={14} onClick={(e) => pickMap("02", e)} x="415" y="450" fill="#B0AFAF" fontSize="15">
         영도구
       </text>
-      <text id={15} onClick={(e) => pickMap("02", e)} x="380" y="420" fill="#B0AFAF" font-size="15">
+      <text id={15} onClick={(e) => pickMap("02", e)} x="380" y="420" fill="#B0AFAF" fontSize="15">
         중구
       </text>
-      <text id={16} onClick={(e) => pickMap("02", e)} x="535" y="300" fill="#B0AFAF" font-size="15">
+      <text id={16} onClick={(e) => pickMap("02", e)} x="535" y="300" fill="#B0AFAF" fontSize="15">
         해운대구
       </text>
     </svg>
