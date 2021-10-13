@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map01 from "./Map01";
 import Map02 from "./Map02";
 import Map03 from "./Map03";
@@ -20,13 +20,24 @@ import { MapContainer } from "./MapIndex.style";
 import { area } from "./MapData";
 
 function MapIndex({
+  nowWeather,
   isShowWeatherInfo,
   showArea,
   searchWeatherHandle,
   changeAreaHandle,
-  nowWeather,
 }) {
   let showMap;
+  // const [nowWeather, setNowWeather] = useState([
+  //   [61, 127],
+  //   [62, 126],
+  //   [59, 125],
+  //   [59, 127],
+  //   [62, 128],
+  //   [60, 127],
+  //   [58, 126],
+  //   [98, 76],
+  // ]);
+
   const pickMap = (pickArea, e) => {
     const idx = e.target.id;
     if (area[pickArea][idx].name === showMap) {
@@ -41,44 +52,46 @@ function MapIndex({
     console.log("어디?: ", area[pickArea][idx].name);
   };
 
-  const [showMap01, setShowMap01] = useState(area["01"]);
-  const [showMap02, setShowMap02] = useState(area["02"]);
-  const [showMap03, setShowMap03] = useState(area["03"]);
-  const [showMap04, setShowMap04] = useState(area["04"]);
-  const [showMap05, setShowMap05] = useState(area["05"]);
-  const [showMap06, setShowMap06] = useState(area["06"]);
-  const [showMap07, setShowMap07] = useState(area["07"]);
-  const [showMap08, setShowMap08] = useState(area["08"]);
-  const [showMap09, setShowMap09] = useState(area["09"]);
-  const [showMap10, setShowMap10] = useState(area["10"]);
-  const [showMap11, setShowMap11] = useState(area["11"]);
-  const [showMap12, setShowMap12] = useState(area["12"]);
-  const [showMap13, setShowMap13] = useState(area["13"]);
-  const [showMap14, setShowMap14] = useState(area["14"]);
-  const [showMap15, setShowMap15] = useState(area["15"]);
-  const [showMap16, setShowMap16] = useState(area["16"]);
-  const [showMap17, setShowMap17] = useState(area["17"]);
+  const [lenderMap, setLenderMap] = useState(area[showArea]);
 
-  console.log(showMap01);
+  useEffect(() => {
+    let city = {};
+    nowWeather.map((coordinate) => {
+      const [x, y] = coordinate;
+      for (let area in lenderMap) {
+        const mapArea = { ...lenderMap[area] };
+        if (!city[area]) {
+          city[area] = mapArea;
+        }
+        if (city[area]) {
+          if (city[area].x === x && city[area].y === y) {
+            city[area].isShow = true;
+          }
+        }
+      }
+      setLenderMap(city);
+    });
+  }, [nowWeather]);
+
   return (
     <MapContainer>
-      {showArea === "01" ? <Map01 pickMap={pickMap} /> : null}
-      {showArea === "02" ? <Map02 pickMap={pickMap} /> : null}
-      {showArea === "03" ? <Map03 pickMap={pickMap} /> : null}
-      {showArea === "04" ? <Map04 pickMap={pickMap} /> : null}
-      {showArea === "05" ? <Map05 pickMap={pickMap} /> : null}
-      {showArea === "06" ? <Map06 pickMap={pickMap} /> : null}
-      {showArea === "07" ? <Map07 pickMap={pickMap} /> : null}
-      {showArea === "08" ? <Map08 pickMap={pickMap} /> : null}
-      {showArea === "09" ? <Map09 pickMap={pickMap} /> : null}
-      {showArea === "10" ? <Map10 pickMap={pickMap} /> : null}
-      {showArea === "11" ? <Map11 pickMap={pickMap} /> : null}
-      {showArea === "12" ? <Map12 pickMap={pickMap} /> : null}
-      {showArea === "13" ? <Map13 pickMap={pickMap} /> : null}
-      {showArea === "14" ? <Map14 pickMap={pickMap} /> : null}
-      {showArea === "15" ? <Map15 pickMap={pickMap} /> : null}
-      {showArea === "16" ? <Map16 pickMap={pickMap} /> : null}
-      {showArea === "17" ? <Map17 pickMap={pickMap} /> : null}
+      {showArea === "01" ? <Map01 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "02" ? <Map02 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "03" ? <Map03 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "04" ? <Map04 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "05" ? <Map05 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "06" ? <Map06 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "07" ? <Map07 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "08" ? <Map08 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "09" ? <Map09 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "10" ? <Map10 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "11" ? <Map11 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "12" ? <Map12 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "13" ? <Map13 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "14" ? <Map14 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "15" ? <Map15 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "16" ? <Map16 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "17" ? <Map17 lenderMap={lenderMap} pickMap={pickMap} /> : null}
     </MapContainer>
   );
 }

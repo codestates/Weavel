@@ -37,6 +37,7 @@ function MainPage() {
       })
       .then((res) => {
         setNowWeather(res.data);
+        console.log(res.data);
       });
   };
 

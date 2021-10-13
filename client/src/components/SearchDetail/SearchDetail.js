@@ -76,8 +76,8 @@ function SearchDetail({
   ];
 
   const timeScroll = useRef([]);
-  const downIdx = [12, 18, 23];
-  const upIdx = [0, 0, 5, 11];
+  const downIdx = ["12", "18", "23"];
+  const upIdx = ["00", "00", "05", "11"];
   const [scrollIdx, setScrollIdx] = useState(0);
   const onButtonClick = (e) => {
     if (e.target.id === "up" && scrollIdx > 0) {
