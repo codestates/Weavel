@@ -9,10 +9,7 @@ export const MapContainer = styled.div`
 `;
 
 export const Path = styled.path`
-  fill: #ffffff;
+  fill: ${(props) => (props.lenderMap ? "#f48fb1" : "#ffffff")};
   stroke: #e4e4e4;
   stroke-width: ${(props) => props.outline || "1px"};
-  &:hover {
-    fill: #c0cbf7;
-  }
 `;

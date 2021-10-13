@@ -7,12 +7,10 @@ module.exports = async (req, res) => {
     const { name, email, password, weather } = req.body;
     const findUser = await user.findOne({ where: { email: email } });
     const salt = crypto.randomBytes(64).toString("hex");
-    const encryptedPassword = crypto
-      .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-      .toString("base64");
+    const encryptedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, "sha512").toString("base64");
 
     if (findUser) {
-      res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
+      return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
     } else {
       // user 생성
       const newUser = await user.create({
@@ -29,16 +27,12 @@ module.exports = async (req, res) => {
         return await user_weather.create({ userId, weatherId });
       };
 
-      const proWeather = weather.map((weatherCode) =>
-        createRelation(userId, weatherCode + 1)
-      );
+      const proWeather = weather.map((weatherCode) => createRelation(userId, weatherCode + 1));
       Promise.all(proWeather);
 
       const result = { userId, name, email, weather };
 
-      res
-        .status(201)
-        .json({ date: result, message: "회원가입이 완료되었습니다" });
+      return res.status(201).json({ date: result, message: "회원가입이 완료되었습니다" });
     }
   } catch (err) {
     console.log(err);

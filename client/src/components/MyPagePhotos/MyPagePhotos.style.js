@@ -12,6 +12,7 @@ export const PhotoContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 32px;
+  cursor: pointer;
 `;
 
 export const Photo = styled.img`

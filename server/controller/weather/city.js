@@ -1,4 +1,4 @@
-const { seoul } = require("../../models");
+const { weather_data } = require("../../models");
 const moment = require("moment");
 require("moment-timezone");
 moment.tz.setDefault("Asia/Seoul");
@@ -22,11 +22,11 @@ module.exports = async (req, res) => {
     dayCode = moment().add(1, "days").format("YYYYMMDD"); //내일
   }
   if (day === "2") {
-    dayCode = moment().add(2, "days").format("YYYYMMDD");
-  } //모래
+    dayCode = moment().add(2, "days").format("YYYYMMDD"); //모레
+  }
   console.log("day", dayCode);
 
-  // 날씨 코드  0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
+  // 날씨 코드  맑음(0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
   // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
   if (weather === "0") {
     SKYvalue = "1";
@@ -43,38 +43,50 @@ module.exports = async (req, res) => {
     PTYvalue = ["2", "3"];
   }
 
-  const SKY = await seoul.findAll({
+  const find = await weather_data.findAll({
     where: {
       city: city,
       date: dayCode,
       time: time,
-      category: "SKY",
-      [or]: { value: SKYvalue },
-    },
-  });
-  const PTY = await seoul.findAll({
-    where: {
-      city: city,
-      date: dayCode,
-      time: time,
-      category: "PTY",
-      [or]: { value: PTYvalue },
+
+      [or]: [{ [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] }, { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] }],
     },
   });
 
-  // SKY PYT 둘다 데이터가 존재 해야함.
-  if (SKY.length === 0 || PTY.length === 0) {
-    res.status(400).json({ message: "데이터가 없습니다." });
-  }
+  console.log("SKYvalueSKYvalueSKYvalueSKYvalue", SKYvalue);
+  console.log("PTYvaluePTYvaluePTYvaluePTYvalue", PTYvalue);
+
+  console.log("day222222222222222222222", find);
 
   // 좌표 추출
   const result = [];
-  for (let i = 0; i < SKY.length; i++) {
+  const end = [];
+
+  for (let i = 0; i < find.length; i++) {
     const xy = [];
-    xy.push(SKY[i].nx);
-    xy.push(SKY[i].ny);
+    xy.push(find[i].nx);
+    xy.push(find[i].ny);
     result.push(xy);
   }
 
-  res.status(200).send(result);
+  if (weather === "1" || weather === "0") {
+    for (let i = 0; i < result.length; i++) {
+      for (let j = i + 1; j < result.length - 1; j++) {
+        if (result[i][0] === result[j][0] && result[i][1] === result[j][1]) {
+          end.push(result[i]);
+          break;
+        }
+      }
+    }
+    if (end.length === 0) {
+      return res.status(404).json({ message: "데이터가 없습니다." });
+    }
+    return res.status(200).send(end);
+  }
+
+  if (result.length === 0) {
+    return res.status(404).json({ message: "데이터가 없습니다." });
+  }
+
+  return res.status(200).send(result);
 };

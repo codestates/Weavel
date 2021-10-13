@@ -9,15 +9,15 @@ module.exports = async (req, res) => {
     if (!id) {
       res.status(409).json({ message: "사진 id 정보가 없습니다." });
     } else if (!weather) {
-      res.status(409).json({ message: "날씨 정보가 없습니다." });
+      return res.status(409).json({ message: "날씨 정보가 없습니다." });
     } else if (!date) {
-      res.status(409).json({ message: "날짜 정보가 없습니다." });
+      return res.status(409).json({ message: "날짜 정보가 없습니다." });
     } else if (!area) {
-      res.status(409).json({ message: "지역 정보가 없습니다." });
+      return res.status(409).json({ message: "지역 정보가 없습니다." });
     } else if (!comment) {
-      res.status(409).json({ message: "comment가 없습니다." });
+      return res.status(409).json({ message: "comment가 없습니다." });
     } else if (!filename) {
-      res.status(409).json({ message: "사진파일 이름 정보가 없습니다." });
+      return res.status(409).json({ message: "사진파일 이름 정보가 없습니다." });
     }
 
     //!파일네임이 같아아 수정될 수 있도록 해야함
