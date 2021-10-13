@@ -1,4 +1,4 @@
-const { seoul } = require("../../models");
+const { weather_data } = require("../../models");
 const moment = require("moment");
 require("moment-timezone");
 moment.tz.setDefault("Asia/Seoul");
@@ -22,8 +22,8 @@ module.exports = async (req, res) => {
     dayCode = moment().add(1, "days").format("YYYYMMDD"); //내일
   }
   if (day === "2") {
-    dayCode = moment().add(2, "days").format("YYYYMMDD");
-  } //모래
+    dayCode = moment().add(2, "days").format("YYYYMMDD"); //모레
+  }
   console.log("day", dayCode);
 
   // 날씨 코드  0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     PTYvalue = ["2", "3"];
   }
 
-  const SKY = await seoul.findAll({
+  const SKY = await weather_data.findAll({
     where: {
       city: city,
       date: dayCode,
@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
       [or]: { value: SKYvalue },
     },
   });
-  const PTY = await seoul.findAll({
+  const PTY = await weather_data.findAll({
     where: {
       city: city,
       date: dayCode,
@@ -63,18 +63,19 @@ module.exports = async (req, res) => {
   });
 
   // SKY PYT 둘다 데이터가 존재 해야함.
-  if (SKY.length === 0 || PTY.length === 0) {
-    res.status(400).json({ message: "데이터가 없습니다." });
+  if (SKYvalue) {
+    if (SKY.length === 0 || PTY.length === 0) {
+      return res.status(404).json({ message: "데이터가 없습니다." });
+    }
   }
 
   // 좌표 추출
   const result = [];
   for (let i = 0; i < SKY.length; i++) {
     const xy = [];
-    xy.push(SKY[i].nx);
-    xy.push(SKY[i].ny);
+    xy.push(PTY[i].nx);
+    xy.push(PTY[i].ny);
     result.push(xy);
   }
-
-  res.status(200).send(result);
+  return res.status(200).send(result);
 };

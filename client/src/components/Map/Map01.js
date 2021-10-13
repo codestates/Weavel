@@ -154,79 +154,254 @@ function Map01({ pickMap, lenderMap }) {
         onClick={(e) => pickMap("01", e)}
         d="m665.83 197.43l-5.43-1.45-1.58-.72-10.83.6-1.15.62-.06.03-6.11 1.05-1.52.13-3.87-1.87-8.2 2.61-.03.01-5.78.09-3.14-1.06-6.87-1.46-8.31 2.11-11.07 3.62-4.89 1.12-2.34.23-.22.03-.4.11-.46.11-.34.16-.05.02-1.86 1.63-.25.03 3.11 3.61-1.23 11.11.03.48.01.08.06.48.01.08.1.64.41 2.44.28 1.42.23.53.05.11.22.49.21.47.98 1.89.83 2.75 0 .13 0 .35-.06.2-.05.15-.03.1-.1.2-.17.33-.28.51-.04.09-.92 1.15 0 0-.03.04-.37.4-.53.56-.52.43-.14.11-.88.51-2.38 6.06 2.12 5.27 0 .01.04 3.11 1.98 5.43 1.06 5.59 5.78 7.57 1.06.12.12.18.06.09.1.16.12.21.11.21.06.12.05.1.08.17.02.05.09.22.09.22.07.22.07.23.06.23.05.22.04.23.03.18.79 5.96 1.57 7.12.9.96.03.04 4.55.44 10.43 1.51 3.82-.02.14.39.06.18.22.68.11.03 3.84.88 6.16-1.65 2.7-.25 8.01-3.83 2.36-1.61.37-.32.05-.83.43-3.52 1.53-2.79.68-.93 1.34-1.63-.22-1.66-.03-.22.45-.58.58-.72 3.42-1.83 4.07-1.75 2.93-1.67.77-1.34.67-2.18.4-1.34.4-2.78 4.25-8.34 1.37-2.02 3.56-1.06.73-.08.05-.01.09-.02.07-.02.31-.13 1.84-.73.4-2.79-.82-1.31-1.35-2.12-.45-.64-1.92-2.64-.7-2.03 2.74-2.89 4.7-5.54.04-.54.01-.09.05-.96 0-.05-2.64-6.37.34-1.28.77-3.11.17-2.01-.69-3.71-.4-1.4-.18-1.44-.06-.56.39-.58.22-.25.49-.53-2-4.16-2.21-1.12z"
       />
-      <text id={0} onClick={(e) => pickMap("01", e)} x="540" y="440" fill="#B0AFAF">
+      <text
+        id={0}
+        onClick={(e) => pickMap("01", e)}
+        x="540"
+        y="440"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         강남구
       </text>
-      <text id={1} onClick={(e) => pickMap("01", e)} x="700" y="330" fill="#B0AFAF">
+      <text
+        id={1}
+        onClick={(e) => pickMap("01", e)}
+        x="700"
+        y="330"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         강동구
       </text>
-      <text id={2} onClick={(e) => pickMap("01", e)} x="460" y="175" fill="#B0AFAF">
+      <text
+        id={2}
+        onClick={(e) => pickMap("01", e)}
+        x="460"
+        y="175"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         강북구
       </text>
-      <text id={3} onClick={(e) => pickMap("01", e)} x="100" y="310" fill="#B0AFAF">
+      <text
+        id={3}
+        onClick={(e) => pickMap("01", e)}
+        x="100"
+        y="310"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         강서구
       </text>
-      <text id={4} onClick={(e) => pickMap("01", e)} x="325" y="490" fill="#B0AFAF">
+      <text
+        id={4}
+        onClick={(e) => pickMap("01", e)}
+        x="325"
+        y="490"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         관악구
       </text>
-      <text id={5} onClick={(e) => pickMap("01", e)} x="595" y="340" fill="#B0AFAF">
+      <text
+        id={5}
+        onClick={(e) => pickMap("01", e)}
+        x="595"
+        y="340"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         광진구
       </text>
-      <text id={6} onClick={(e) => pickMap("01", e)} x="140" y="440" fill="#B0AFAF">
+      <text
+        id={6}
+        onClick={(e) => pickMap("01", e)}
+        x="140"
+        y="440"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         구로구
       </text>
-      <text id={7} onClick={(e) => pickMap("01", e)} x="240" y="500" fill="#B0AFAF">
+      <text
+        id={7}
+        onClick={(e) => pickMap("01", e)}
+        x="240"
+        y="500"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         금천구
       </text>
-      <text id={8} onClick={(e) => pickMap("01", e)} x="570" y="145" fill="#B0AFAF">
+      <text
+        id={8}
+        onClick={(e) => pickMap("01", e)}
+        x="570"
+        y="145"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         노원구
       </text>
-      <text id={9} onClick={(e) => pickMap("01", e)} x="490" y="120" fill="#B0AFAF">
+      <text
+        id={9}
+        onClick={(e) => pickMap("01", e)}
+        x="490"
+        y="120"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         도봉구
       </text>
-      <text id={10} onClick={(e) => pickMap("01", e)} x="520" y="275" fill="#B0AFAF">
+      <text
+        id={10}
+        onClick={(e) => pickMap("01", e)}
+        x="520"
+        y="275"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         동대문구
       </text>
-      <text id={11} onClick={(e) => pickMap("01", e)} x="335" y="420" fill="#B0AFAF">
+      <text
+        id={11}
+        onClick={(e) => pickMap("01", e)}
+        x="335"
+        y="420"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         동작구
       </text>
-      <text id={12} onClick={(e) => pickMap("01", e)} x="250" y="320" fill="#B0AFAF">
+      <text
+        id={12}
+        onClick={(e) => pickMap("01", e)}
+        x="250"
+        y="320"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         마포구
       </text>
-      <text id={13} onClick={(e) => pickMap("01", e)} x="300" y="285" fill="#B0AFAF">
+      <text
+        id={13}
+        onClick={(e) => pickMap("01", e)}
+        x="300"
+        y="285"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         서대문구
       </text>
-      <text id={14} onClick={(e) => pickMap("01", e)} x="470" y="475" fill="#B0AFAF">
+      <text
+        id={14}
+        onClick={(e) => pickMap("01", e)}
+        x="470"
+        y="475"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         서초구
       </text>
-      <text id={15} onClick={(e) => pickMap("01", e)} x="510" y="330" fill="#B0AFAF">
+      <text
+        id={15}
+        onClick={(e) => pickMap("01", e)}
+        x="510"
+        y="330"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         성동구
       </text>
-      <text id={16} onClick={(e) => pickMap("01", e)} x="460" y="240" fill="#B0AFAF">
+      <text
+        id={16}
+        onClick={(e) => pickMap("01", e)}
+        x="460"
+        y="240"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         성북구
       </text>
-      <text id={17} onClick={(e) => pickMap("01", e)} x="640" y="410" fill="#B0AFAF">
+      <text
+        id={17}
+        onClick={(e) => pickMap("01", e)}
+        x="640"
+        y="410"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         송파구
       </text>
-      <text id={18} onClick={(e) => pickMap("01", e)} x="155" y="390" fill="#B0AFAF">
+      <text
+        id={18}
+        onClick={(e) => pickMap("01", e)}
+        x="155"
+        y="390"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         양천구
       </text>
-      <text id={19} onClick={(e) => pickMap("01", e)} x="255" y="390" fill="#B0AFAF">
+      <text
+        id={19}
+        onClick={(e) => pickMap("01", e)}
+        x="255"
+        y="390"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         영등포구
       </text>
-      <text id={20} onClick={(e) => pickMap("01", e)} x="390" y="370" fill="#B0AFAF">
+      <text
+        id={20}
+        onClick={(e) => pickMap("01", e)}
+        x="390"
+        y="370"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         용산구
       </text>
-      <text id={21} onClick={(e) => pickMap("01", e)} x="295" y="200" fill="#B0AFAF">
+      <text
+        id={21}
+        onClick={(e) => pickMap("01", e)}
+        x="295"
+        y="200"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         은평구
       </text>
-      <text id={22} onClick={(e) => pickMap("01", e)} x="385" y="270" fill="#B0AFAF">
+      <text
+        id={22}
+        onClick={(e) => pickMap("01", e)}
+        x="385"
+        y="270"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         종로구
       </text>
-      <text id={23} onClick={(e) => pickMap("01", e)} x="430" y="315" fill="#B0AFAF">
+      <text
+        id={23}
+        onClick={(e) => pickMap("01", e)}
+        x="430"
+        y="315"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         중구
       </text>
-      <text id={24} onClick={(e) => pickMap("01", e)} x="605" y="245" fill="#B0AFAF">
+      <text
+        id={24}
+        onClick={(e) => pickMap("01", e)}
+        x="605"
+        y="245"
+        fill="#B0AFAF"
+        fontSize="13"
+      >
         중랑구
       </text>
     </svg>

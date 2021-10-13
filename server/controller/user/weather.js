@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
 
       const data = { 0: a, 1: b, 2: c, 3: d };
 
-      res.status(200).json({ data: data });
+      return res.status(200).json({ data: data });
     }
   } catch (err) {
     console.log(err);

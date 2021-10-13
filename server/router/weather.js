@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { accessToken } = require("../middleware/accessToken");
+
 const { weatherController } = require("../controller");
 
 // city
