@@ -17,9 +17,7 @@ module.exports = async (req, res) => {
     const dbPassword = findUser.password;
     const salt = findUser.salt;
 
-    const hashedPassword = crypto
-      .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-      .toString("base64");
+    const hashedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, "sha512").toString("base64");
 
     if (hashedPassword !== dbPassword) {
       return res.status(403).json({ message: "비밀번호가 틀렸습니다." });
@@ -35,9 +33,7 @@ module.exports = async (req, res) => {
         expiresIn: "1d",
       });
 
-      res
-        .status(200)
-        .json({ data: { accessToken }, message: "로그인에 성공하였습니다." });
+      return res.status(200).json({ data: { accessToken }, message: "로그인에 성공하였습니다." });
     }
   } catch (err) {
     console.log(err);

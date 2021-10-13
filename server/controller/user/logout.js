@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     if (!header.authorization) {
       return res.status(401).json({ message: "이미 로그아웃 되었습니다." });
     } else {
-      res.status(200).json({ message: "로그아웃 되었습니다." });
+      return res.status(200).json({ message: "로그아웃 되었습니다." });
     }
   } catch (err) {
     console.log(err);

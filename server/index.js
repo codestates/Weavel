@@ -19,25 +19,57 @@ app.use(
   })
 );
 
-// 날씨 API Get 요청 예약
-schedule.scheduleJob("30 15 21 * * *", function () {
+// 전국 날씨 API Get 요청 예약
+schedule.scheduleJob("0 14 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=01");
 });
-
-schedule.scheduleJob("30 16 21 * * *", function () {
+schedule.scheduleJob("0 15 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=02");
 });
-
-schedule.scheduleJob("0 20 16 * * *", function () {
+schedule.scheduleJob("0 16 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=03");
 });
-
-schedule.scheduleJob("0 20 16 * * *", function () {
+schedule.scheduleJob("0 17 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=04");
 });
-
-schedule.scheduleJob("0 20 16 * * *", function () {
+schedule.scheduleJob("0 18 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=05");
+});
+schedule.scheduleJob("0 19 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=06");
+});
+schedule.scheduleJob("0 20 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=07");
+});
+schedule.scheduleJob("0 21 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=08");
+});
+schedule.scheduleJob("0 23 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=09");
+});
+schedule.scheduleJob("0 24 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=10");
+});
+schedule.scheduleJob("0 25 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=11");
+});
+schedule.scheduleJob("0 26 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=12");
+});
+schedule.scheduleJob("0 27 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=13");
+});
+schedule.scheduleJob("0 28 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=14");
+});
+schedule.scheduleJob("0 29 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=15");
+});
+schedule.scheduleJob("0 30 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=16");
+});
+schedule.scheduleJob("0 31 5/3 * * *", function () {
+  axios.get("http://localhost:4000/weatherAPI?id=17");
 });
 
 //라우터 경로

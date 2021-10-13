@@ -10,5 +10,5 @@ module.exports = async (req, res) => {
   if (result) {
     return res.status(200).json({ message: `이메일이 중복됩니다.` });
   }
-  res.status(200).json({ message: `이메일이 중복되지 않습니다.` });
+  return res.status(200).json({ message: `이메일이 중복되지 않습니다.` });
 };
