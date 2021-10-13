@@ -11,15 +11,15 @@ import {
   WeatherSelectContainer,
 } from "./WeatherSearch.style";
 
-function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandle }) {
+function WeatherSearch({
+  isShowWeatherInfo,
+  searchWeatherHandle,
+  changeAreaHandle,
+  getSearchHandle,
+  nowWeather,
+  dataHandle,
+}) {
   const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
-  const [isSelectSuccess, setIsSelectSuccess] = useState(false);
-  const [allSelect, setAllSelect] = useState({
-    weather: false,
-    day: false,
-    time: false,
-    area: false,
-  });
 
   const activationHandle = () => {
     const isOpen = { ...isActivation };
@@ -28,14 +28,6 @@ function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandl
     setIsActivation(isOpen);
     searchWeatherHandle(false);
   };
-
-  useEffect(() => {
-    if (allSelect.weather && allSelect.day && allSelect.time && allSelect.area) {
-      setIsSelectSuccess(false);
-    } else {
-      setIsSelectSuccess(true);
-    }
-  }, [allSelect]);
 
   const [selectTitle, setSelectTitle] = useState({
     weather: "날씨를 선택하세요",
@@ -47,13 +39,6 @@ function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandl
   const [showArea, setShowArea] = useState(null);
 
   const showAreaHandle = (idx) => {
-    if (idx < 9) {
-      idx += 1;
-      idx = `0${idx}`;
-    } else {
-      idx += 1;
-      idx = `${idx}`;
-    }
     setShowArea(idx);
   };
 
@@ -86,16 +71,16 @@ function WeatherSearch({ isShowWeatherInfo, searchWeatherHandle, changeAreaHandl
             searchWeatherHandle={searchWeatherHandle}
             showArea={showArea}
             changeAreaHandle={changeAreaHandle}
+            nowWeather={nowWeather}
           />
         ) : isActivation.isOpen ? (
           <SearchDetail
             setSelectTitle={setSelectTitle}
             selectTitle={selectTitle}
-            isSelectSuccess={isSelectSuccess}
-            allSelect={allSelect}
-            setAllSelect={setAllSelect}
             setIsActivation={setIsActivation}
             showAreaHandle={showAreaHandle}
+            getSearchHandle={getSearchHandle}
+            dataHandle={dataHandle}
           />
         ) : (
           <SearchInfo />

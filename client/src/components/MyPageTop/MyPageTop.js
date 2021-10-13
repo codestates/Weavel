@@ -17,6 +17,7 @@ import {
   MyPageTopContainer,
 } from "./MyPageTop.style";
 function MyPageTop({ openCloseModalHandler, loginUserInfo, isLogin }) {
+  console.log("hi");
   const weather = [
     {
       id: 1,
