@@ -7,6 +7,7 @@ import EditUserInfoModal from "../../components/EditUserInfoModal/EditUserInfoMo
 import PhotoUploadModal from "../../components/PhotoUploadModal/PhotoUploadModal";
 import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
 import Modal from "../../components/Modal/Modal";
+import NewPhotoUploadModal from "../../components/PhotoUploadModal/NewPhotoUploadModal";
 
 function MyPage({
   loginUserInfo,
@@ -15,12 +16,16 @@ function MyPage({
   isWeather,
   weatherHandle,
   token,
+  allPhotoInfo,
+  allUserWeather,
 }) {
+  const [keyword, setKeyword] = useState("");
   const [isModal, setIsModal] = useState({
     photoUpload: false,
     editUserInfo: false,
     deleteAccount: false,
     deletePhoto: false,
+    newPhotoUpload: false,
   });
 
   const openCloseModalHandler = (e) => {
@@ -34,6 +39,8 @@ function MyPage({
       newIsModal.deleteAccount = !newIsModal.deleteAccount;
     } else if (e.target.name === "deletePhoto") {
       newIsModal.deletePhoto = !newIsModal.deletePhoto;
+    } else if (e.target.name === "newPhotoUpload") {
+      newIsModal.newPhotoUpload = !newIsModal.newPhotoUpload;
     } else {
       if (isModal.photoUpload) {
         newIsModal.photoUpload = !newIsModal.photoUpload;
@@ -43,20 +50,32 @@ function MyPage({
         newIsModal.deletePhoto = !newIsModal.deletePhoto;
       } else if (isModal.editUserInfo) {
         newIsModal.editUserInfo = !newIsModal.editUserInfo;
+      } else if (isModal.newPhotoUpload) {
+        newIsModal.newPhotoUpload = !newIsModal.newPhotoUpload;
       }
     }
     setIsModal(newIsModal);
   };
 
-  const { photoUpload, editUserInfo, deleteAccount, deletePhoto } = isModal;
+  const {
+    photoUpload,
+    editUserInfo,
+    deleteAccount,
+    deletePhoto,
+    newPhotoUpload,
+  } = isModal;
 
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow =
-      photoUpload || editUserInfo || deleteAccount || deletePhoto
+      photoUpload ||
+      editUserInfo ||
+      deleteAccount ||
+      deletePhoto ||
+      newPhotoUpload
         ? "hidden"
         : "auto";
-  }, [photoUpload, editUserInfo, deleteAccount, deletePhoto]);
+  }, [photoUpload, editUserInfo, deleteAccount, deletePhoto, newPhotoUpload]);
 
   // const weatherDataHandle = () => {
   //   loginUserInfo.weather.map((weatherNum) => {
@@ -96,28 +115,37 @@ function MyPage({
   return (
     <MyPageContainer>
       <MyPageTop
+        allUserWeather={allUserWeather}
         isLogin={isLogin}
         isWeather={isWeather}
         loginUserInfo={loginUserInfo}
         openCloseModalHandler={openCloseModalHandler}
       />
       <MyPageMiddle
+        setKeyword={setKeyword}
+        keyword={keyword}
         isWeather={isWeather}
         weatherCheckHandle={weatherCheckHandle}
       />
       <MyPagePhotos
+        isLogin={isLogin}
+        keyword={keyword}
+        loginUserInfo={loginUserInfo}
+        isWeather={isWeather}
+        allPhotoInfo={allPhotoInfo}
         token={token}
         openCloseModalHandler={openCloseModalHandler}
       />
-      {isModal.photoUpload ? (
+
+      {isModal.newPhotoUpload ? (
         <ModalContainer onClick={openCloseModalHandler}>
-          <PhotoUploadModal
+          <NewPhotoUploadModal
             token={token}
             loginUserInfo={loginUserInfo}
             isWeather={isWeather}
             weatherCheckHandle={weatherCheckHandle}
             openCloseModalHandler={openCloseModalHandler}
-          ></PhotoUploadModal>
+          ></NewPhotoUploadModal>
         </ModalContainer>
       ) : null}
       {isModal.editUserInfo ? (

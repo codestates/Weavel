@@ -13,232 +13,188 @@ import {
   ButtonContainer,
   PhotoClickContainer,
 } from "./MyPagePhotos.style";
-
 import { ModalContainer } from "../../pages/MyPage/MyPage.style";
+import { PhotoUploadButton } from "../MyPageTop/MyPageTop.style";
+import PhotoUploadModal from "../PhotoUploadModal/PhotoUploadModal";
 
-function MyPagePhotos({ openCloseModalHandler, token }) {
+function MyPagePhotos({
+  openCloseModalHandler,
+  allPhotoInfo,
+  token,
+  loginUserInfo,
+  isWeather,
+  weatherCheckHandle,
+  setKeyword,
+  keyword,
+  isLogin,
+}) {
   const [isModal, setIsModal] = useState({
-    photoClickModal: false,
+    photoUpload: false,
   });
 
   const openCloseModalHandlerPhoto = (e) => {
     let newIsModal = { ...isModal };
 
-    if (e.target.name === "photoClickModal") {
-      newIsModal.photoClickModal = !newIsModal.photoClickModal;
+    if (e.target.name === "photoUpload") {
+      newIsModal.photoUpload = !newIsModal.photoUpload;
     } else {
-      if (isModal.photoClickModal) {
-        newIsModal.photoClickModal = !newIsModal.photoClickModal;
+      if (isModal.photoUpload) {
+        newIsModal.photoUpload = !newIsModal.photoUpload;
       }
     }
     setIsModal(newIsModal);
   };
 
-  const { photoClickModal } = isModal;
+  const { photoUpload } = isModal;
 
   useEffect(() => {
     const body = document.querySelector("body");
-    body.style.overflow = photoClickModal ? "hidden" : "auto";
-  }, [photoClickModal]);
+    body.style.overflow = photoUpload ? "hidden" : "auto";
+  }, [photoUpload]);
 
   return (
     <AlbumContainer>
-      <PhotoContainer onClick={(e) => openCloseModalHandlerPhoto(e)}>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-      <PhotoContainer>
-        <Photo src="../../images/photo_example1.jpg" />
-        <PhotoInfoContainer>
-          <PhotoDate>2021.10.03</PhotoDate>
-          <PhotoAreaWeather>서울시 서초구, 맑음</PhotoAreaWeather>
-          <Comment>간만에 한강 산책한 날</Comment>
-          <ButtonContainer>
-            <PhotoButton
-              name={"photoUpload"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              수정
-            </PhotoButton>
-            <PhotoButton
-              name={"deletePhoto"}
-              onClick={(e) => {
-                openCloseModalHandler(e);
-              }}
-            >
-              삭제
-            </PhotoButton>
-          </ButtonContainer>
-        </PhotoInfoContainer>
-      </PhotoContainer>
-
-      {/* <NoPhotoContainer>
-        <NoPhotoTextContainer>
-          기록하고 싶은 날씨가 있으신가요? <div></div>사진을 찍어 올려보세요
-        </NoPhotoTextContainer>
-        <PhotoUploadButton
-          name={"photoUpload"}
-          onClick={(e) => {
-            openCloseModalHandler(e);
-          }}
-        >
-          사진 업로드
-        </PhotoUploadButton>
-      </NoPhotoContainer> */}
+      {allPhotoInfo ? (
+        <>
+          {allPhotoInfo.map((photo) => {
+            return (
+              <PhotoContainer
+                key={photo.id}
+                onClick={(e) => openCloseModalHandlerPhoto(e)}
+              >
+                <Photo src={`http://localhost:4000/${photo.image}`} />
+                <PhotoInfoContainer>
+                  <PhotoDate>{photo.date}</PhotoDate>
+                  <PhotoAreaWeather>
+                    {photo.area},{" "}
+                    {photo.weather === "1"
+                      ? "맑음"
+                      : "2"
+                      ? "구름"
+                      : "3"
+                      ? "비"
+                      : "4"
+                      ? "눈"
+                      : null}
+                  </PhotoAreaWeather>
+                  <Comment>{photo.comment}</Comment>
+                  <ButtonContainer>
+                    <PhotoButton
+                      name={"photoUpload"}
+                      onClick={(e) => {
+                        openCloseModalHandler(e);
+                      }}
+                    >
+                      수정
+                    </PhotoButton>
+                    <PhotoButton
+                      name={"deletePhoto"}
+                      onClick={(e) => {
+                        openCloseModalHandler(e);
+                      }}
+                    >
+                      삭제
+                    </PhotoButton>
+                  </ButtonContainer>
+                </PhotoInfoContainer>
+                {isModal.photoUpload ? (
+                  <ModalContainer onClick={openCloseModalHandler}>
+                    <PhotoUploadModal
+                      photoId={photo.id}
+                      allPhotoInfo={allPhotoInfo}
+                      token={token}
+                      loginUserInfo={loginUserInfo}
+                      isWeather={isWeather}
+                      weatherCheckHandle={weatherCheckHandle}
+                      openCloseModalHandler={openCloseModalHandler}
+                    ></PhotoUploadModal>
+                  </ModalContainer>
+                ) : null}
+              </PhotoContainer>
+            );
+          })}
+        </>
+      ) : allPhotoInfo && keyword ? (
+        allPhotoInfo
+          .filter((photo) => {
+            photo.area.includes(keyword);
+          })
+          .map((photo) => {
+            return (
+              <PhotoContainer
+                key={photo.id}
+                onClick={(e) => openCloseModalHandlerPhoto(e)}
+              >
+                <Photo src={`http://localhost:3000/${photo.image}`} />
+                <PhotoInfoContainer>
+                  <PhotoDate>{photo.date}</PhotoDate>
+                  <PhotoAreaWeather>
+                    {photo.area},{" "}
+                    {photo.weather === "1"
+                      ? "맑음"
+                      : "2"
+                      ? "구름"
+                      : "3"
+                      ? "비"
+                      : "4"
+                      ? "눈"
+                      : null}
+                  </PhotoAreaWeather>
+                  <Comment>{photo.comment}</Comment>
+                  <ButtonContainer>
+                    <PhotoButton
+                      name={"photoUpload"}
+                      onClick={(e) => {
+                        openCloseModalHandler(e);
+                      }}
+                    >
+                      수정
+                    </PhotoButton>
+                    <PhotoButton
+                      name={"deletePhoto"}
+                      onClick={(e) => {
+                        openCloseModalHandler(e);
+                      }}
+                    >
+                      삭제
+                    </PhotoButton>
+                  </ButtonContainer>
+                </PhotoInfoContainer>
+                {isModal.photoUpload ? (
+                  <ModalContainer onClick={openCloseModalHandler}>
+                    <PhotoUploadModal
+                      date={photo.date}
+                      area={photo.area}
+                      weather={photo.weather}
+                      comment={photo.comment}
+                      allPhotoInfo={allPhotoInfo}
+                      token={token}
+                      loginUserInfo={loginUserInfo}
+                      isWeather={isWeather}
+                      weatherCheckHandle={weatherCheckHandle}
+                      openCloseModalHandler={openCloseModalHandler}
+                    ></PhotoUploadModal>
+                  </ModalContainer>
+                ) : null}
+              </PhotoContainer>
+            );
+          })
+      ) : (
+        <NoPhotoContainer>
+          <NoPhotoTextContainer>
+            기록하고 싶은 날씨가 있으신가요? <br></br>사진을 찍어 올려보세요
+          </NoPhotoTextContainer>
+          <PhotoUploadButton
+            disabled={!isLogin}
+            name={"newPhotoUpload"}
+            onClick={(e) => {
+              openCloseModalHandler(e);
+            }}
+          >
+            사진 업로드
+          </PhotoUploadButton>
+        </NoPhotoContainer>
+      )}
     </AlbumContainer>
   );
 }

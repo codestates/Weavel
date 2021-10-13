@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   ConfirmButton,
   CancelButton,
   ButtonContainer,
 } from "../Modal/Modal.style";
+import axios from "axios";
 import { InputLabel, EmailInput } from "../../pages/LoginPage/LoginPage.style";
 import { area } from "./SearchData";
-
 import AutoComplete from "./AutoComplete";
 import {
   Sunny,
@@ -17,20 +16,11 @@ import {
 } from "../../pages/SignupPage/SignupPage.style";
 
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
-import { PhotoUploadContainer, DateInput } from "./PhotoUploadModal.style";
+import { PhotoUploadContainer } from "./PhotoUploadModal.style";
 import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style";
 import PhotoUpload from "../PhotoUpload/PhotoUpload";
 
-function PhotoUploadModal({
-  openCloseModalHandler,
-  loginUserInfo,
-  token,
-  allPhotoInfo,
-  date,
-  weather,
-  comment,
-  photoId,
-}) {
+function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const [photoInfo, setphotoInfo] = useState({
     weather: [],
     date: null,
@@ -70,8 +60,6 @@ function PhotoUploadModal({
     setIsPhotoWeather({ ...photoweather });
   }
 
-  console.log(allPhotoInfo);
-
   function commentHandler(e) {
     const newphotoInfo = { ...photoInfo };
     if (e.target.name === "comment") {
@@ -97,13 +85,14 @@ function PhotoUploadModal({
   const formData = new FormData();
 
   formData.append("userId", loginUserInfo.id);
-  formData.append("newpath", fileInfo.image);
-  formData.append("newfilename", fileInfo.filename);
+  formData.append("image", fileInfo.image);
+  formData.append("filename", fileInfo.filename);
 
-  const handlePhotoEdit = (e) => {
+  // 사진 업로드
+  const handlePhotoUpload = (e) => {
     console.log(e);
     axios
-      .put(
+      .post(
         "http://localhost:4000/photo/",
         formData,
         {
@@ -115,7 +104,9 @@ function PhotoUploadModal({
         { withCredentials: true }
       )
       .then((res) => {
-        handlePhotoInfoEdit(e, res.data.data);
+        console.log("데이터 콘솔로그", res.data);
+        console.log(res.data.message);
+        handlePhotoInfoUpload(e, res.data.data);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -126,9 +117,9 @@ function PhotoUploadModal({
     setFileInfo(file);
   };
 
-  const handlePhotoInfoEdit = (e, photo) => {
+  const handlePhotoInfoUpload = (e, photo) => {
     axios
-      .put(
+      .post(
         "http://localhost:4000/photo/info",
         {
           id: photo.id,
@@ -162,16 +153,14 @@ function PhotoUploadModal({
       />
       <EditInfoContainer margin={"270px"}>
         <InputLabel>날짜</InputLabel>
-        <DateInput
+        <EmailInput
           name="date"
           onChange={(e) => commentHandler(e)}
-          value={photoId.date}
           placeholder="YYYY.MM.DD 형식으로 입력해주세요"
           maxLength="10"
         />
         <InputLabel>지역</InputLabel>
         <AutoComplete
-          allPhotoInfo={allPhotoInfo}
           photoInfo={photoInfo}
           name="area"
           suggestions={area}
@@ -214,11 +203,10 @@ function PhotoUploadModal({
           onChange={(e) => commentHandler(e)}
           placeholder="25글자 이내로 남기고 싶은 코멘트를 적어주세요"
           maxLength="25"
-          value={comment}
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={(e) => handlePhotoEdit(e)}>
+            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>
               업로드
             </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
@@ -229,4 +217,4 @@ function PhotoUploadModal({
   );
 }
 
-export default PhotoUploadModal;
+export default NewPhotoUploadModal;
