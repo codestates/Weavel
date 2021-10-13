@@ -21,7 +21,7 @@ module.exports = (req, res) => {
     console.log(arr);
     arr.map((el) => {
       const day = moment().format("YYYYMMDD");
-      const base_time = moment().format("HH") + "00";
+      const base_time = "1700";
       const nx = el[0];
       const ny = el[1];
       const nz = el[2];
