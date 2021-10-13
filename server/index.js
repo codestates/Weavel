@@ -8,6 +8,7 @@ const express = require("express");
 const app = express();
 const schedule = require("node-schedule");
 
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -16,7 +17,7 @@ app.use(
     origin: ["http://localhost:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "OPTIONS"],
-  }),
+  })
 );
 
 // 전국 날씨 API Get 요청 예약
