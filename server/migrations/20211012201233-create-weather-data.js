@@ -1,45 +1,45 @@
-"use strict";
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("seoul", {
+    await queryInterface.createTable('weather_data', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       city: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       nx: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       ny: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
-      date: {
-        type: Sequelize.STRING,
+      data: {
+        type: Sequelize.STRING
       },
       time: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       category: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       value: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("seoul");
-  },
+    await queryInterface.dropTable('weather_data');
+  }
 };

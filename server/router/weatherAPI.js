@@ -3,6 +3,6 @@ var router = express.Router();
 const { weatherAPIController } = require("../controller");
 const { cityarea } = require("../middleware/cityArea");
 
-router.get("/", cityarea, weatherAPIController.seoul);
+router.get("/", cityarea, weatherAPIController.weather_data);
 
 module.exports = router;
