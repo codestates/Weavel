@@ -41,15 +41,25 @@ export const SelectList = styled.div`
 `;
 
 export const WeatherItem = styled.div`
+  display: flex;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   padding-right: 40px;
   margin-bottom: 44px;
   cursor: pointer;
+
+  div {
+    margin-right: 10px;
+  }
 `;
 export const DayItem = styled.div`
+  display: flex;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   margin-bottom: 44px;
   cursor: pointer;
+
+  div {
+    margin-right: 10px;
+  }
 `;
 export const TimeItem = styled.div`
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
