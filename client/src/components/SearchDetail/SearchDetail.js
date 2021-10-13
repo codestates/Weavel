@@ -10,6 +10,7 @@ import {
   AreaItem,
   SearchButton,
 } from "./SearchDetail.style";
+import { dummy } from "../Graph/data";
 
 function SearchDetail({
   setSelectTitle,
@@ -17,6 +18,7 @@ function SearchDetail({
   setIsActivation,
   showAreaHandle,
   getSearchHandle,
+  dataHandle,
 }) {
   const weather = [
     {
@@ -152,12 +154,7 @@ function SearchDetail({
   });
 
   useEffect(() => {
-    if (
-      allSelect.weather &&
-      allSelect.day &&
-      allSelect.time &&
-      allSelect.area
-    ) {
+    if (allSelect.weather && allSelect.day && allSelect.time && allSelect.area) {
       setIsSelectSuccess(false);
     } else {
       setIsSelectSuccess(true);
@@ -222,13 +219,9 @@ function SearchDetail({
       selectTitle.area = areaTitle.area;
       setSelectTitle({ ...selectTitle });
       setIsActivation({ isOpen: false, isLender: true });
+      dataHandle(dummy);
       showAreaHandle(areaTitle.id);
-      getSearchHandle(
-        weatherTitle.id,
-        dayTitle.id,
-        `${timeTitle.id}00`,
-        areaTitle.id
-      );
+      getSearchHandle(weatherTitle.id, dayTitle.id, `${timeTitle.id}00`, areaTitle.id);
     }
   };
 
@@ -263,11 +256,7 @@ function SearchDetail({
           <SelectList>
             {daySelect.map((day) => {
               return (
-                <DayItem
-                  selectId={day.isSelect}
-                  onClick={(e) => daySelectHandle(e)}
-                  id={day.id}
-                >
+                <DayItem selectId={day.isSelect} onClick={(e) => daySelectHandle(e)} id={day.id}>
                   {day.isSelect ? (
                     <div>
                       <img src={day.click} />
@@ -285,11 +274,7 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <ArrowPosition id={"up"} onClick={(e) => onButtonClick(e)}>
-            <img
-              id={"up"}
-              onClick={(e) => onButtonClick(e)}
-              src="./images/top_arrow.svg"
-            />
+            <img id={"up"} onClick={(e) => onButtonClick(e)} src="./images/top_arrow.svg" />
           </ArrowPosition>
           <SelectList>
             {timeSelect.map((time) => {
@@ -306,11 +291,7 @@ function SearchDetail({
             })}
           </SelectList>
           <ArrowPosition id={"down"} onClick={(e) => onButtonClick(e)}>
-            <img
-              id={"down"}
-              onClick={(e) => onButtonClick(e)}
-              src="./images/bottom_arrow.svg"
-            />
+            <img id={"down"} onClick={(e) => onButtonClick(e)} src="./images/bottom_arrow.svg" />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>

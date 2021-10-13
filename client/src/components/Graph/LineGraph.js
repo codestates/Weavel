@@ -20,18 +20,24 @@ class LineChart extends Component {
         <div className="row">
           <div className="mixed-chart">
             <Container>
-              {this.props.bar ? (
+              {this.props.POPbar ? (
                 <Chart
-                  options={this.props.tem.options}
-                  series={this.props.tem.series}
+                  options={this.props.graphOption[0].options}
+                  series={this.props.graphOption[0].series}
                   type="bar"
-                  width="600"
-                  
+                  width="500"
+                />
+              ) : this.props.REHbar ? (
+                <Chart
+                  options={this.props.graphOption[2].options}
+                  series={this.props.graphOption[2].series}
+                  type="bar"
+                  width="500"
                 />
               ) : (
                 <Chart
-                  options={this.props.tem.options}
-                  series={this.props.tem.series}
+                  options={this.props.graphOption[1].options}
+                  series={this.props.graphOption[1].series}
                   type="line"
                   width="500"
                 />

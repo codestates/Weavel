@@ -17,6 +17,7 @@ function WeatherSearch({
   changeAreaHandle,
   getSearchHandle,
   nowWeather,
+  dataHandle,
 }) {
   const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
 
@@ -79,6 +80,7 @@ function WeatherSearch({
             setIsActivation={setIsActivation}
             showAreaHandle={showAreaHandle}
             getSearchHandle={getSearchHandle}
+            dataHandle={dataHandle}
           />
         ) : (
           <SearchInfo />
