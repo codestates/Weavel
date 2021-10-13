@@ -19,12 +19,12 @@ module.exports = async (req, res) => {
     },
   });
 
-  // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
+  // POP 강수확률,  REH 습도,  TMP 1시간 기온
   const weather = await weather_data.findAll({
     where: {
       nx: nx,
       ny: ny,
-      [or]: [{ category: "TMP" }],
+      [or]: [{ category: "TMP" }, { category: "POP" }, { category: "REH" }],
     },
   });
   console.log("-----------_>", weather);
