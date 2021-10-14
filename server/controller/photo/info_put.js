@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
     }
 
     //!파일네임이 같아아 수정될 수 있도록 해야함
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", req.file);
     const edit = await photo.update({ weather: weather, date: date, area: area, comment: comment, updatedAt: new Date() }, { where: { id: id, userId: userId, filename: filename } });
 
     // 업데이트하려는 정보 칼럼을 조회하지 못하였을 때

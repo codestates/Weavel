@@ -8,16 +8,18 @@ const { or, and, gt, lt } = Sequelize.Op;
 module.exports = async (req, res) => {
   const nx = req.query.nx;
   const ny = req.query.ny;
+  // 현재시간
   const time = Number(moment().format("HH") + "00");
+  // 현재날짜
   const today = moment().format("YYYYMMDD");
 
-  // 현재시간 이전 데이터 삭제
-  const trash = await weather_data.destroy({
-    where: {
-      date: today,
-      time: { [lt]: time },
-    },
-  });
+  // 현재시간 이전 불필요 데이터 삭제
+  // const trash = await weather_data.destroy({
+  //   where: {
+  //     date: today,
+  //     time: { [lt]: time },
+  //   },
+  // });
 
   // POP 강수확률,  REH 습도,  TMP 1시간 기온
   const weather = await weather_data.findAll({
@@ -27,13 +29,9 @@ module.exports = async (req, res) => {
       [or]: [{ category: "TMP" }, { category: "POP" }, { category: "REH" }],
     },
   });
-  console.log("-----------_>", weather);
-  console.log("-----------_>", trash);
-  console.log("-----------_>", today);
-  console.log("-----------_>", time);
 
+  // 날씨 데이터 추출
   const result = [];
-
   weather.filter((e) => {
     const data = [];
     data.push(e.date);

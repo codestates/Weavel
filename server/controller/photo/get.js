@@ -19,23 +19,3 @@ module.exports = async (req, res) => {
     res.status(400).json({ message: "사진을 조회할 수 없습니다." });
   }
 };
-
-// function getImgPath(startPath, fileExt) {
-//   const dirName = fs.readdirSync(startPath, { withFileTypes: true }).filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
-//   const imgPath = [];
-//   dirName.forEach(name => {
-//       const filePath = path.join(startPath, name);
-//       const fileName = fs.readdirSync(filePath).filter((file) => file.endsWith(fileExt));
-//       fileName.forEach(file => {
-//           const fullPath = path.join(startPath, name, file);
-//           imgPath.push(fullPath);
-//       });
-//   });
-//   return imgPath;
-// }
-
-// async function run(){
-//   const imagePath = getImgPath('shapes', 'png')
-//   imagePath.forEach(path => console.log(path))
-// }
-// run()

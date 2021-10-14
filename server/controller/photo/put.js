@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
       return res.status(409).json({ massage: "이미 삭제 되었거나, 존재하지 않는 파일입니다." });
     }
 
+    // 사진 변경
     const update = await photo.update({ image: newpath, filename: newfilename }, { where: { id: id, userId: userId } });
     if (!update) {
       return res.status(409).json({ massage: "사진의 데이터가 저장되지 않았습니다." });
