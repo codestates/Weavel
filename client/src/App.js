@@ -10,7 +10,8 @@ import {
 } from "react-router-dom";
 
 import axios from "axios";
-import Modal from "./components/Modal/Modal";
+import LogOutModal from "./components/Modal/LogoutModal";
+import DeleteUserModalModal from "./components/Modal/DeleteUserModal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/MyPage/MyPage";
@@ -207,6 +208,7 @@ function App() {
       withCredentials: true,
     }).then((res) => {
       setAllPhotoInfo(res.data);
+      console.log("사진정보받기~~~~~", res.data);
     });
   };
 
@@ -221,6 +223,7 @@ function App() {
       },
       withCredentials: true,
     }).then((res) => {
+      console.log("afdadfd", res.data);
       setPhoto(res.data);
     });
   };
@@ -240,19 +243,45 @@ function App() {
     });
   };
 
-  // 사진 삭제
-  const deletePhoto = (token) => {
-    axios({
-      method: "delete",
-      url: "http://localhost:4000/photo",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }).then((res) => {
-      console.log(res);
+  const [SearchWeatherPhoto, setSearchWeatherPhoto] = useState({
+    sunny: false,
+    cloud: false,
+    rain: false,
+    snow: false,
+  });
+  console.log("adadf", SearchWeatherPhoto);
+  const filterPhotoHandler = (num) => {
+    let filterPhotoInfo = [];
+
+    allPhotoInfo.map((el) => {
+      const newEl = { ...el };
+      filterPhotoInfo.push(newEl);
     });
+    const newFilterPhotoInfo = filterPhotoInfo.filter((el) => {
+      return el.weather === num;
+    });
+    setAllPhotoInfo(newFilterPhotoInfo);
+  };
+  const [allPhotoSearch, setAllPhotoSearch] = useState(null);
+  const [searchInputValue, setSearchInputValue] = useState(null);
+
+  const handleInputChange = (e) => {
+    if (e.target.value) {
+      setSearchInputValue(e.target.value);
+    }
+
+    let filterPhotoInfo = [];
+
+    allPhotoInfo.map((el) => {
+      const newEl = { ...el };
+      filterPhotoInfo.push(newEl);
+    });
+    const newSearchPhotoInfo = filterPhotoInfo.filter((el) => {
+      if (el.area.indexOf(searchInputValue > -1)) {
+        return true;
+      }
+    });
+    setAllPhotoInfo(newSearchPhotoInfo);
   };
 
   return (
@@ -289,11 +318,11 @@ function App() {
             )}
             {isModal.logOut ? (
               <ModalContainer onClick={openCloseModalHandler}>
-                <Modal
+                <LogOutModal
                   handleLogout={handleLogout}
                   message={"로그아웃하시겠습니까?"}
                   openCloseModalHandler={openCloseModalHandler}
-                ></Modal>
+                ></LogOutModal>
               </ModalContainer>
             ) : null}
           </HeaderBox>
@@ -317,6 +346,10 @@ function App() {
             </Route>
             <Route path="/mypage">
               <MyPage
+                handleInputChange={handleInputChange}
+                SearchWeatherPhoto={SearchWeatherPhoto}
+                setSearchWeatherPhoto={setSearchWeatherPhoto}
+                filterPhotoHandler={filterPhotoHandler}
                 allUserWeather={allUserWeather}
                 allPhotoInfo={allPhotoInfo}
                 isLogin={isLogin}

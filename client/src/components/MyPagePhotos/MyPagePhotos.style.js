@@ -1,23 +1,27 @@
 import styled from "styled-components";
 
 export const AlbumContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30%, auto));
   margin-top: 45px;
   width: 1260px;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  column-gap: 36px;
 `;
 
 export const PhotoContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
   margin-bottom: 32px;
   cursor: pointer;
 `;
 
 export const Photo = styled.img`
   width: 396px;
-  height: 389px;
+  height: 396px;
+`;
+
+export const ClickPhotoModal = styled.div`
+  width: auto;
+  height: auto;
 `;
 
 export const NoPhotoContainer = styled.div`
@@ -44,12 +48,12 @@ export const NoPhotoTextContainer = styled.div`
 export const PhotoInfoContainer = styled.div`
   position: absolute;
   width: 396px;
-  height: 255px;
+  height: 262.5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 134px 0 0 0;
-  gap: 5px;
+
   opacity: 0;
   color: #ffffff;
   &:hover {
@@ -90,6 +94,7 @@ export const PhotoButton = styled.button`
   background-repeat: no-repeat;
   cursor: pointer;
   color: #ffffff;
+  z-index: 1;
 `;
 
 export const PhotoClickContainer = styled.div`

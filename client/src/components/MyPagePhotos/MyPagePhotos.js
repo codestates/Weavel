@@ -12,11 +12,13 @@ import {
   PhotoInfoContainer,
   ButtonContainer,
   PhotoClickContainer,
+  ClickPhotoModal,
 } from "./MyPagePhotos.style";
+import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 import { ModalContainer } from "../../pages/MyPage/MyPage.style";
 import { PhotoUploadButton } from "../MyPageTop/MyPageTop.style";
 import PhotoUploadModal from "../PhotoUploadModal/PhotoUploadModal";
-
+import axios from "axios";
 function MyPagePhotos({
   openCloseModalHandler,
   allPhotoInfo,
@@ -24,43 +26,86 @@ function MyPagePhotos({
   loginUserInfo,
   isWeather,
   weatherCheckHandle,
-  setKeyword,
-  keyword,
+  isModal,
   isLogin,
+  deletephotohandler,
 }) {
-  const [isModal, setIsModal] = useState({
-    photoUpload: false,
-  });
+  const [photoIdx, setPhotoIdx] = useState(null);
 
-  const openCloseModalHandlerPhoto = (e) => {
-    let newIsModal = { ...isModal };
+  const [photoEditWeather, setPhotoEditWeather] = useState(null);
 
-    if (e.target.name === "photoUpload") {
-      newIsModal.photoUpload = !newIsModal.photoUpload;
-    } else {
-      if (isModal.photoUpload) {
-        newIsModal.photoUpload = !newIsModal.photoUpload;
-      }
+  function photoEditHandler(e) {
+    setPhotoIdx(e.target.id);
+
+    const weatherState = {
+      sunny: false,
+      cloud: false,
+      rain: false,
+      snow: false,
+      num: null,
+    };
+
+    if (allPhotoInfo[e.target.id].weather === "1") {
+      weatherState.sunny = true;
+    } else if (allPhotoInfo[e.target.id].weather === "2") {
+      weatherState.cloud = true;
+    } else if (allPhotoInfo[e.target.id].weather === "3") {
+      weatherState.rain = true;
+    } else if (allPhotoInfo[e.target.id].weather === "4") {
+      weatherState.snow = true;
     }
-    setIsModal(newIsModal);
-  };
 
-  const { photoUpload } = isModal;
+    setPhotoEditWeather(weatherState);
+    openCloseModalHandler(e);
+  }
 
-  useEffect(() => {
-    const body = document.querySelector("body");
-    body.style.overflow = photoUpload ? "hidden" : "auto";
-  }, [photoUpload]);
+  function photoDeleteHandler(e) {
+    openCloseModalHandler(e);
+  }
+
+  // 사진 삭제
+  function handleDeletePhoto(e) {
+    axios
+      .delete(
+        "http://localhost:4000/photo",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+          data: {
+            id: allPhotoInfo[photoIdx].id,
+            userId: loginUserInfo.id,
+            weather: allPhotoInfo[photoIdx].weather,
+            date: allPhotoInfo[photoIdx].date,
+            area: allPhotoInfo[photoIdx].area,
+            filename: allPhotoInfo[photoIdx].filename,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        openCloseModalHandler(e);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
 
   return (
     <AlbumContainer>
-      {allPhotoInfo ? (
+      {isLogin && allPhotoInfo.length > 0 ? (
         <>
-          {allPhotoInfo.map((photo) => {
+          {allPhotoInfo.map((photo, idx) => {
             return (
               <PhotoContainer
-                key={photo.id}
-                onClick={(e) => openCloseModalHandlerPhoto(e)}
+                onClick={(e) => {
+                  openCloseModalHandler(e);
+                }}
+                name={"clickPhoto"}
+                id={idx}
               >
                 <Photo src={`http://localhost:4000/${photo.image}`} />
                 <PhotoInfoContainer>
@@ -80,105 +125,38 @@ function MyPagePhotos({
                   <Comment>{photo.comment}</Comment>
                   <ButtonContainer>
                     <PhotoButton
+                      id={idx}
                       name={"photoUpload"}
                       onClick={(e) => {
-                        openCloseModalHandler(e);
+                        photoEditHandler(e);
                       }}
                     >
                       수정
                     </PhotoButton>
                     <PhotoButton
+                      id={idx}
                       name={"deletePhoto"}
                       onClick={(e) => {
-                        openCloseModalHandler(e);
+                        photoDeleteHandler(e);
                       }}
                     >
                       삭제
                     </PhotoButton>
                   </ButtonContainer>
                 </PhotoInfoContainer>
-                {isModal.photoUpload ? (
-                  <ModalContainer onClick={openCloseModalHandler}>
-                    <PhotoUploadModal
-                      photoId={photo.id}
-                      allPhotoInfo={allPhotoInfo}
-                      token={token}
-                      loginUserInfo={loginUserInfo}
-                      isWeather={isWeather}
-                      weatherCheckHandle={weatherCheckHandle}
-                      openCloseModalHandler={openCloseModalHandler}
-                    ></PhotoUploadModal>
-                  </ModalContainer>
-                ) : null}
               </PhotoContainer>
             );
           })}
+          {isModal.clickPhoto ? (
+            <ModalContainer onClick={openCloseModalHandler}>
+              <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
+                <img
+                  src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
+                />
+              </ClickPhotoModal>
+            </ModalContainer>
+          ) : null}
         </>
-      ) : allPhotoInfo && keyword ? (
-        allPhotoInfo
-          .filter((photo) => {
-            photo.area.includes(keyword);
-          })
-          .map((photo) => {
-            return (
-              <PhotoContainer
-                key={photo.id}
-                onClick={(e) => openCloseModalHandlerPhoto(e)}
-              >
-                <Photo src={`http://localhost:3000/${photo.image}`} />
-                <PhotoInfoContainer>
-                  <PhotoDate>{photo.date}</PhotoDate>
-                  <PhotoAreaWeather>
-                    {photo.area},{" "}
-                    {photo.weather === "1"
-                      ? "맑음"
-                      : "2"
-                      ? "구름"
-                      : "3"
-                      ? "비"
-                      : "4"
-                      ? "눈"
-                      : null}
-                  </PhotoAreaWeather>
-                  <Comment>{photo.comment}</Comment>
-                  <ButtonContainer>
-                    <PhotoButton
-                      name={"photoUpload"}
-                      onClick={(e) => {
-                        openCloseModalHandler(e);
-                      }}
-                    >
-                      수정
-                    </PhotoButton>
-                    <PhotoButton
-                      name={"deletePhoto"}
-                      onClick={(e) => {
-                        openCloseModalHandler(e);
-                      }}
-                    >
-                      삭제
-                    </PhotoButton>
-                  </ButtonContainer>
-                </PhotoInfoContainer>
-                {isModal.photoUpload ? (
-                  <ModalContainer onClick={openCloseModalHandler}>
-                    <PhotoUploadModal
-                      date={photo.date}
-                      area={photo.area}
-                      weather={photo.weather}
-                      comment={photo.comment}
-                      allPhotoInfo={allPhotoInfo}
-                      token={token}
-                      loginUserInfo={loginUserInfo}
-                      isWeather={isWeather}
-                      weatherCheckHandle={weatherCheckHandle}
-                      openCloseModalHandler={openCloseModalHandler}
-                    ></PhotoUploadModal>
-                  </ModalContainer>
-                ) : null}
-              </PhotoContainer>
-            );
-          })
       ) : (
         <NoPhotoContainer>
           <NoPhotoTextContainer>
@@ -195,6 +173,33 @@ function MyPagePhotos({
           </PhotoUploadButton>
         </NoPhotoContainer>
       )}
+      {isModal.photoUpload ? (
+        <ModalContainer
+          background={"rgba(0, 0, 0, 0.1)"}
+          onClick={openCloseModalHandler}
+        >
+          <PhotoUploadModal
+            photoEditWeather={photoEditWeather}
+            photoEditHandler={photoEditHandler}
+            photoIdx={photoIdx}
+            allPhotoInfo={allPhotoInfo}
+            token={token}
+            loginUserInfo={loginUserInfo}
+            isWeather={isWeather}
+            weatherCheckHandle={weatherCheckHandle}
+            openCloseModalHandler={openCloseModalHandler}
+          ></PhotoUploadModal>
+        </ModalContainer>
+      ) : null}
+      {isModal.deletePhoto ? (
+        <ModalContainer onClick={openCloseModalHandler}>
+          <DeletePhotoModal
+            handleDeletePhoto={handleDeletePhoto}
+            message={"사진을 삭제하시겠습니까?"}
+            openCloseModalHandler={openCloseModalHandler}
+          ></DeletePhotoModal>
+        </ModalContainer>
+      ) : null}
     </AlbumContainer>
   );
 }

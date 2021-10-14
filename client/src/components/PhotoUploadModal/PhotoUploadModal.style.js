@@ -10,10 +10,6 @@ export const PhotoUploadContainer = styled.div`
   flex-direction: column;
   align-content: space-evenly;
   margin-top: 10vh;
-  span {
-    display: flex;
-    margin-top: 10px;
-  }
 `;
 
 export const PhotoUploadPlace = styled.div`
