@@ -21,14 +21,28 @@ module.exports = (req, res) => {
     console.log(arr);
     arr.map((el) => {
       const day = moment().format("YYYYMMDD");
-      const base_time = "1700";
+      const base_time = "0500";
       const nx = el[0];
       const ny = el[1];
       const nz = el[2];
       const dataType = "XML";
       // url
 
-      const all_url = url1 + "?serviceKey=" + key + "&pageNo=1&numOfRows=22222" + "&dataType=" + dataType + "&base_date=" + day + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+      const all_url =
+        url1 +
+        "?serviceKey=" +
+        key +
+        "&pageNo=1&numOfRows=22222" +
+        "&dataType=" +
+        dataType +
+        "&base_date=" +
+        day +
+        "&base_time=" +
+        base_time +
+        "&nx=" +
+        nx +
+        "&ny=" +
+        ny;
       console.log(all_url);
 
       request(all_url, (err, res, body) => {
@@ -42,8 +56,22 @@ module.exports = (req, res) => {
           const value = $(this).find("fcstValue").text();
 
           // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
-          if (category === "POP" || category === "PTY" || category === "REH" || category === "SKY" || category === "TMP") {
-            return weather_data.create({ city: nz, nx: x, ny: y, date: date, time: time, category: category, value: value });
+          if (
+            category === "POP" ||
+            category === "PTY" ||
+            category === "REH" ||
+            category === "SKY" ||
+            category === "TMP"
+          ) {
+            return weather_data.create({
+              city: nz,
+              nx: x,
+              ny: y,
+              date: date,
+              time: time,
+              category: category,
+              value: value,
+            });
           }
         });
       });

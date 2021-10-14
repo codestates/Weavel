@@ -78,16 +78,17 @@ function Previews({ fileInfo, setFileHandle }) {
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>
       <input {...getInputProps()} />
       <PhotoBackground>
-        {!file ? (
-          <>
-            <img src="./images/upload.svg"></img>
-            <div>
-              <b>Drag&Drop</b>도 가능합니다
+        <aside style={thumbsContainer}>
+          {files[0] ? (
+            <div style={thumb}>
+              <div style={thumbInner}>
+                <img src={"./images/logo.svg"} style={img} />
+              </div>
             </div>
-          </>
-        ) : (
-          <aside style={thumbsContainer}>{thumbs}</aside>
-        )}
+          ) : (
+            <>{thumbs}</>
+          )}
+        </aside>
       </PhotoBackground>
     </div>
   );

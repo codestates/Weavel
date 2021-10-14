@@ -49,7 +49,10 @@ module.exports = async (req, res) => {
       date: dayCode,
       time: time,
 
-      [or]: [{ [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] }, { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] }],
+      [or]: [
+        { [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] },
+        { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] },
+      ],
     },
   });
 
@@ -68,16 +71,20 @@ module.exports = async (req, res) => {
     xy.push(find[i].ny);
     result.push(xy);
   }
-
+  console.log("결과", result);
   if (weather === "1" || weather === "0") {
     for (let i = 0; i < result.length; i++) {
-      for (let j = i + 1; j < result.length - 1; j++) {
+      for (let j = i + 1; j < result.length; j++) {
         if (result[i][0] === result[j][0] && result[i][1] === result[j][1]) {
           end.push(result[i]);
+          break;
+        } else {
           break;
         }
       }
     }
+    console.log("ㅁㄴㅇㄴㅁㅇ",end);
+
     if (end.length === 0) {
       return res.status(404).json({ message: "데이터가 없습니다." });
     }

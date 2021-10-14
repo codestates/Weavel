@@ -17,11 +17,11 @@ app.use(
     origin: ["http://localhost:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "OPTIONS"],
-  })
+  }),
 );
 
 // 전국 날씨 API Get 요청 예약
-schedule.scheduleJob("0 29 19 * * *", function () {
+schedule.scheduleJob("0 14 5/3 * * *", function () {
   axios.get("http://localhost:4000/weatherAPI?id=01");
 });
 schedule.scheduleJob("0 15 5/3 * * *", function () {
