@@ -32,9 +32,21 @@ import {
   FooterProjectLink,
   FooterTeamLink,
 } from "./App.style";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth, setLogOut } from "./reducers/authReducer";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
+  useEffect(() => {
+    setToken(accessToken);
+    getUserInfo(accessToken);
+    getPhotos(accessToken);
+    getAllPhotosInfo(accessToken);
+    getAllUserWeather(accessToken);
+  }, [accessToken]);
+
   const [token, setToken] = useState("");
   const [isValid, setIsValid] = useState(null);
   const history = useHistory();
@@ -44,8 +56,9 @@ function App() {
     name: "코드몬",
     weather: [],
   });
+  console.log(`loginUserInfo`, loginUserInfo);
 
-  const [allUserWeather, setAllUserWeather] = useState(null);
+  const [allUserWeather, setAllUserWeather] = useState([]);
   const [allPhotoInfo, setAllPhotoInfo] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [isModal, setIsModal] = useState({
@@ -95,16 +108,19 @@ function App() {
       { withCredentials: true }
     )
       .then((res) => {
-        setIsLogin(false);
+        // setIsLogin(false);
+        // replace by redux
+        dispatch(setLogOut());
         openCloseModalHandler(e);
-        test();
+        // test();
+        history.push("/home");
       })
       .catch((error) => console.log("Error", error.message));
   };
 
-  const test = () => {
-    history.push("/signup");
-  };
+  // const test = () => {
+  //   history.push("/home");
+  // };
 
   const putUserInfo = (weather, password, email) => {
     axios
@@ -125,29 +141,38 @@ function App() {
       .then((res) => console.log(res));
   };
 
-  const handleLoginButton = (e, inputId, inputPw) => {
+  const dispatch = useDispatch();
+
+  const handleLoginButton = (e, email, password) => {
     e.preventDefault();
-    axios
-      .post(
-        "http://localhost:4000/user/login",
-        {
-          email: inputId,
-          password: inputPw,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        setIsLogin(true);
-        setToken(res.data.data.accessToken);
-        getUserInfo(res.data.data.accessToken);
-        getPhotos(res.data.data.accessToken);
-        getAllPhotosInfo(res.data.data.accessToken);
-        getAllUserWeather(res.data.data.accessToken);
-      })
-      .catch((err) => {
-        console.error(`signin error: ${err.message}`);
-        setIsValid(true);
-      });
+    // axios
+    //   .post(
+    //     "http://localhost:4000/user/login",
+    //     {
+    //       email: inputId,
+    //       password: inputPw,
+    //     },
+    //     { withCredentials: true }
+    //   )
+    //   .then((res) => {
+    //     setIsLogin(true);
+    // setToken(res.data.data.accessToken);
+    // getUserInfo(res.data.data.accessToken);
+    // getPhotos(res.data.data.accessToken);
+    // getAllPhotosInfo(res.data.data.accessToken);
+    // getAllUserWeather(res.data.data.accessToken);
+    //   })
+    //   .catch((err) => {
+    //     console.error(`signin error: ${err.message}`);
+    //     setIsValid(true);
+    //   });
+
+    dispatch(setAuth({ email: email, password: password }));
+    // setToken(accessToken);
+    // getUserInfo(accessToken);
+    // getPhotos(accessToken);
+    // getAllPhotosInfo(accessToken);
+    // getAllUserWeather(accessToken);
   };
 
   const getUserInfo = (token) => {
