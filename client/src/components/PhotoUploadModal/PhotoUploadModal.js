@@ -19,34 +19,31 @@ import {
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
 import { PhotoUploadContainer, DateInput } from "./PhotoUploadModal.style";
 import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style";
-import PhotoUpload from "../PhotoUpload/PhotoUpload";
+import EditUpload from "../PhotoUpload/EditUpload";
 
 function PhotoUploadModal({
   openCloseModalHandler,
   loginUserInfo,
   token,
   allPhotoInfo,
-  date,
-  weather,
-  comment,
-  photoId,
+  photoIdx,
+  photoEditHandler,
+  photoEditWeather,
 }) {
   const [photoInfo, setphotoInfo] = useState({
-    weather: [],
-    date: null,
-    area: null,
-    comment: null,
+    weather: allPhotoInfo[photoIdx].weather,
+    date: allPhotoInfo[photoIdx].date,
+    area: allPhotoInfo[photoIdx].area,
+    comment: allPhotoInfo[photoIdx].comment,
   });
 
-  const [isPhotoWeather, setIsPhotoWeather] = useState({
-    sunny: false,
-    cloud: false,
-    rain: false,
-    snow: false,
-    num: null,
-  });
+  console.log("asdfdf", allPhotoInfo);
+  console.log("photo upload modal", token);
+
+  const [isPhotoWeather, setIsPhotoWeather] = useState(photoEditWeather);
 
   function weatherButtonHandler(e) {
+    console.log("asdfd", editFileInfo);
     const photoweather = {
       sunny: false,
       cloud: false,
@@ -70,8 +67,6 @@ function PhotoUploadModal({
     setIsPhotoWeather({ ...photoweather });
   }
 
-  console.log(allPhotoInfo);
-
   function commentHandler(e) {
     const newphotoInfo = { ...photoInfo };
     if (e.target.name === "comment") {
@@ -88,57 +83,58 @@ function PhotoUploadModal({
     console.log(newphotoInfo);
   }
 
-  const [fileInfo, setFileInfo] = useState({
+  const [editFileInfo, seteditFileInfo] = useState({
     userId: loginUserInfo.id,
-    image: null,
-    filename: null,
+    newpath: null,
+    newfilename: null,
   });
 
   const formData = new FormData();
+  // formData.append("userId", loginUserInfo.id);
+  formData.append("image", editFileInfo.newpath);
+  // formData.append("newfilename", allPhotoInfo[photoIdx]);
+  // formData.append("id", allPhotoInfo[photoIdx].id);
 
-  formData.append("userId", loginUserInfo.id);
-  formData.append("newpath", fileInfo.image);
-  formData.append("newfilename", fileInfo.filename);
-
+  // 사진 수정
   const handlePhotoEdit = (e) => {
-    console.log(e);
     axios
       .put(
-        "http://localhost:4000/photo/",
+        `http://localhost:4000/photo/id=?${allPhotoInfo[photoIdx].id}`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
-        },
-        { withCredentials: true }
+        }
       )
       .then((res) => {
         handlePhotoInfoEdit(e, res.data.data);
+        console.log("ss");
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
       });
   };
 
-  const setFileHandle = (file) => {
-    setFileInfo(file);
+  const setFileEditHandle = (file) => {
+    seteditFileInfo(file);
   };
 
-  const handlePhotoInfoEdit = (e, photo) => {
+  const handlePhotoInfoEdit = (e) => {
     axios
       .put(
         "http://localhost:4000/photo/info",
-        {
-          id: photo.id,
-          filename: photo.filename,
-          ...photoInfo,
-        },
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+          photo: {
+            id: allPhotoInfo[photoIdx].id,
+            filename: editFileInfo.newpath.path,
+            ...photoInfo,
           },
         },
         { withCredentials: true }
@@ -154,9 +150,11 @@ function PhotoUploadModal({
 
   return (
     <PhotoUploadContainer onClick={(e) => e.stopPropagation()}>
-      <PhotoUpload
-        fileInfo={fileInfo}
-        setFileHandle={setFileHandle}
+      <EditUpload
+        allPhotoInfo={allPhotoInfo}
+        photoIdx={photoIdx}
+        editFileInfo={editFileInfo}
+        setFileEditHandle={setFileEditHandle}
         token={token}
         loginUserInfo={loginUserInfo}
       />
@@ -165,12 +163,13 @@ function PhotoUploadModal({
         <DateInput
           name="date"
           onChange={(e) => commentHandler(e)}
-          value={photoId.date}
           placeholder="YYYY.MM.DD 형식으로 입력해주세요"
+          value={photoInfo.date}
           maxLength="10"
         />
         <InputLabel>지역</InputLabel>
         <AutoComplete
+          photoIdx={photoIdx}
           allPhotoInfo={allPhotoInfo}
           photoInfo={photoInfo}
           name="area"
@@ -214,11 +213,11 @@ function PhotoUploadModal({
           onChange={(e) => commentHandler(e)}
           placeholder="25글자 이내로 남기고 싶은 코멘트를 적어주세요"
           maxLength="25"
-          value={comment}
+          value={photoInfo.comment}
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={(e) => handlePhotoEdit(e)}>
+            <ConfirmButton onClick={(e) => handlePhotoInfoEdit(e)}>
               업로드
             </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>

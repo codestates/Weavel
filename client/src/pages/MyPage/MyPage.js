@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { MyPageContainer, ModalContainer } from "./MyPage.style";
 import MyPageTop from "../../components/MyPageTop/MyPageTop";
 import MyPageMiddle from "../../components/MyPageMiddle/MyPageMiddle";
@@ -6,7 +7,7 @@ import MyPagePhotos from "../../components/MyPagePhotos/MyPagePhotos";
 import EditUserInfoModal from "../../components/EditUserInfoModal/EditUserInfoModal";
 import PhotoUploadModal from "../../components/PhotoUploadModal/PhotoUploadModal";
 import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
-import Modal from "../../components/Modal/Modal";
+import DeleteUserModal from "../../components/Modal/DeleteUserModal";
 import NewPhotoUploadModal from "../../components/PhotoUploadModal/NewPhotoUploadModal";
 import { useSelector } from "react-redux";
 
@@ -19,6 +20,10 @@ function MyPage({
   token,
   allPhotoInfo,
   allUserWeather,
+  filterPhotoHandler,
+  SearchWeatherPhoto,
+  setSearchWeatherPhoto,
+  handleInputChange,
 }) {
   const [keyword, setKeyword] = useState("");
   const [isModal, setIsModal] = useState({
@@ -44,6 +49,8 @@ function MyPage({
       newIsModal.deletePhoto = !newIsModal.deletePhoto;
     } else if (e.target.name === "newPhotoUpload") {
       newIsModal.newPhotoUpload = !newIsModal.newPhotoUpload;
+    } else if (e.target.name === "clickPhoto") {
+      newIsModal.clickPhoto = !newIsModal.clickPhoto;
     } else {
       if (isModal.photoUpload) {
         newIsModal.photoUpload = !newIsModal.photoUpload;
@@ -55,6 +62,8 @@ function MyPage({
         newIsModal.editUserInfo = !newIsModal.editUserInfo;
       } else if (isModal.newPhotoUpload) {
         newIsModal.newPhotoUpload = !newIsModal.newPhotoUpload;
+      } else if (isModal.clickPhoto) {
+        newIsModal.clickPhoto = !newIsModal.clickPhoto;
       }
     }
     setIsModal(newIsModal);
@@ -66,6 +75,7 @@ function MyPage({
     deleteAccount,
     deletePhoto,
     newPhotoUpload,
+    clickPhoto,
   } = isModal;
 
   useEffect(() => {
@@ -75,25 +85,18 @@ function MyPage({
       editUserInfo ||
       deleteAccount ||
       deletePhoto ||
-      newPhotoUpload
+      newPhotoUpload ||
+      clickPhoto
         ? "hidden"
         : "auto";
-  }, [photoUpload, editUserInfo, deleteAccount, deletePhoto, newPhotoUpload]);
-
-  // const weatherDataHandle = () => {
-  //   loginUserInfo.weather.map((weatherNum) => {
-  //     if (weatherNum === 1) {
-  //       isWeather.sunny = true;
-  //     } else if (weatherNum === 2) {
-  //       isWeather.cloud = true;
-  //     } else if (weatherNum === 3) {
-  //       isWeather.rain = true;
-  //     } else if (weatherNum === 4) {
-  //       isWeather.snow = true;
-  //     }
-  //   });
-  //   weatherHandle({ ...isWeather });
-  // };
+  }, [
+    photoUpload,
+    editUserInfo,
+    deleteAccount,
+    deletePhoto,
+    newPhotoUpload,
+    clickPhoto,
+  ]);
 
   const weatherCheckHandle = (e) => {
     let newWeather = { ...isWeather };
@@ -125,14 +128,18 @@ function MyPage({
         openCloseModalHandler={openCloseModalHandler}
       />
       <MyPageMiddle
+        handleInputChange={handleInputChange}
+        SearchWeatherPhoto={SearchWeatherPhoto}
+        setSearchWeatherPhoto={setSearchWeatherPhoto}
+        filterPhotoHandler={filterPhotoHandler}
         setKeyword={setKeyword}
         keyword={keyword}
         isWeather={isWeather}
         weatherCheckHandle={weatherCheckHandle}
       />
       <MyPagePhotos
+        isModal={isModal}
         isLogin={isLogin}
-        keyword={keyword}
         loginUserInfo={loginUserInfo}
         isWeather={isWeather}
         allPhotoInfo={allPhotoInfo}
@@ -164,18 +171,10 @@ function MyPage({
       ) : null}
       {isModal.deleteAccount ? (
         <ModalContainer onClick={openCloseModalHandler}>
-          <Modal
+          <DeleteUserModal
             message={"정말 탈퇴하시겠습니까?"}
             openCloseModalHandler={openCloseModalHandler}
-          ></Modal>
-        </ModalContainer>
-      ) : null}
-      {isModal.deletePhoto ? (
-        <ModalContainer onClick={openCloseModalHandler}>
-          <Modal
-            message={"사진을 삭제하시겠습니까?"}
-            openCloseModalHandler={openCloseModalHandler}
-          ></Modal>
+          ></DeleteUserModal>
         </ModalContainer>
       ) : null}
     </MyPageContainer>

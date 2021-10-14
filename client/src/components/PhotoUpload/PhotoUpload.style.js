@@ -18,6 +18,7 @@ export const PhotoBackground = styled.div`
     font-family: Roboto;
     font-size: 14px;
     color: #b0afaf;
+    z-index: 1;
   }
   img {
     margin: 30px 0 30px 0;
