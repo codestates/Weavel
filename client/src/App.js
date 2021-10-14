@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  useHistory,
-  Redirect,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-router-dom";
 
 import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
@@ -105,7 +98,7 @@ function App() {
           "Content-Type": "application/json",
         },
       },
-      { withCredentials: true }
+      { withCredentials: true },
     )
       .then((res) => {
         // setIsLogin(false);
@@ -136,7 +129,7 @@ function App() {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       )
       .then((res) => console.log(res));
   };
@@ -145,6 +138,7 @@ function App() {
 
   const handleLoginButton = (e, email, password) => {
     e.preventDefault();
+
     // axios
     //   .post(
     //     "http://localhost:4000/user/login",

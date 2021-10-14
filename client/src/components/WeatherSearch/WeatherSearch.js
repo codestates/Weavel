@@ -17,7 +17,8 @@ function WeatherSearch({
   changeAreaHandle,
   getSearchHandle,
   nowWeather,
-  dataHandle,
+  dateTime,
+  weatherColor,
 }) {
   const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
 
@@ -72,6 +73,7 @@ function WeatherSearch({
             showArea={showArea}
             changeAreaHandle={changeAreaHandle}
             nowWeather={nowWeather}
+            weatherColor={weatherColor}
           />
         ) : isActivation.isOpen ? (
           <SearchDetail
@@ -80,7 +82,7 @@ function WeatherSearch({
             setIsActivation={setIsActivation}
             showAreaHandle={showAreaHandle}
             getSearchHandle={getSearchHandle}
-            dataHandle={dataHandle}
+            dateTime={dateTime}
           />
         ) : (
           <SearchInfo />

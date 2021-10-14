@@ -43,8 +43,8 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
   });
@@ -77,9 +77,10 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
       <PhotoBackground>
         {!file ? (
           <>
-            <img src="./images/upload.svg"></img>
-            <div>
-              <b>Drag&Drop</b>도 가능합니다
+            <div style={thumb}>
+              <div style={thumbInner}>
+                <img src={"./images/logo.svg"} style={img} />
+              </div>
             </div>
           </>
         ) : (

@@ -9,7 +9,16 @@ export const MapContainer = styled.div`
 `;
 
 export const Path = styled.path`
-  fill: ${(props) => (props.lenderMap ? "#f48fb1" : "#ffffff")};
+  fill: ${(props) =>
+    props.lenderMap
+      ? "#FFFFFF"
+      : props.weatherColor === 0
+      ? "#FBD489"
+      : props.weatherColor === 1
+      ? "#FBD489"
+      : props.weatherColor === 2
+      ? "#80B9EF"
+      : "#80B9EF"};
   stroke: #e4e4e4;
   stroke-width: ${(props) => props.outline || "1px"};
 `;
