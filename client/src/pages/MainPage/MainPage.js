@@ -3,6 +3,7 @@ import WeatherInfo from "../../components/WeatherInfo/WeatherInfo";
 import WeatherSearch from "../../components/WeatherSearch/WeatherSearch";
 import { MainPageContainer } from "./MainPage.style";
 import axios from "axios";
+import { AlertBox, AlertText } from "../LoginPage/LoginPage.style";
 
 function MainPage() {
   const [isShowWeatherInfo, setIsShowWeatherInfo] = useState(false);
@@ -13,36 +14,61 @@ function MainPage() {
     setIsShowWeatherInfo(boolean);
   };
 
-  const [graphOption, setGraphOption] = useState([]);
-  const [nowWeather, setNowWeather] = useState([]);
-  const [areaWeather, setAreaWeather] = useState([
-    ["20211012", "2200", "POP", "20"],
-    ["20211012", "2200", "TMP", "17"],
-    ["20211012", "2200", "REH", "30"],
-    ["20211012", "2300", "POP", "10"],
-    ["20211012", "2300", "TMP", "19"],
-    ["20211012", "2300", "REH", "40"],
-    ["20211013", "0000", "TMP", "21"],
-    ["20211013", "0000", "POP", "90"],
-    ["20211013", "0000", "REH", "20"],
-    ["20211013", "0100", "TMP", "16"],
-    ["20211013", "0100", "POP", "80"],
-    ["20211013", "0100", "REH", "50"],
-    ["20211013", "0200", "POP", "70"],
-    ["20211013", "0200", "TMP", "18"],
-    ["20211013", "0200", "REH", "30"],
-    ["20211013", "0300", "TMP", "15"],
-    ["20211013", "0300", "REH", "25"],
-    ["20211013", "0300", "POP", "40"],
-    ["20211013", "0400", "TMP", "14"],
-    ["20211013", "0400", "REH", "15"],
-    ["20211013", "0400", "POP", "60"],
-    ["20211013", "0500", "TMP", "16"],
-    ["20211013", "0500", "REH", "35"],
-    ["20211013", "0500", "POP", "30"],
+  const [graphOption, setGraphOption] = useState([
+    {
+      options: {
+        chart: {
+          id: "basic-bar",
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "강수확률",
+          data: [],
+        },
+      ],
+    },
+    {
+      options: {
+        chart: {
+          id: "basic-bar",
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "기온",
+          data: [],
+        },
+      ],
+    },
+    {
+      options: {
+        chart: {
+          id: "basic-bar",
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "습도",
+          data: [],
+        },
+      ],
+    },
   ]);
+  const [nowWeather, setNowWeather] = useState([]);
+  const [areaWeather, setAreaWeather] = useState([]);
 
-  const getAreaWeather = (x, y) => {
+  const getAreaWeather = (x, y, date) => {
+    console.log(x, y);
     axios
       .get("http://localhost:4000/weather/area", {
         params: {
@@ -52,7 +78,7 @@ function MainPage() {
       })
       .then((res) => {
         setAreaWeather(res.data);
-        console.log(res.data);
+        dataHandle(res.data, date);
       });
   };
 
@@ -69,21 +95,22 @@ function MainPage() {
       })
       .then((res) => {
         setNowWeather(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log("err~!!!!");
       });
   };
 
+  const [weatherColor, setWeatherColor] = useState("0");
+
   const getSearchHandle = (weather, day, time, area) => {
     getCityWeather(`${weather}`, `${day}`, time, area);
+    setWeatherColor(weather);
   };
 
-  const changeAreaHandle = (area, x, y) => {
+  const changeAreaHandle = (area, x, y, date) => {
     setAreaName(area);
-    // dataHandle(dummy);
-    // getAreaWeather(x, y);
+    getAreaWeather(x, y, date);
   };
 
   useEffect(() => {
@@ -100,44 +127,64 @@ function MainPage() {
     });
   }, []);
 
-  // const dataHandle = (dummy) => {
-  //   let tempArr = [];
-  //   let dayArr = [];
+  const dataHandle = (areaWeather, date) => {
+    let dayArr = [[], [], []];
+    let popArr = [[], [], []];
+    let tmpArr = [[], [], []];
+    let rehArr = [[], [], []];
 
-  //   dummy.map((data) => {
-  //     tempArr.push(data.tmp);
-  //     dayArr.push(data.time.slice(0, 2));
-  //   });
+    // areaWeather.sort((a, b) => a[0] - b[0]);
+    console.log(areaWeather);
 
-  const dataHandle = () => {
-    let dayArr = [];
-    let popArr = [];
-    let tmpArr = [];
-    let rehArr = [];
+    let today = (24 - dateTime.time) * 3;
+    let tomorrow = (48 - today) * 3;
+    let dayAfterTomorrow = (72 - tomorrow) * 3;
 
-    areaWeather.sort((a, b) => a[0] - b[0]);
-    // areaWeather.sort((a, b) => a[1] - b[1]);
     let rootIdx = 2;
-    areaWeather.map((data, idx) => {
-      if (idx - rootIdx === 0) {
-        if (idx > 2 && data[1] === "0000") {
-          dayArr.push(`내일 ${data[1].slice(0, 2)}시`);
-        } else if (idx > 2) {
-          dayArr.push(`${data[1].slice(0, 2)}시`);
-          rootIdx += 3;
+    for (let i = 0; i < today; i++) {
+      if (rootIdx - i === 0 && i < today) {
+        dayArr[0].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        rootIdx += 3;
+      } else if (rootIdx - i === 0 && i < tomorrow) {
+        dayArr[1].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        rootIdx += 3;
+      }
+      if (rootIdx - i === 0 && i < dayAfterTomorrow) {
+        dayArr[2].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        rootIdx += 3;
+      }
+    }
+
+    for (let i = 0; i < areaWeather.length; i++) {
+      if (areaWeather[i][2] === "POP") {
+        if (i < today) {
+          popArr[0].push(areaWeather[i][3]);
+        } else if (i < tomorrow) {
+          popArr[1].push(areaWeather[i][3]);
+        }
+        if (i < dayAfterTomorrow) {
+          popArr[2].push(areaWeather[i][3]);
+        }
+      } else if (areaWeather[i][2] === "TMP") {
+        if (i < today) {
+          tmpArr[0].push(`${areaWeather[i][3]}`);
+        } else if (i < tomorrow) {
+          tmpArr[1].push(`${areaWeather[i][3]}`);
+        }
+        if (i < dayAfterTomorrow) {
+          tmpArr[2].push(`${areaWeather[i][3]}`);
+        }
+      } else if (areaWeather[i][2] === "REH") {
+        if (i < today) {
+          rehArr[0].push(`${areaWeather[i][3]}`);
+        } else if (i < tomorrow) {
+          rehArr[1].push(`${areaWeather[i][3]}`);
+        }
+        if (i < dayAfterTomorrow) {
+          rehArr[2].push(`${areaWeather[i][3]}`);
         }
       }
-    });
-
-    areaWeather.map((data) => {
-      if (data[2] === "POP") {
-        popArr.push(data[3]);
-      } else if (data[2] === "TMP") {
-        tmpArr.push(`${data[3]}`);
-      } else if (data[2] === "REH") {
-        rehArr.push(`${data[3]}`);
-      }
-    });
+    }
 
     let graphData = [
       {
@@ -146,13 +193,13 @@ function MainPage() {
             id: "basic-bar",
           },
           xaxis: {
-            categories: dayArr,
+            categories: dayArr[date],
           },
         },
         series: [
           {
             name: "강수확률",
-            data: popArr,
+            data: popArr[date],
           },
         ],
       },
@@ -162,13 +209,13 @@ function MainPage() {
             id: "basic-bar",
           },
           xaxis: {
-            categories: dayArr,
+            categories: dayArr[date],
           },
         },
         series: [
           {
             name: "기온",
-            data: tmpArr,
+            data: tmpArr[date],
           },
         ],
       },
@@ -178,17 +225,28 @@ function MainPage() {
             id: "basic-bar",
           },
           xaxis: {
-            categories: dayArr,
+            categories: dayArr[date],
           },
         },
         series: [
           {
             name: "습도",
-            data: rehArr,
+            data: rehArr[date],
           },
         ],
       },
     ];
+
+    // let graphData = [...graphOption];
+    // if (date === undefined) {
+    //   date = 1;
+    // }
+    // graphData[0].options.xaxis.categories = dayArr[date];
+    // graphData[0].series[0].data = popArr[date];
+    // graphData[1].options.xaxis.categories = dayArr[date];
+    // graphData[1].series[0].data = tmpArr[date];
+    // graphData[2].options.xaxis.categories = dayArr[date];
+    // graphData[2].series[0].data = rehArr[date];
 
     setGraphOption(graphData);
   };
@@ -201,7 +259,8 @@ function MainPage() {
         isShowWeatherInfo={isShowWeatherInfo}
         getSearchHandle={getSearchHandle}
         nowWeather={nowWeather}
-        dataHandle={dataHandle}
+        dateTime={dateTime}
+        weatherColor={weatherColor}
       ></WeatherSearch>
       {isShowWeatherInfo ? (
         <WeatherInfo

@@ -6,7 +6,7 @@ export const WeatherInfoContainer = styled.div`
   background: #fbfbfb;
   margin: 44px 0 60px 0;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
-  border-radius: 50px;
+  border-radius: 3.125rem;
   font-family: "Roboto";
   position: relative;
   display: flex;
@@ -20,7 +20,7 @@ export const InfoTitle = styled.div`
   line-height: 5.75rem;
   font-weight: bold;
   font-size: 2rem;
-  width: 63.313rem;
+  padding-left: 1.063rem;
 `;
 
 export const InfoContainer = styled.div`
@@ -61,4 +61,32 @@ export const InfoItemItem = styled.div`
   height: 19.125rem;
   width: 63.313rem;
   padding: 0 1.063rem 0 1.063rem;
+`;
+
+export const DaySelectButton = styled.div`
+  width: 3.688rem;
+  height: 2.2rem;
+  background: #4d70ff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+  border-radius: 0.25rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
+  color: #ffffff;
+  border: 1px solid #4d70ff;
+  text-align: center;
+  line-height: 2rem;
+  cursor: pointer;
+`;
+
+export const DaySelectButtonContainer = styled.div`
+  display: flex;
+  padding-right: 1.063rem;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 63.313rem;
+  align-items: center;
 `;

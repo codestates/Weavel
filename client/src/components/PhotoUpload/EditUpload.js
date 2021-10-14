@@ -31,7 +31,14 @@ const dropzone = {
   position: "relative",
 };
 
-function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
+function EditUpload({
+  fileInfo,
+  editFileInfo,
+  setFileHandle,
+  photoIdx,
+  allPhotoInfo,
+  setFileEditHandle,
+}) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
 
@@ -43,8 +50,8 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });
@@ -62,12 +69,12 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
     files.forEach((file) => URL.revokeObjectURL(file.preview));
     setFile(true);
     if (files[0]) {
-      const newFileInfo = { ...fileInfo };
+      const newEditFileInfo = { ...editFileInfo };
 
-      newFileInfo.image = files[0];
-      newFileInfo.filename = files[0].name;
+      newEditFileInfo.newpath = files[0];
+      newEditFileInfo.newfilename = files[0].name;
 
-      setFileHandle(newFileInfo);
+      setFileEditHandle(newEditFileInfo);
     }
   }, [files]);
 
@@ -75,19 +82,24 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>
       <input {...getInputProps()} />
       <PhotoBackground>
-        {!file ? (
-          <>
-            <div style={thumb}>
-              <div style={thumbInner}>
-                <img src={"./images/logo.svg"} style={img} />
+        <aside>
+          {files[0] === undefined ? (
+            <>
+              <div style={thumb} key={file.name}>
+                <div style={thumbInner}>
+                  <img
+                    src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
+                    style={img}
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <aside>{thumbs}</aside>
-        )}
+            </>
+          ) : (
+            <>{thumbs}</>
+          )}
+        </aside>
       </PhotoBackground>
     </div>
   );
 }
-export default Previews;
+export default EditUpload;

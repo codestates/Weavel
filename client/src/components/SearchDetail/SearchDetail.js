@@ -10,7 +10,6 @@ import {
   AreaItem,
   SearchButton,
 } from "./SearchDetail.style";
-import { dummy } from "../Graph/data";
 
 function SearchDetail({
   setSelectTitle,
@@ -219,7 +218,6 @@ function SearchDetail({
       selectTitle.area = areaTitle.area;
       setSelectTitle({ ...selectTitle });
       setIsActivation({ isOpen: false, isLender: true });
-      dataHandle(dummy);
       showAreaHandle(areaTitle.id);
       getSearchHandle(weatherTitle.id, dayTitle.id, `${timeTitle.id}00`, areaTitle.id);
     }

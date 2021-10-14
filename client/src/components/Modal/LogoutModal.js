@@ -6,7 +6,7 @@ import {
   ConfirmButton,
   CancelButton,
 } from "./Modal.style";
-function Modal({ message, openCloseModalHandler, handleLogout }) {
+function LogoutModal({ message, openCloseModalHandler, handleLogout }) {
   return (
     <ModalContainer onClick={(e) => e.stopPropagation()}>
       <ModalMessage>{message}</ModalMessage>
@@ -18,4 +18,4 @@ function Modal({ message, openCloseModalHandler, handleLogout }) {
   );
 }
 
-export default Modal;
+export default LogoutModal;

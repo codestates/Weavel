@@ -8,13 +8,23 @@ import {
   InfoItemTitle,
   InfoItemDate,
   InfoItemItem,
+  TitleContainer,
+  DaySelectButton,
+  DaySelectButtonContainer,
 } from "./WeatherInfo.style";
 
 function WeatherInfo({ graphOption, areaWeather, areaName }) {
   return (
     <div>
       <WeatherInfoContainer>
-        <InfoTitle>{areaName}의 날씨 정보</InfoTitle>
+        <TitleContainer>
+          <InfoTitle>{areaName}의 날씨 정보</InfoTitle>
+          <DaySelectButtonContainer>
+            <DaySelectButton id={1}>오늘</DaySelectButton>
+            <DaySelectButton id={2}>내일</DaySelectButton>
+            <DaySelectButton id={3}>모레</DaySelectButton>
+          </DaySelectButtonContainer>
+        </TitleContainer>
         <InfoContainer>
           <InfoItemTitle>기온</InfoItemTitle>
           <InfoItemDate>

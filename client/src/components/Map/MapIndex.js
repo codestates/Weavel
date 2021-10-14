@@ -17,32 +17,24 @@ import Map15 from "./Map15";
 import Map16 from "./Map16";
 import Map17 from "./Map17";
 import { MapContainer } from "./MapIndex.style";
-import { area } from "./MapData";
+import { areas } from "./MapData";
 
-function MapIndex({ showArea, searchWeatherHandle, changeAreaHandle }) {
-  const [nowWeather, setNowWeather] = useState([
-    // [61, 127],
-    // [62, 126],
-    // [59, 125],
-    // [59, 127],
-    [62, 128],
-    [60, 127],
-    // [58, 126],
-    // [98, 76],
-  ]);
-
+function MapIndex({ nowWeather, showArea, searchWeatherHandle, changeAreaHandle, weatherColor }) {
   const pickMap = (pickArea, e) => {
     const idx = e.target.id;
     searchWeatherHandle(true);
-    changeAreaHandle(area[pickArea][idx].name, area[pickArea][idx].x, area[pickArea][idx].y);
+    changeAreaHandle(areas[pickArea][idx].name, areas[pickArea][idx].x, areas[pickArea][idx].y, 1);
     window.scrollTo({ top: 900, behavior: "smooth" });
-    console.log("nx: ", area[pickArea][idx].x);
-    console.log("ny: ", area[pickArea][idx].y);
-    console.log("어디?: ", area[pickArea][idx].name);
+    console.log("nx: ", areas[pickArea][idx].x);
+    console.log("ny: ", areas[pickArea][idx].y);
+    console.log("어디?: ", areas[pickArea][idx].name);
+    console.log("색깔: ", areas[pickArea][idx].isShow);
   };
+  // console.log(weatherColor);
+  const [lenderMap, setLenderMap] = useState(areas[showArea]);
 
-  const [lenderMap, setLenderMap] = useState(area[showArea]);
-
+  console.log(areas[showArea]);
+  console.log(nowWeather);
   useEffect(() => {
     let city = {};
     nowWeather.map((coordinate) => {
@@ -54,7 +46,7 @@ function MapIndex({ showArea, searchWeatherHandle, changeAreaHandle }) {
         }
         if (city[area]) {
           if (city[area].x === x && city[area].y === y) {
-            city[area].isShow = true;
+            city[area].isShow = false;
           }
         }
       }
@@ -62,25 +54,63 @@ function MapIndex({ showArea, searchWeatherHandle, changeAreaHandle }) {
     });
   }, [nowWeather]);
 
+  useEffect(() => {
+    return setLenderMap(areas[showArea]);
+  }, []);
+
   return (
     <MapContainer>
-      {showArea === "01" ? <Map01 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "02" ? <Map02 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "03" ? <Map03 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "04" ? <Map04 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "05" ? <Map05 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "06" ? <Map06 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "07" ? <Map07 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "08" ? <Map08 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "09" ? <Map09 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "10" ? <Map10 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "11" ? <Map11 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "12" ? <Map12 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "13" ? <Map13 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "14" ? <Map14 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "15" ? <Map15 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "16" ? <Map16 lenderMap={lenderMap} pickMap={pickMap} /> : null}
-      {showArea === "17" ? <Map17 lenderMap={lenderMap} pickMap={pickMap} /> : null}
+      {showArea === "01" ? (
+        <Map01 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "02" ? (
+        <Map02 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "03" ? (
+        <Map03 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "04" ? (
+        <Map04 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "05" ? (
+        <Map05 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "06" ? (
+        <Map06 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "07" ? (
+        <Map07 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "08" ? (
+        <Map08 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "09" ? (
+        <Map09 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "10" ? (
+        <Map10 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "11" ? (
+        <Map11 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "12" ? (
+        <Map12 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "13" ? (
+        <Map13 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "14" ? (
+        <Map14 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "15" ? (
+        <Map15 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "16" ? (
+        <Map16 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
+      {showArea === "17" ? (
+        <Map17 weatherColor={weatherColor} lenderMap={lenderMap} pickMap={pickMap} />
+      ) : null}
     </MapContainer>
   );
 }

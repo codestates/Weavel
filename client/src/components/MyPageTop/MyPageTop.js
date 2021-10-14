@@ -16,8 +16,13 @@ import {
   FavWeathersContainer,
   MyPageTopContainer,
 } from "./MyPageTop.style";
-function MyPageTop({ openCloseModalHandler, loginUserInfo, isLogin }) {
-  console.log("hi");
+
+function MyPageTop({
+  openCloseModalHandler,
+  loginUserInfo,
+  isLogin,
+  allUserWeather,
+}) {
   const weather = [
     {
       id: 1,
@@ -54,7 +59,7 @@ function MyPageTop({ openCloseModalHandler, loginUserInfo, isLogin }) {
             <PhotoUploadButton
               disabled={!isLogin}
               margin={"242px"}
-              name={"photoUpload"}
+              name={"newPhotoUpload"}
               onClick={(e) => {
                 openCloseModalHandler(e);
               }}
@@ -93,13 +98,11 @@ function MyPageTop({ openCloseModalHandler, loginUserInfo, isLogin }) {
                 })
                 .map((weather, idx) => {
                   return (
-                    <FavoriteWeather id={idx}>
-                      <FavoriteWeatherIcon id={idx} src={weather.src} />
-                      <FavoriteWeatherText id={idx}>
-                        {weather.title}
-                      </FavoriteWeatherText>
-                      <FavoriteWeatherUsers id={idx}>
-                        32명의 회원이 좋아합니다
+                    <FavoriteWeather key={idx}>
+                      <FavoriteWeatherIcon src={weather.src} />
+                      <FavoriteWeatherText>{weather.title}</FavoriteWeatherText>
+                      <FavoriteWeatherUsers>
+                        {allUserWeather[idx]}명의 회원이 좋아합니다
                       </FavoriteWeatherUsers>
                     </FavoriteWeather>
                   );
