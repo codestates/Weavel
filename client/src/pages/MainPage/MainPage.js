@@ -3,7 +3,6 @@ import WeatherInfo from "../../components/WeatherInfo/WeatherInfo";
 import WeatherSearch from "../../components/WeatherSearch/WeatherSearch";
 import { MainPageContainer } from "./MainPage.style";
 import axios from "axios";
-import { AlertBox, AlertText } from "../LoginPage/LoginPage.style";
 
 function MainPage() {
   const [isShowWeatherInfo, setIsShowWeatherInfo] = useState(false);
@@ -66,9 +65,9 @@ function MainPage() {
   ]);
   const [nowWeather, setNowWeather] = useState([]);
   const [areaWeather, setAreaWeather] = useState([]);
+  const [chartId, setChartId] = useState(0);
 
   const getAreaWeather = (x, y, date) => {
-    console.log(x, y);
     axios
       .get("http://localhost:4000/weather/area", {
         params: {
@@ -108,9 +107,14 @@ function MainPage() {
     setWeatherColor(weather);
   };
 
-  const changeAreaHandle = (area, x, y, date) => {
+  const ChartHandle = (idx) => {
+    setChartId(idx);
+    dataHandle(areaWeather, idx);
+  };
+
+  const changeAreaHandle = (area, x, y) => {
     setAreaName(area);
-    getAreaWeather(x, y, date);
+    getAreaWeather(x, y, chartId);
   };
 
   useEffect(() => {
@@ -128,28 +132,25 @@ function MainPage() {
   }, []);
 
   const dataHandle = (areaWeather, date) => {
+    console.log(areaWeather);
     let dayArr = [[], [], []];
     let popArr = [[], [], []];
     let tmpArr = [[], [], []];
     let rehArr = [[], [], []];
 
-    // areaWeather.sort((a, b) => a[0] - b[0]);
-    console.log(areaWeather);
-
     let today = (24 - dateTime.time) * 3;
-    let tomorrow = (48 - today) * 3;
-    let dayAfterTomorrow = (72 - tomorrow) * 3;
-
+    let tomorrow = 24 * 3 + today;
+    let dayAfterTomorrow = 24 * 3 + tomorrow;
+    //15 16~87     72+16+72
     let rootIdx = 2;
-    for (let i = 0; i < today; i++) {
+    for (let i = 0; i < areaWeather.length; i++) {
       if (rootIdx - i === 0 && i < today) {
         dayArr[0].push(`${areaWeather[i][1].slice(0, 2)}시`);
         rootIdx += 3;
       } else if (rootIdx - i === 0 && i < tomorrow) {
         dayArr[1].push(`${areaWeather[i][1].slice(0, 2)}시`);
         rootIdx += 3;
-      }
-      if (rootIdx - i === 0 && i < dayAfterTomorrow) {
+      } else if (rootIdx - i === 0 && i < dayAfterTomorrow) {
         dayArr[2].push(`${areaWeather[i][1].slice(0, 2)}시`);
         rootIdx += 3;
       }
@@ -158,30 +159,27 @@ function MainPage() {
     for (let i = 0; i < areaWeather.length; i++) {
       if (areaWeather[i][2] === "POP") {
         if (i < today) {
-          popArr[0].push(areaWeather[i][3]);
+          popArr[0].push(`${areaWeather[i][3]}%`);
         } else if (i < tomorrow) {
-          popArr[1].push(areaWeather[i][3]);
-        }
-        if (i < dayAfterTomorrow) {
-          popArr[2].push(areaWeather[i][3]);
+          popArr[1].push(`${areaWeather[i][3]}%`);
+        } else if (i < dayAfterTomorrow) {
+          popArr[2].push(`${areaWeather[i][3]}%`);
         }
       } else if (areaWeather[i][2] === "TMP") {
         if (i < today) {
           tmpArr[0].push(`${areaWeather[i][3]}`);
         } else if (i < tomorrow) {
           tmpArr[1].push(`${areaWeather[i][3]}`);
-        }
-        if (i < dayAfterTomorrow) {
+        } else if (i < dayAfterTomorrow) {
           tmpArr[2].push(`${areaWeather[i][3]}`);
         }
       } else if (areaWeather[i][2] === "REH") {
         if (i < today) {
-          rehArr[0].push(`${areaWeather[i][3]}`);
+          rehArr[0].push(`${areaWeather[i][3]}%`);
         } else if (i < tomorrow) {
-          rehArr[1].push(`${areaWeather[i][3]}`);
-        }
-        if (i < dayAfterTomorrow) {
-          rehArr[2].push(`${areaWeather[i][3]}`);
+          rehArr[1].push(`${areaWeather[i][3]}%`);
+        } else if (i < dayAfterTomorrow) {
+          rehArr[2].push(`${areaWeather[i][3]}%`);
         }
       }
     }
@@ -237,18 +235,30 @@ function MainPage() {
       },
     ];
 
-    // let graphData = [...graphOption];
-    // if (date === undefined) {
-    //   date = 1;
-    // }
-    // graphData[0].options.xaxis.categories = dayArr[date];
-    // graphData[0].series[0].data = popArr[date];
-    // graphData[1].options.xaxis.categories = dayArr[date];
-    // graphData[1].series[0].data = tmpArr[date];
-    // graphData[2].options.xaxis.categories = dayArr[date];
-    // graphData[2].series[0].data = rehArr[date];
-
     setGraphOption(graphData);
+  };
+
+  const [buttonColor, setButton] = useState({
+    today: true,
+    tomorrow: false,
+    dayAfterTomorrow: false,
+  });
+
+  const showChart = (idx) => {
+    let newButtonColor = {
+      today: false,
+      tomorrow: false,
+      dayAfterTomorrow: false,
+    };
+
+    if (idx === "0") {
+      newButtonColor.today = true;
+    } else if (idx === "1") {
+      newButtonColor.tomorrow = true;
+    } else if (idx === "2") {
+      newButtonColor.dayAfterTomorrow = true;
+    }
+    setButton(newButtonColor);
   };
 
   return (
@@ -267,6 +277,9 @@ function MainPage() {
           areaWeather={areaWeather}
           graphOption={graphOption}
           areaName={areaName}
+          ChartHandle={ChartHandle}
+          showChart={showChart}
+          buttonColor={buttonColor}
         ></WeatherInfo>
       ) : null}
     </MainPageContainer>

@@ -17,8 +17,8 @@ export const Path = styled.path`
       : props.weatherColor === 1
       ? "#FBD489"
       : props.weatherColor === 2
-      ? "#80B9EF"
-      : "#80B9EF"};
+      ? "#D6E7F7"
+      : "#D6E7F7"};
   stroke: #e4e4e4;
   stroke-width: ${(props) => props.outline || "1px"};
 `;

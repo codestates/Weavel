@@ -237,7 +237,7 @@ export const PasswordConfirmMessage = styled.div`
 export const SubmitSignup = styled.button`
   width: 398px;
   height: 49px;
-  background: ${(props) => (props.isButtonValid ? "#c0cbf7 " : "#4D70FF")};
+  background: ${(props) => (props.isButtonValid ? "#4D70FF" : "#c0cbf7")};
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   border: none;

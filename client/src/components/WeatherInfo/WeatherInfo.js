@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import LineChart from "../Graph/LineGraph";
 
 import {
@@ -13,16 +14,39 @@ import {
   DaySelectButtonContainer,
 } from "./WeatherInfo.style";
 
-function WeatherInfo({ graphOption, areaWeather, areaName }) {
+function WeatherInfo({ graphOption, areaWeather, areaName, ChartHandle, showChart, buttonColor }) {
+  const chartButtonIdx = (e) => {
+    ChartHandle(e.target.id);
+    showChart(e.target.id);
+  };
+
   return (
     <div>
       <WeatherInfoContainer>
         <TitleContainer>
           <InfoTitle>{areaName}의 날씨 정보</InfoTitle>
           <DaySelectButtonContainer>
-            <DaySelectButton id={1}>오늘</DaySelectButton>
-            <DaySelectButton id={2}>내일</DaySelectButton>
-            <DaySelectButton id={3}>모레</DaySelectButton>
+            <DaySelectButton
+              buttonColor={buttonColor.today}
+              onClick={(e) => chartButtonIdx(e)}
+              id={"0"}
+            >
+              오늘
+            </DaySelectButton>
+            <DaySelectButton
+              buttonColor={buttonColor.tomorrow}
+              onClick={(e) => chartButtonIdx(e)}
+              id={"1"}
+            >
+              내일
+            </DaySelectButton>
+            <DaySelectButton
+              buttonColor={buttonColor.dayAfterTomorrow}
+              onClick={(e) => chartButtonIdx(e)}
+              id={"2"}
+            >
+              모레
+            </DaySelectButton>
           </DaySelectButtonContainer>
         </TitleContainer>
         <InfoContainer>

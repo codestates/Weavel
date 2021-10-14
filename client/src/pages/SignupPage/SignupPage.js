@@ -95,9 +95,9 @@ function SignupPage() {
       isCheckInput.isPassword &&
       isCheckInput.isPasswordConfirm
     ) {
-      setIsSubmitValid(false);
-    } else {
       setIsSubmitValid(true);
+    } else {
+      setIsSubmitValid(false);
     }
   }, [isCheckInput, name]);
 
