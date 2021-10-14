@@ -96,68 +96,67 @@ function MyPagePhotos({
 
   return (
     <AlbumContainer>
-      {isLogin && allPhotoInfo.length > 0 ? (
-        <>
-          {allPhotoInfo.map((photo, idx) => {
-            return (
-              <PhotoContainer
-                onClick={(e) => {
-                  openCloseModalHandler(e);
-                }}
-                name={"clickPhoto"}
-                id={idx}
-              >
-                <Photo src={`http://localhost:4000/${photo.image}`} />
-                <PhotoInfoContainer>
-                  <PhotoDate>{photo.date}</PhotoDate>
-                  <PhotoAreaWeather>
-                    {photo.area},{" "}
-                    {photo.weather === "1"
-                      ? "맑음"
-                      : "2"
-                      ? "구름"
-                      : "3"
-                      ? "비"
-                      : "4"
-                      ? "눈"
-                      : null}
-                  </PhotoAreaWeather>
-                  <Comment>{photo.comment}</Comment>
-                  <ButtonContainer>
-                    <PhotoButton
-                      id={idx}
-                      name={"photoUpload"}
-                      onClick={(e) => {
-                        photoEditHandler(e);
-                      }}
-                    >
-                      수정
-                    </PhotoButton>
-                    <PhotoButton
-                      id={idx}
-                      name={"deletePhoto"}
-                      onClick={(e) => {
-                        photoDeleteHandler(e);
-                      }}
-                    >
-                      삭제
-                    </PhotoButton>
-                  </ButtonContainer>
-                </PhotoInfoContainer>
-              </PhotoContainer>
-            );
-          })}
-          {isModal.clickPhoto ? (
-            <ModalContainer onClick={openCloseModalHandler}>
-              <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
-                <img
-                  src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
-                />
-              </ClickPhotoModal>
-            </ModalContainer>
-          ) : null}
-        </>
-      ) : (
+      <>
+        {allPhotoInfo.map((photo, idx) => {
+          return (
+            <PhotoContainer
+              onClick={(e) => {
+                openCloseModalHandler(e);
+              }}
+              name={"clickPhoto"}
+              id={idx}
+            >
+              <Photo src={`http://localhost:4000/${photo.image}`} />
+              <PhotoInfoContainer>
+                <PhotoDate>{photo.date}</PhotoDate>
+                <PhotoAreaWeather>
+                  {photo.area},{" "}
+                  {photo.weather === "1"
+                    ? "맑음"
+                    : "2"
+                    ? "구름"
+                    : "3"
+                    ? "비"
+                    : "4"
+                    ? "눈"
+                    : null}
+                </PhotoAreaWeather>
+                <Comment>{photo.comment}</Comment>
+                <ButtonContainer>
+                  <PhotoButton
+                    id={idx}
+                    name={"photoUpload"}
+                    onClick={(e) => {
+                      photoEditHandler(e);
+                    }}
+                  >
+                    수정
+                  </PhotoButton>
+                  <PhotoButton
+                    id={idx}
+                    name={"deletePhoto"}
+                    onClick={(e) => {
+                      photoDeleteHandler(e);
+                    }}
+                  >
+                    삭제
+                  </PhotoButton>
+                </ButtonContainer>
+              </PhotoInfoContainer>
+            </PhotoContainer>
+          );
+        })}
+        {isModal.clickPhoto ? (
+          <ModalContainer onClick={openCloseModalHandler}>
+            <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
+              <img
+                src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
+              />
+            </ClickPhotoModal>
+          </ModalContainer>
+        ) : null}
+      </>
+      {/*   
         <NoPhotoContainer>
           <NoPhotoTextContainer>
             기록하고 싶은 날씨가 있으신가요? <br></br>사진을 찍어 올려보세요
@@ -199,7 +198,7 @@ function MyPagePhotos({
             openCloseModalHandler={openCloseModalHandler}
           ></DeletePhotoModal>
         </ModalContainer>
-      ) : null}
+      ) : null} */}
     </AlbumContainer>
   );
 }

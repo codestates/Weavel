@@ -59,8 +59,8 @@ function App() {
   console.log(`loginUserInfo`, loginUserInfo);
 
   const [allUserWeather, setAllUserWeather] = useState([]);
-  const [allPhotoInfo, setAllPhotoInfo] = useState(null);
-  const [photo, setPhoto] = useState(null);
+  const [allPhotoInfo, setAllPhotoInfo] = useState([]);
+  const [photo, setPhoto] = useState([]);
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -101,7 +101,7 @@ function App() {
         method: "post",
         url: "http://localhost:4000/user/logout",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       },
@@ -133,7 +133,7 @@ function App() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
         }
