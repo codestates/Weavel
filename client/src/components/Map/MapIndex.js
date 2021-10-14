@@ -23,14 +23,16 @@ function MapIndex({ nowWeather, showArea, searchWeatherHandle, changeAreaHandle,
   const pickMap = (pickArea, e) => {
     const idx = e.target.id;
     searchWeatherHandle(true);
-    changeAreaHandle(areas[pickArea][idx].name, areas[pickArea][idx].x, areas[pickArea][idx].y, 1);
-    window.scrollTo({ top: 900, behavior: "smooth" });
+    changeAreaHandle(areas[pickArea][idx].name, areas[pickArea][idx].x, areas[pickArea][idx].y);
+    setTimeout(() => {
+      window.scrollTo({ top: 900, behavior: "smooth" });
+    });
     console.log("nx: ", areas[pickArea][idx].x);
     console.log("ny: ", areas[pickArea][idx].y);
     console.log("어디?: ", areas[pickArea][idx].name);
     console.log("색깔: ", areas[pickArea][idx].isShow);
   };
-  // console.log(weatherColor);
+
   const [lenderMap, setLenderMap] = useState(areas[showArea]);
 
   console.log(areas[showArea]);

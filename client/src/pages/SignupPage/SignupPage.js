@@ -95,9 +95,9 @@ function SignupPage() {
       isCheckInput.isPassword &&
       isCheckInput.isPasswordConfirm
     ) {
-      setIsSubmitValid(false);
-    } else {
       setIsSubmitValid(true);
+    } else {
+      setIsSubmitValid(false);
     }
   }, [isCheckInput, name]);
 
@@ -297,7 +297,7 @@ function SignupPage() {
       </PasswordConfirmContainer>
       <SubmitSignup
         onClick={(e) => editInfohandler(e)}
-        disabled={isSubmitValid}
+        disabled={!isSubmitValid}
         isButtonValid={isSubmitValid}
       >
         가입

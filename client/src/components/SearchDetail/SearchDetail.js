@@ -17,7 +17,6 @@ function SearchDetail({
   setIsActivation,
   showAreaHandle,
   getSearchHandle,
-  dataHandle,
 }) {
   const weather = [
     {

@@ -66,17 +66,17 @@ export const InfoItemItem = styled.div`
 export const DaySelectButton = styled.div`
   width: 3.688rem;
   height: 2.2rem;
-  background: #4d70ff;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   font-weight: 500;
   font-size: 0.875rem;
   margin-left: 0.5rem;
-  color: #ffffff;
   border: 1px solid #4d70ff;
   text-align: center;
-  line-height: 2rem;
+  line-height: 2.2rem;
   cursor: pointer;
+  background: ${(props) => (props.buttonColor ? "#4D70FF" : "#FBFBFB")};
+  color: ${(props) => (props.buttonColor ? "#FBFBFB" : "#4D70FF")};
 `;
 
 export const DaySelectButtonContainer = styled.div`
