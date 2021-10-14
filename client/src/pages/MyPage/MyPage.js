@@ -8,11 +8,12 @@ import PhotoUploadModal from "../../components/PhotoUploadModal/PhotoUploadModal
 import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
 import Modal from "../../components/Modal/Modal";
 import NewPhotoUploadModal from "../../components/PhotoUploadModal/NewPhotoUploadModal";
+import { useSelector } from "react-redux";
 
 function MyPage({
   loginUserInfo,
   putUserInfo,
-  isLogin,
+  // isLogin,
   isWeather,
   weatherHandle,
   token,
@@ -27,6 +28,8 @@ function MyPage({
     deletePhoto: false,
     newPhotoUpload: false,
   });
+
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const openCloseModalHandler = (e) => {
     let newIsModal = { ...isModal };
