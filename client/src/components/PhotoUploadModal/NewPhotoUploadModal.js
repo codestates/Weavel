@@ -74,6 +74,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     newphotoInfo.weather = isPhotoWeather.num;
     setphotoInfo(newphotoInfo);
     console.log(newphotoInfo);
+    console.log("!!!!", fileInfo.image);
   }
 
   const [fileInfo, setFileInfo] = useState({
@@ -84,9 +85,8 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
 
   const formData = new FormData();
 
-  formData.append("userId", loginUserInfo.id);
+  // formData.append("userId", loginUserInfo.id);
   formData.append("image", fileInfo.image);
-  formData.append("filename", fileInfo.filename);
 
   // 사진 업로드
   const handlePhotoUpload = (e) => {

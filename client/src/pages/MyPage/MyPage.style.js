@@ -14,7 +14,7 @@ export const ModalContainer = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: ${(props) => props.background || "rgba(0, 0, 0, 0.5)"};
   font-family: "Roboto";
   z-index: 999;
 `;

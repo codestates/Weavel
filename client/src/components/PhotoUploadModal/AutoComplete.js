@@ -6,7 +6,7 @@ import {
   AutoCompleteInput,
 } from "./AutoComplete.style";
 
-const AutoComplete = ({ suggestions, photoInfo }) => {
+const AutoComplete = ({ suggestions, photoInfo, photoIdx }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [input, setInput] = useState("");

@@ -10,10 +10,6 @@ export const PhotoUploadContainer = styled.div`
   flex-direction: column;
   align-content: space-evenly;
   margin-top: 10vh;
-  span {
-    display: flex;
-    margin-top: 10px;
-  }
 `;
 
 export const PhotoUploadPlace = styled.div`
@@ -28,4 +24,20 @@ export const PhotoUploadPlace = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+`;
+export const DateInput = styled.input`
+  background: #fbfbfb;
+  width: 396px;
+  height: 47px;
+  border: 1px solid #dcdcdc;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin: 0 0 18px 36px;
+  padding-left: 10px;
+  &:focus {
+    outline-color: #4d70ff;
+  }
+  ::placeholder {
+    color: #b0afaf;
+  }
 `;
