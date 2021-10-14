@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 import {
   LoginContainer,
   LoginText,
@@ -17,11 +17,11 @@ import {
 } from "./LoginPage.style";
 import { Link, Redirect } from "react-router-dom";
 
-function LoginPage({ handleLoginButton, isLogin, isValid, setIsValid }) {
+function LoginPage({ handleLoginButton, isValid, setIsValid }) {
   const [isdisabled, setIsDisabled] = useState(true);
   const [inputPw, setInputPw] = useState("");
   const [inputId, setInputId] = useState("");
-
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
   const handleInputId = (e) => {
     if (e.key === "Enter") {
       handleLoginButton(e, inputId, inputPw);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   AlbumContainer,
   PhotoContainer,
@@ -27,13 +28,12 @@ function MyPagePhotos({
   isWeather,
   weatherCheckHandle,
   isModal,
-  isLogin,
-  deletephotohandler,
+
+  getAllPhotosInfo,
 }) {
-  const [photoIdx, setPhotoIdx] = useState(null);
-
-  const [photoEditWeather, setPhotoEditWeather] = useState(null);
-
+  const [photoIdx, setPhotoIdx] = useState([]);
+  const [photoEditWeather, setPhotoEditWeather] = useState([]);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
   function photoEditHandler(e) {
     setPhotoIdx(e.target.id);
 
@@ -45,13 +45,13 @@ function MyPagePhotos({
       num: null,
     };
 
-    if (allPhotoInfo[e.target.id].weather === "1") {
+    if (allPhotoInfo[e.target.id].weather === "0") {
       weatherState.sunny = true;
-    } else if (allPhotoInfo[e.target.id].weather === "2") {
+    } else if (allPhotoInfo[e.target.id].weather === "1") {
       weatherState.cloud = true;
-    } else if (allPhotoInfo[e.target.id].weather === "3") {
+    } else if (allPhotoInfo[e.target.id].weather === "2") {
       weatherState.rain = true;
-    } else if (allPhotoInfo[e.target.id].weather === "4") {
+    } else if (allPhotoInfo[e.target.id].weather === "3") {
       weatherState.snow = true;
     }
 
@@ -62,7 +62,12 @@ function MyPagePhotos({
   function photoDeleteHandler(e) {
     openCloseModalHandler(e);
   }
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
 
+  useEffect(() => {
+    setPhotoIdx(photoIdx);
+    getAllPhotosInfo(accessToken);
+  }, []);
   // 사진 삭제
   function handleDeletePhoto(e) {
     axios
@@ -71,7 +76,7 @@ function MyPagePhotos({
 
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
@@ -97,108 +102,100 @@ function MyPagePhotos({
   return (
     <AlbumContainer>
       <>
-        {allPhotoInfo.map((photo, idx) => {
-          return (
-            <PhotoContainer
+        {isLogin && allPhotoInfo.length !== 0 ? (
+          allPhotoInfo.map((photo, idx) => {
+            return (
+              <PhotoContainer
+                onClick={(e) => {
+                  openCloseModalHandler(e);
+                }}
+                name={"clickPhoto"}
+                id={idx}
+              >
+                <Photo src={`http://localhost:4000/${photo.image}`} />
+                <PhotoInfoContainer>
+                  <PhotoDate>{photo.date}</PhotoDate>
+                  <PhotoAreaWeather>
+                    {photo.area},{" "}
+                    {photo.weather === "1"
+                      ? "맑음"
+                      : "2"
+                      ? "구름"
+                      : "3"
+                      ? "비"
+                      : "4"
+                      ? "눈"
+                      : null}
+                  </PhotoAreaWeather>
+                  <Comment>{photo.comment}</Comment>
+                  <ButtonContainer>
+                    <PhotoButton
+                      id={idx}
+                      name={"photoUpload"}
+                      onClick={(e) => {
+                        photoEditHandler(e);
+                      }}
+                    >
+                      수정
+                    </PhotoButton>
+                    <PhotoButton
+                      id={idx}
+                      name={"deletePhoto"}
+                      onClick={(e) => {
+                        photoDeleteHandler(e);
+                      }}
+                    >
+                      삭제
+                    </PhotoButton>
+                  </ButtonContainer>
+                </PhotoInfoContainer>
+              </PhotoContainer>
+            );
+          })
+        ) : (
+          <NoPhotoContainer>
+            <NoPhotoTextContainer>
+              기록하고 싶은 날씨가 있으신가요? <br></br>사진을 찍어 올려보세요
+            </NoPhotoTextContainer>
+            <PhotoUploadButton
+              disabled={!isLogin}
+              name={"newPhotoUpload"}
               onClick={(e) => {
                 openCloseModalHandler(e);
               }}
-              name={"clickPhoto"}
-              id={idx}
             >
-              <Photo src={`http://localhost:4000/${photo.image}`} />
-              <PhotoInfoContainer>
-                <PhotoDate>{photo.date}</PhotoDate>
-                <PhotoAreaWeather>
-                  {photo.area},{" "}
-                  {photo.weather === "1"
-                    ? "맑음"
-                    : "2"
-                    ? "구름"
-                    : "3"
-                    ? "비"
-                    : "4"
-                    ? "눈"
-                    : null}
-                </PhotoAreaWeather>
-                <Comment>{photo.comment}</Comment>
-                <ButtonContainer>
-                  <PhotoButton
-                    id={idx}
-                    name={"photoUpload"}
-                    onClick={(e) => {
-                      photoEditHandler(e);
-                    }}
-                  >
-                    수정
-                  </PhotoButton>
-                  <PhotoButton
-                    id={idx}
-                    name={"deletePhoto"}
-                    onClick={(e) => {
-                      photoDeleteHandler(e);
-                    }}
-                  >
-                    삭제
-                  </PhotoButton>
-                </ButtonContainer>
-              </PhotoInfoContainer>
-            </PhotoContainer>
-          );
-        })}
-        {isModal.clickPhoto ? (
+              사진 업로드
+            </PhotoUploadButton>
+          </NoPhotoContainer>
+        )}
+        {isModal.photoUpload ? (
+          <ModalContainer
+            background={"rgba(0, 0, 0, 0.1)"}
+            onClick={openCloseModalHandler}
+          >
+            <PhotoUploadModal
+              photoEditWeather={photoEditWeather}
+              photoEditHandler={photoEditHandler}
+              photoIdx={photoIdx}
+              allPhotoInfo={allPhotoInfo}
+              token={token}
+              loginUserInfo={loginUserInfo}
+              isWeather={isWeather}
+              weatherCheckHandle={weatherCheckHandle}
+              openCloseModalHandler={openCloseModalHandler}
+            ></PhotoUploadModal>
+          </ModalContainer>
+        ) : null}
+        {isModal.deletePhoto ? (
           <ModalContainer onClick={openCloseModalHandler}>
-            <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
-              <img
-                src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
-              />
-            </ClickPhotoModal>
+            <DeletePhotoModal
+              handleDeletePhoto={handleDeletePhoto}
+              message={"사진을 삭제하시겠습니까?"}
+              openCloseModalHandler={openCloseModalHandler}
+            ></DeletePhotoModal>
           </ModalContainer>
         ) : null}
       </>
-      {/*   
-        <NoPhotoContainer>
-          <NoPhotoTextContainer>
-            기록하고 싶은 날씨가 있으신가요? <br></br>사진을 찍어 올려보세요
-          </NoPhotoTextContainer>
-          <PhotoUploadButton
-            disabled={!isLogin}
-            name={"newPhotoUpload"}
-            onClick={(e) => {
-              openCloseModalHandler(e);
-            }}
-          >
-            사진 업로드
-          </PhotoUploadButton>
-        </NoPhotoContainer>
-      )}
-      {isModal.photoUpload ? (
-        <ModalContainer
-          background={"rgba(0, 0, 0, 0.1)"}
-          onClick={openCloseModalHandler}
-        >
-          <PhotoUploadModal
-            photoEditWeather={photoEditWeather}
-            photoEditHandler={photoEditHandler}
-            photoIdx={photoIdx}
-            allPhotoInfo={allPhotoInfo}
-            token={token}
-            loginUserInfo={loginUserInfo}
-            isWeather={isWeather}
-            weatherCheckHandle={weatherCheckHandle}
-            openCloseModalHandler={openCloseModalHandler}
-          ></PhotoUploadModal>
-        </ModalContainer>
-      ) : null}
-      {isModal.deletePhoto ? (
-        <ModalContainer onClick={openCloseModalHandler}>
-          <DeletePhotoModal
-            handleDeletePhoto={handleDeletePhoto}
-            message={"사진을 삭제하시겠습니까?"}
-            openCloseModalHandler={openCloseModalHandler}
-          ></DeletePhotoModal>
-        </ModalContainer>
-      ) : null} */}
     </AlbumContainer>
   );
 }

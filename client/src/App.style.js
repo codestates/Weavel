@@ -64,7 +64,7 @@ export const LoginButton = styled.button`
 `;
 
 export const Body = styled.div`
-  height: 100%;
+  min-height: 90vh;
   display: flex;
   flex-grow: 1;
   justify-content: center;
@@ -77,6 +77,7 @@ export const Body = styled.div`
 `;
 
 export const Footer = styled.div`
+  margin-top: auto;
   height: 180px;
   display: flex;
   justify-content: center;

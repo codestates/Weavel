@@ -72,6 +72,7 @@ function EditUserInfoModal({
     if (isWeather.snow) {
       arrEditWeather.push(4);
     }
+
     if (password === passwordConfirm) {
       putUserInfo(arrEditWeather, password, loginUserInfo.email);
     }

@@ -58,19 +58,19 @@ function SignupPage() {
   const [isWeather, setIsWeather] = useState(isCheckWeather);
   const weatherCheckHandle = (e) => {
     let newWeather = { ...isWeather };
-    if (e.target.id === "1") {
+    if (e.target.id === "0") {
       newWeather.sunny = !newWeather.sunny;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "2") {
+    if (e.target.id === "1") {
       newWeather.cloud = !newWeather.cloud;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "3") {
+    if (e.target.id === "2") {
       newWeather.rain = !newWeather.rain;
       setIsWeather(newWeather);
     }
-    if (e.target.id === "4") {
+    if (e.target.id === "3") {
       newWeather.snow = !newWeather.snow;
       setIsWeather(newWeather);
     }
@@ -110,7 +110,9 @@ function SignupPage() {
       isNewCheckInput.isPassword = passwordHandle(e.target.value);
       SetIsCheckInput(isNewCheckInput);
     } else if (e.target.id === "passwordConfirm") {
-      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(e.target.value);
+      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(
+        e.target.value
+      );
       SetIsCheckInput(isNewCheckInput);
     }
   };
@@ -120,7 +122,7 @@ function SignupPage() {
       return null;
     }
     let check = email.match(
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
     );
 
     return email.indexOf(".") !== -1 && check ? true : false;
@@ -131,7 +133,9 @@ function SignupPage() {
       return null;
     }
 
-    let check = password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+    let check = password.match(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+    );
     return password.length > 7 && password.length < 17 && check ? true : false;
   };
 
@@ -145,16 +149,16 @@ function SignupPage() {
   const editInfohandler = (e) => {
     let arrEditWeather = [];
     if (isWeather.sunny) {
-      arrEditWeather.push(1);
+      arrEditWeather.push(0);
     }
     if (isWeather.cloud) {
-      arrEditWeather.push(2);
+      arrEditWeather.push(1);
     }
     if (isWeather.rain) {
-      arrEditWeather.push(3);
+      arrEditWeather.push(2);
     }
     if (isWeather.snow) {
-      arrEditWeather.push(4);
+      arrEditWeather.push(3);
     }
     if (password === passwordConfirm) {
     }
@@ -171,7 +175,7 @@ function SignupPage() {
           password: password,
           weather: arrEditWeather,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
 
       .then((res) => {
@@ -189,7 +193,7 @@ function SignupPage() {
         {
           email: email,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
         console.log(res);
@@ -249,16 +253,32 @@ function SignupPage() {
       <WeatherContainer>
         <span>좋아하는 날씨</span>
         <WeatherChoiceBox>
-          <Sunny isSunny={isWeather.sunny} id="1" onClick={(e) => weatherCheckHandle(e)}>
+          <Sunny
+            isSunny={isWeather.sunny}
+            id="0"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
             맑음
           </Sunny>
-          <Cloud isCloud={isWeather.cloud} id="2" onClick={(e) => weatherCheckHandle(e)}>
+          <Cloud
+            isCloud={isWeather.cloud}
+            id="1"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
             구름
           </Cloud>
-          <Rain isRain={isWeather.rain} id="3" onClick={(e) => weatherCheckHandle(e)}>
+          <Rain
+            isRain={isWeather.rain}
+            id="2"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
             비
           </Rain>
-          <Snow isSnow={isWeather.snow} id="4" onClick={(e) => weatherCheckHandle(e)}>
+          <Snow
+            isSnow={isWeather.snow}
+            id="3"
+            onClick={(e) => weatherCheckHandle(e)}
+          >
             눈
           </Snow>
         </WeatherChoiceBox>
@@ -287,7 +307,9 @@ function SignupPage() {
           onChange={(e) => inputValueHandle(e)}
           onKeyUp={(e) => inputValidHandle(e)}
         />
-        <PasswordConfirmMessage isPasswordConfirm={isCheckInput.isPasswordConfirm}>
+        <PasswordConfirmMessage
+          isPasswordConfirm={isCheckInput.isPasswordConfirm}
+        >
           {isCheckInput.isPasswordConfirm === null
             ? null
             : isCheckInput.isPasswordConfirm
@@ -297,7 +319,7 @@ function SignupPage() {
       </PasswordConfirmContainer>
       <SubmitSignup
         onClick={(e) => editInfohandler(e)}
-        disabled={isSubmitValid}
+        disabled={!isSubmitValid}
         isButtonValid={isSubmitValid}
       >
         가입

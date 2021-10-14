@@ -170,28 +170,28 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
         <WeatherBox margin={"0 10px 15px 34px"}>
           <Sunny
             isSunnyPhoto={isPhotoWeather.sunny}
-            id="1"
+            id="0"
             onClick={(e) => weatherButtonHandler(e)}
           >
             맑음
           </Sunny>
           <Cloud
             isCloudPhoto={isPhotoWeather.cloud}
-            id="2"
+            id="1"
             onClick={(e) => weatherButtonHandler(e)}
           >
             구름
           </Cloud>
           <Rain
             isRainPhoto={isPhotoWeather.rain}
-            id="3"
+            id="2"
             onClick={(e) => weatherButtonHandler(e)}
           >
             비
           </Rain>
           <Snow
             isSnowPhoto={isPhotoWeather.snow}
-            id="4"
+            id="3"
             onClick={(e) => weatherButtonHandler(e)}
           >
             눈
