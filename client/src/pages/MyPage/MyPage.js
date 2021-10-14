@@ -24,6 +24,8 @@ function MyPage({
   SearchWeatherPhoto,
   setSearchWeatherPhoto,
   handleInputChange,
+  getAllPhotosInfo,
+  DeleteUser,
 }) {
   const [keyword, setKeyword] = useState("");
   const [isModal, setIsModal] = useState({
@@ -138,6 +140,7 @@ function MyPage({
         weatherCheckHandle={weatherCheckHandle}
       />
       <MyPagePhotos
+        getAllPhotosInfo={getAllPhotosInfo}
         isModal={isModal}
         isLogin={isLogin}
         loginUserInfo={loginUserInfo}
@@ -172,6 +175,7 @@ function MyPage({
       {isModal.deleteAccount ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <DeleteUserModal
+            DeleteUser={DeleteUser}
             message={"정말 탈퇴하시겠습니까?"}
             openCloseModalHandler={openCloseModalHandler}
           ></DeleteUserModal>

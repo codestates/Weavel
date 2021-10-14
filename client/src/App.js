@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { BrowserRouter, Route, Switch, useHistory, Redirect, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+  Link,
+} from "react-router-dom";
 
 import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
@@ -98,7 +105,7 @@ function App() {
           "Content-Type": "application/json",
         },
       },
-      { withCredentials: true },
+      { withCredentials: true }
     )
       .then((res) => {
         // setIsLogin(false);
@@ -129,7 +136,7 @@ function App() {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-        },
+        }
       )
       .then((res) => console.log(res));
   };
@@ -182,13 +189,13 @@ function App() {
       const { id, email, name, weather } = res.data.data;
 
       weather.map((weather) => {
-        if (weather === 1) {
+        if (weather === 0) {
           isWeather.sunny = true;
-        } else if (weather === 2) {
+        } else if (weather === 1) {
           isWeather.cloud = true;
-        } else if (weather === 3) {
+        } else if (weather === 2) {
           isWeather.rain = true;
-        } else if (weather === 4) {
+        } else if (weather === 3) {
           isWeather.snow = true;
         }
       });
@@ -201,12 +208,12 @@ function App() {
   // };
 
   // 회원 탈퇴
-  const DeleteUser = (token) => {
+  const DeleteUser = () => {
     axios({
       method: "delete",
       url: "http://localhost:4000/user",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       withCredentials: true,
@@ -248,7 +255,7 @@ function App() {
   };
 
   // 모든 회원 날씨 정보
-  const getAllUserWeather = (token) => {
+  const getAllUserWeather = () => {
     axios({
       method: "get",
       url: "http://localhost:4000/user/weather",
@@ -268,7 +275,7 @@ function App() {
     rain: false,
     snow: false,
   });
-  console.log("adadf", SearchWeatherPhoto);
+
   const filterPhotoHandler = (num) => {
     let filterPhotoInfo = [];
 
@@ -349,13 +356,13 @@ function App() {
         <Body>
           <Switch>
             <Route exact path="/">
-              <MainPage isLogin={isLogin} />
+              <MainPage />
             </Route>
             <Route path="/login">
               <LoginPage
                 setIsValid={setIsValid}
                 isValid={isValid}
-                isLogin={isLogin}
+                // isLogin={isLogin}
                 loginUserInfo={loginUserInfo}
                 handleLoginButton={handleLoginButton}
               />
@@ -365,6 +372,8 @@ function App() {
             </Route>
             <Route path="/mypage">
               <MyPage
+                DeleteUser={DeleteUser}
+                getAllPhotosInfo={getAllPhotosInfo}
                 handleInputChange={handleInputChange}
                 SearchWeatherPhoto={SearchWeatherPhoto}
                 setSearchWeatherPhoto={setSearchWeatherPhoto}
