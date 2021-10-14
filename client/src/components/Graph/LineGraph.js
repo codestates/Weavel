@@ -25,21 +25,24 @@ class LineChart extends Component {
                   options={this.props.graphOption[0].options}
                   series={this.props.graphOption[0].series}
                   type="bar"
-                  width="500"
+                  width="1000"
+                  height="300"
                 />
               ) : this.props.REHbar ? (
                 <Chart
                   options={this.props.graphOption[2].options}
                   series={this.props.graphOption[2].series}
                   type="bar"
-                  width="500"
+                  width="1000"
+                  height="300"
                 />
               ) : (
                 <Chart
                   options={this.props.graphOption[1].options}
                   series={this.props.graphOption[1].series}
                   type="line"
-                  width="500"
+                  width="1000"
+                  height="300"
                 />
               )}
             </Container>

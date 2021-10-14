@@ -15,10 +15,10 @@ export const Path = styled.path`
       : props.weatherColor === 0
       ? "#FBD489"
       : props.weatherColor === 1
-      ? "#D6E7F7"
+      ? "#FBD489"
       : props.weatherColor === 2
       ? "#80B9EF"
-      : "#D9D9D9"};
+      : "#80B9EF"};
   stroke: #e4e4e4;
   stroke-width: ${(props) => props.outline || "1px"};
 `;
