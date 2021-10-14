@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
   let SKYvalue = "";
   let PTYvalue = "";
 
+  // pty는 만족하나 sky는 만족 x
   //날짜 코드 오늘(0), 내일(1), 모레(2)
   if (day === "0") {
     dayCode = moment().format("YYYYMMDD");
