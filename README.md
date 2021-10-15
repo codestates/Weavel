@@ -1,5 +1,5 @@
-# Weavel
-## 🖋프로젝트 소개
+
+## 🖋 프로젝트 소개
 
 <img width="909" alt="스크린샷 2021-10-15 05 49 59" src="https://user-images.githubusercontent.com/85698976/137393404-ed208ecf-c003-48c5-8965-18a64293cd65.png">
 
@@ -23,11 +23,11 @@
 
 구름 한점없이 맑은 곳, 시원한 비가 내리는 곳, 펑펑 눈이 내리는 곳 날씨를 느끼러 떠나기 전 `웨블(Weavel)`과 함께 하세요!
 
-## ⚙️사용 스택
+## ⚙️ 사용 스택
 ![Weavel 기술 스택](https://user-images.githubusercontent.com/85698976/137167710-6a9ec57c-aaf0-41e4-a862-d9e8388eaec8.jpeg)
 
 
-## Codemon Team Members
+## TEAM: Codemon
 
 <img src = "https://user-images.githubusercontent.com/82765407/133204924-ee98db2f-f364-4e57-87c8-935f7fa58714.png" width="200px">
 <a href="https://github.com/devSominPark"><img src = "https://img.shields.io/badge/devSominPark-black?style=for-the-badge&logo=GitHub&logoColor=white"></a>
