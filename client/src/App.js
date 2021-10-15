@@ -227,6 +227,7 @@ function App() {
       withCredentials: true,
     }).then((res) => {
       setAllPhotoInfo(res.data);
+      console.log(allPhotoInfo);
       console.log("사진정보받기~~~~~", res.data);
     });
   };

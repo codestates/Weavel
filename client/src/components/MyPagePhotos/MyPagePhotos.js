@@ -28,36 +28,19 @@ function MyPagePhotos({
   weatherCheckHandle,
   isModal,
   isLogin,
+  photoIdx,
   deletephotohandler,
+  weatherAndPhotoIdxHandle,
+  isPhotoWeather,
+  OnlyOneWeatherHandle,
 }) {
-  const [photoIdx, setPhotoIdx] = useState(null);
-
-  const [photoEditWeather, setPhotoEditWeather] = useState(null);
-
+  console.log("dyrlrlrlrl", allPhotoInfo);
   function photoEditHandler(e) {
-    setPhotoIdx(e.target.id);
-
-    const weatherState = {
-      sunny: false,
-      cloud: false,
-      rain: false,
-      snow: false,
-      num: null,
-    };
-
-    if (allPhotoInfo[e.target.id].weather === "1") {
-      weatherState.sunny = true;
-    } else if (allPhotoInfo[e.target.id].weather === "2") {
-      weatherState.cloud = true;
-    } else if (allPhotoInfo[e.target.id].weather === "3") {
-      weatherState.rain = true;
-    } else if (allPhotoInfo[e.target.id].weather === "4") {
-      weatherState.snow = true;
-    }
-
-    setPhotoEditWeather(weatherState);
     openCloseModalHandler(e);
   }
+  const photoSelectHandle = (e) => {
+    weatherAndPhotoIdxHandle(e);
+  };
 
   function photoDeleteHandler(e) {
     openCloseModalHandler(e);
@@ -83,7 +66,7 @@ function MyPagePhotos({
             area: allPhotoInfo[photoIdx].area,
             filename: allPhotoInfo[photoIdx].filename,
           },
-        }
+        },
       )
       .then((res) => {
         console.log(res);
@@ -101,7 +84,7 @@ function MyPagePhotos({
           return (
             <PhotoContainer
               onClick={(e) => {
-                openCloseModalHandler(e);
+                photoSelectHandle(e);
               }}
               name={"clickPhoto"}
               id={idx}
@@ -111,15 +94,7 @@ function MyPagePhotos({
                 <PhotoDate>{photo.date}</PhotoDate>
                 <PhotoAreaWeather>
                   {photo.area},{" "}
-                  {photo.weather === "1"
-                    ? "맑음"
-                    : "2"
-                    ? "구름"
-                    : "3"
-                    ? "비"
-                    : "4"
-                    ? "눈"
-                    : null}
+                  {photo.weather === "1" ? "맑음" : "2" ? "구름" : "3" ? "비" : "4" ? "눈" : null}
                 </PhotoAreaWeather>
                 <Comment>{photo.comment}</Comment>
                 <ButtonContainer>
@@ -146,12 +121,11 @@ function MyPagePhotos({
             </PhotoContainer>
           );
         })}
+
         {isModal.clickPhoto ? (
           <ModalContainer onClick={openCloseModalHandler}>
             <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
-              <img
-                src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
-              />
+              <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} />
             </ClickPhotoModal>
           </ModalContainer>
         ) : null}
