@@ -67,9 +67,14 @@
 * Works : 마이 페이지, 로그인
 
 ## More Info
-[👾 Wiki](https://github.com/codestates/Weavel/wiki)
 
-[🗓 회의록](https://github.com/codestates/Weavel/projects/5)
+[🖥  발표 PPT](https://www.miricanvas.com/v/1nd0sx)
+
+[🎬  발표 영상](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d0194e0b-c6fe-4196-95c7-7b4f784e60e7/zoom_6.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20211015%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20211015T092724Z&X-Amz-Expires=86400&X-Amz-Signature=ca5b532db6a584150a7fe30bdf59368fa124ae8d39871efe55a347571ffbd36b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%2214_Codemon_Weavel.mp4%22)
+
+[👾  Wiki](https://github.com/codestates/Weavel/wiki)
+
+[🗓  회의록](https://github.com/codestates/Weavel/projects/5)
 
 [🐬 DB schema](https://dbdiagram.io/d/615c4654825b5b014621fdad)
 
