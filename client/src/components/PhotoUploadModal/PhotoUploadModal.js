@@ -441,110 +441,40 @@ import { PhotoUploadContainer } from "./PhotoUploadModal.style";
 import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style";
 import EditUploadCopy from "../PhotoUpload/EditUploadCopy";
 
-function PhotoUploadModal({
-  openCloseModalHandler,
-  loginUserInfo,
-  token,
-  isPhotoWeather,
-  OnlyOneWeatherHandle,
-  photoIdx,
-  allPhotoInfo,
-  setPhotoIdx,
-}) {
-  const [photoInfo, setphotoInfo] = useState({
-    weather: [],
-    date: null,
-    area: null,
-    comment: null,
-  });
-
-  const [isnowPhotoWeather, setIsnowPhotoWeather] = useState({
-    sunny: false,
-    cloud: false,
-    rain: false,
-    snow: false,
-    num: null,
-  });
+function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token, photoIdx, allPhotoInfo }) {
   useEffect(() => {
     const showWeather = { ...isnowPhotoWeather };
-    if (isPhotoWeather === "1") {
+    if (allPhotoInfo[photoIdx].weather === "1") {
       showWeather.sunny = true;
-    } else if (isPhotoWeather === "2") {
+    } else if (allPhotoInfo[photoIdx].weather === "2") {
       showWeather.cloud = true;
-    } else if (isPhotoWeather === "3") {
+    } else if (allPhotoInfo[photoIdx].weather === "3") {
       showWeather.rain = true;
-    } else if (isPhotoWeather === "4") {
+    } else if (allPhotoInfo[photoIdx].weather === "4") {
       showWeather.snow = true;
     }
     setIsnowPhotoWeather(showWeather);
+    // setphotoInfo({
+    //   weather: allPhotoInfo[photoIdx].weather,
+    //   date: allPhotoInfo[photoIdx].date,
+    //   area: allPhotoInfo[photoIdx].area,
+    //   comment: allPhotoInfo[photoIdx].comment,
+    // });
   }, []);
-  function weatherButtonHandler(e) {
-    const photoweather = {
-      sunny: false,
-      cloud: false,
-      rain: false,
-      snow: false,
-      num: null,
-    };
-    if (e.target.id === "1") {
-      photoweather.sunny = true;
-      photoweather.num = "1";
-    } else if (e.target.id === "2") {
-      photoweather.cloud = true;
-      photoweather.num = "2";
-    } else if (e.target.id === "3") {
-      photoweather.rain = true;
-      photoweather.num = "3";
-    } else if (e.target.id === "4") {
-      photoweather.snow = true;
-      photoweather.num = "4";
-    }
-    setIsnowPhotoWeather({ ...photoweather });
-  }
-  function commentHandler(e) {
-    const newphotoInfo = { ...photoInfo };
-    if (e.target.name === "comment") {
-      allPhotoInfo[photoIdx].comment = e.target.value;
-      newphotoInfo.comment = e.target.value;
-    }
-    if (e.target.name === "date") {
-      allPhotoInfo[photoIdx].date = e.target.value;
-      newphotoInfo.date = e.target.value;
-    }
-    if (e.target.name === "area") {
-      newphotoInfo.area = e.target.value;
-    }
-    newphotoInfo.weather = isnowPhotoWeather.num;
-    setphotoInfo(newphotoInfo);
-    // if (isPhotoWeather.sunny === true) {
-    //   newphotoInfo.weather = "1";
-    // } else if (isPhotoWeather.sunny === true) {
-    //   newphotoInfo.weather = "2";
-    // } else if (isPhotoWeather.sunny === true) {
-    //   newphotoInfo.weather = "3";
-    // } else if (isPhotoWeather.sunny === true) {
-    //   newphotoInfo.weather = "4";
-    // }
-    // OnlyOneWeatherHandle(e);
-    setphotoInfo(newphotoInfo);
-  }
 
-  const [fileInfo, setFileInfo] = useState({
-    userId: loginUserInfo.id,
-    image: null,
-    filename: null,
+  const [photoInfo, setphotoInfo] = useState({
+    weather: "null",
+    date: "날짜 정보가 없습니다",
+    area: "위치 정보가 없습니다",
+    comment: "코멘트 정보가 없습니다",
   });
-
-  const formData = new FormData();
-
-  // formData.append("userId", loginUserInfo.id);
-  formData.append("image", fileInfo.image);
-
+  console.log("333333343434343434", photoInfo);
   // 사진 업로드
+
   const handlePhotoUpload = (e) => {
     axios
       .put(
-        `http://localhost:4000/photo?id=${photoIdx}`,
+        `http://localhost:4000/photo?id=${allPhotoInfo[photoIdx].id}`,
         formData,
         {
           headers: {
@@ -555,7 +485,7 @@ function PhotoUploadModal({
         { withCredentials: true },
       )
       .then((res) => {
-        handlePhotoInfoUpload(e, allPhotoInfo[photoIdx], photoIdx);
+        handlePhotoInfoUpload(e);
         console.log(res.data.date);
       })
       .catch((err) => {
@@ -563,18 +493,17 @@ function PhotoUploadModal({
       });
   };
 
-  const setFileHandle = (file) => {
-    setFileInfo(file);
-  };
-
-  const handlePhotoInfoUpload = (e, photo, photoIdx) => {
+  const handlePhotoInfoUpload = (e) => {
     axios
       .put(
         "http://localhost:4000/photo/info",
         {
-          id: photoIdx,
           filename: allPhotoInfo[photoIdx].filename,
-          ...photoInfo,
+          id: allPhotoInfo[photoIdx].id,
+          weather: photoInfo.weather,
+          date: photoInfo.date,
+          comment: photoInfo.comment,
+          area: photoInfo.area,
         },
         {
           headers: {
@@ -593,6 +522,80 @@ function PhotoUploadModal({
       });
   };
 
+  const [isnowPhotoWeather, setIsnowPhotoWeather] = useState({
+    sunny: false,
+    cloud: false,
+    rain: false,
+    snow: false,
+    num: "null",
+  });
+
+  function weatherButtonHandler(e) {
+    const photoweather = {
+      sunny: false,
+      cloud: false,
+      rain: false,
+      snow: false,
+      num: "null",
+    };
+    if (e.target.id === "1") {
+      photoweather.sunny = true;
+      photoweather.num = "1";
+    } else if (e.target.id === "2") {
+      photoweather.cloud = true;
+      photoweather.num = "2";
+    } else if (e.target.id === "3") {
+      photoweather.rain = true;
+      photoweather.num = "3";
+    } else if (e.target.id === "4") {
+      photoweather.snow = true;
+      photoweather.num = "4";
+    }
+    setIsnowPhotoWeather({ ...photoweather });
+  }
+
+  function commentHandler(e) {
+    const newphotoInfo = { ...photoInfo };
+    if (e.target.name === "comment") {
+      newphotoInfo.comment = e.target.value;
+    }
+    if (e.target.name === "date") {
+      newphotoInfo.date = e.target.value;
+    }
+    if (e.target.name === "area") {
+      newphotoInfo.area = e.target.value;
+    }
+    newphotoInfo.weather = isnowPhotoWeather.num;
+    setphotoInfo(newphotoInfo);
+    console.log(photoInfo);
+    // if (isPhotoWeather.sunny === true) {
+    //   newphotoInfo.weather = "1";
+    // } else if (isPhotoWeather.sunny === true) {
+    //   newphotoInfo.weather = "2";
+    // } else if (isPhotoWeather.sunny === true) {
+    //   newphotoInfo.weather = "3";
+    // } else if (isPhotoWeather.sunny === true) {
+    //   newphotoInfo.weather = "4";
+    // }
+    // OnlyOneWeatherHandle(e);
+    // setphotoInfo(newphotoInfo);
+  }
+
+  const [fileInfo, setFileInfo] = useState({
+    userId: loginUserInfo.id,
+    image: null,
+    filename: null,
+  });
+
+  const formData = new FormData();
+
+  // formData.append("userId", loginUserInfo.id);
+  formData.append("image", fileInfo.image);
+
+  const setFileHandle = (file) => {
+    setFileInfo(file);
+  };
+
   return (
     <PhotoUploadContainer onClick={(e) => e.stopPropagation()}>
       <EditUploadCopy
@@ -602,12 +605,11 @@ function PhotoUploadModal({
         loginUserInfo={loginUserInfo}
         fileInfo={fileInfo}
         setFileHandle={setFileHandle}
-        setPhotoIdx={setPhotoIdx}
       />
       <EditInfoContainer margin={"270px"}>
         <InputLabel>날짜</InputLabel>
         <EmailInput
-          value={allPhotoInfo[photoIdx].date}
+          value={photoInfo.date}
           name="date"
           onChange={(e) => commentHandler(e)}
           placeholder="YYYY.MM.DD 형식으로 입력해주세요"
@@ -654,7 +656,7 @@ function PhotoUploadModal({
         </WeatherBox>
         <InputLabel>코멘트</InputLabel>
         <EmailInput
-          value={allPhotoInfo[photoIdx].comment}
+          value={photoInfo.comment}
           name="comment"
           onChange={(e) => commentHandler(e)}
           placeholder="25글자 이내로 남기고 싶은 코멘트를 적어주세요"

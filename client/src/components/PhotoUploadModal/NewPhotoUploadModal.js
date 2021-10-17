@@ -14,10 +14,10 @@ import PhotoUpload from "../PhotoUpload/PhotoUpload";
 function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   console.log(token);
   const [photoInfo, setphotoInfo] = useState({
-    weather: [],
-    date: null,
-    area: null,
-    comment: null,
+    weather: "5",
+    date: "날짜 정보를 입력해주세요",
+    area: "날씨 정보를 입력해주세요",
+    comment: "코멘트 정보를 입력해주세요",
   });
 
   const [isPhotoWeather, setIsPhotoWeather] = useState({
@@ -25,7 +25,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     cloud: false,
     rain: false,
     snow: false,
-    num: null,
+    num: "null",
   });
 
   function weatherButtonHandler(e) {
@@ -34,7 +34,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
       cloud: false,
       rain: false,
       snow: false,
-      num: null,
+      num: "null",
     };
     if (e.target.id === "1") {
       photoweather.sunny = true;
@@ -115,6 +115,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
         "http://localhost:4000/photo/info",
         {
           id: photo.id,
+          filename: photo.filename,
           ...photoInfo,
         },
         {

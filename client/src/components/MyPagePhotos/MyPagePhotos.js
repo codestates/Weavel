@@ -46,37 +46,6 @@ function MyPagePhotos({
     openCloseModalHandler(e);
   }
 
-  // 사진 삭제
-  function handleDeletePhoto(e) {
-    axios
-      .delete(
-        "http://localhost:4000/photo",
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-          data: {
-            id: allPhotoInfo[photoIdx].id,
-            userId: loginUserInfo.id,
-            weather: allPhotoInfo[photoIdx].weather,
-            date: allPhotoInfo[photoIdx].date,
-            area: allPhotoInfo[photoIdx].area,
-            filename: allPhotoInfo[photoIdx].filename,
-          },
-        },
-      )
-      .then((res) => {
-        console.log(res);
-        openCloseModalHandler(e);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  }
-
   return (
     <AlbumContainer>
       <>
@@ -91,12 +60,26 @@ function MyPagePhotos({
             >
               <Photo src={`http://localhost:4000/${photo.image}`} />
               <PhotoInfoContainer>
-                <PhotoDate>{photo.date}</PhotoDate>
+                <PhotoDate>
+                  {photo.date === "날짜 정보가 없습니다" ? "날짜 정보가 없습니다" : photo.date}
+                </PhotoDate>
                 <PhotoAreaWeather>
-                  {photo.area},{" "}
-                  {photo.weather === "1" ? "맑음" : "2" ? "구름" : "3" ? "비" : "4" ? "눈" : null}
+                  {photo.area === "위치 정보가 없습니다" ? "위치 정보가 없습니다" : photo.area},{" "}
+                  {photo.weather === "1"
+                    ? "맑음"
+                    : photo.weather === "2"
+                    ? "구름"
+                    : photo.weather === "3"
+                    ? "비"
+                    : photo.weather === "4"
+                    ? "눈"
+                    : ""}
                 </PhotoAreaWeather>
-                <Comment>{photo.comment}</Comment>
+                <Comment>
+                  {photo.comment === "코멘트 정보가 없습니다"
+                    ? "코멘트 정보가 없습니다"
+                    : photo.comment}
+                </Comment>
                 <ButtonContainer>
                   <PhotoButton
                     id={idx}
@@ -111,7 +94,7 @@ function MyPagePhotos({
                     id={idx}
                     name={"deletePhoto"}
                     onClick={(e) => {
-                      photoDeleteHandler(e);
+                      openCloseModalHandler(e);
                     }}
                   >
                     삭제

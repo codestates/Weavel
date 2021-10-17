@@ -1,10 +1,6 @@
 import { useState } from "react";
 
-import {
-  SuggestionUl,
-  NoSuggestions,
-  AutoCompleteInput,
-} from "./AutoComplete.style";
+import { SuggestionUl, NoSuggestions, AutoCompleteInput } from "./AutoComplete.style";
 
 const AutoComplete = ({ suggestions, photoInfo, photoIdx }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -13,9 +9,7 @@ const AutoComplete = ({ suggestions, photoInfo, photoIdx }) => {
 
   const onChange = (e) => {
     const userInput = e.target.value;
-    const unLinked = suggestions.filter(
-      (suggestion) => suggestion.indexOf(userInput) > -1
-    );
+    const unLinked = suggestions.filter((suggestion) => suggestion.indexOf(userInput) > -1);
 
     setInput(e.target.value);
     setFilteredSuggestions(unLinked);

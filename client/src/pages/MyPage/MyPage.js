@@ -10,7 +10,7 @@ import { EditUserInfoButton } from "../../components/MyPageTop/MyPageTop.style";
 import DeleteUserModal from "../../components/Modal/DeleteUserModal";
 import NewPhotoUploadModal from "../../components/PhotoUploadModal/NewPhotoUploadModal";
 import { useSelector } from "react-redux";
-
+import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 function MyPage({
   loginUserInfo,
   putUserInfo,
@@ -56,7 +56,6 @@ function MyPage({
     }
     setIsModal(newIsModal);
   };
-  useEffect(() => {}, [isModal]);
   const { photoUpload, editUserInfo, deleteAccount, deletePhoto, newPhotoUpload, clickPhoto } =
     isModal;
 
@@ -117,6 +116,39 @@ function MyPage({
     setPhotoIdx(e.target.id);
     console.log(e.target.id);
   };
+  // onst userId = req.userId;
+  //   const { id, weather, date, area, filename }
+  // 사진 삭제
+  function handleDeletePhoto(e) {
+    axios
+      .delete(
+        "http://localhost:4000/photo",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+          data: {
+            id: allPhotoInfo[photoIdx].id,
+            userId: loginUserInfo.id,
+            weather: allPhotoInfo[photoIdx].weather,
+            date: allPhotoInfo[photoIdx].date,
+            area: allPhotoInfo[photoIdx].area,
+            filename: allPhotoInfo[photoIdx].filename,
+          },
+        },
+      )
+      .then((res) => {
+        console.log(res);
+        openCloseModalHandler(e);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
+
   return (
     <MyPageContainer>
       <MyPageTop
@@ -141,10 +173,10 @@ function MyPage({
         isLogin={isLogin}
         loginUserInfo={loginUserInfo}
         isWeather={isWeather}
-        allPhotoInfo={allPhotoInfo}
-        token={token}
         openCloseModalHandler={openCloseModalHandler}
         weatherAndPhotoIdxHandle={weatherAndPhotoIdxHandle}
+        allPhotoInfo={allPhotoInfo}
+        token={token}
         photoIdx={photoIdx}
         isPhotoWeather={isPhotoWeather}
         OnlyOneWeatherHandle={OnlyOneWeatherHandle}
@@ -159,6 +191,7 @@ function MyPage({
             openCloseModalHandler={openCloseModalHandler}
             isPhotoWeather={isPhotoWeather}
             OnlyOneWeatherHandle={OnlyOneWeatherHandle}
+            isPhotoWeather={isPhotoWeather}
             photoIdx={photoIdx}
             allPhotoInfo={allPhotoInfo}
             setPhotoIdx={setPhotoIdx}
@@ -166,7 +199,8 @@ function MyPage({
             //
           ></PhotoUploadModal>
         </ModalContainer>
-      ) : isModal.newPhotoUpload ? (
+      ) : null}
+      {isModal.newPhotoUpload ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <NewPhotoUploadModal
             token={token}
@@ -178,6 +212,7 @@ function MyPage({
           ></NewPhotoUploadModal>
         </ModalContainer>
       ) : null}
+
       {isModal.editUserInfo ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <EditUserInfoModal
@@ -188,6 +223,17 @@ function MyPage({
           ></EditUserInfoModal>
         </ModalContainer>
       ) : null}
+
+      {isModal.deletePhoto ? (
+        <ModalContainer onClick={openCloseModalHandler}>
+          <DeletePhotoModal
+            message={"사진을 삭제 하시겠습니까?"}
+            openCloseModalHandler={openCloseModalHandler}
+            handleDeletePhoto={handleDeletePhoto}
+          ></DeletePhotoModal>
+        </ModalContainer>
+      ) : null}
+
       {isModal.deleteAccount ? (
         <ModalContainer onClick={openCloseModalHandler}>
           <DeleteUserModal

@@ -31,15 +31,7 @@ const dropzone = {
   position: "relative",
 };
 
-function EditUploadCopy({
-  fileInfo,
-  setFileHandle,
-  photoIdx,
-  allPhotoInfo,
-  token,
-  loginUserInfo,
-  setPhotoIdx,
-}) {
+function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token, loginUserInfo }) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
   console.log(token);
