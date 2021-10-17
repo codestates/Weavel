@@ -88,6 +88,10 @@ app.use("/weatherAPI", weatherAPIrouter);
 const PORT = process.env.SERVER_PORT || 4000;
 const HOST = process.env.SERVER_HOST;
 
+app.get('/', (req, res) => {
+  res.status(201).send('Hello World');
+});
+
 app.listen(PORT, HOST, () => {
   console.log(`Server Listening on ${HOST}:${PORT}`);
 });
