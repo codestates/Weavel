@@ -26,6 +26,7 @@ function SearchInfo() {
         </InfoContents>
       </InfoContentsContainer>
       <InfoImg>
+<<<<<<< HEAD
         <img src="./images/info.svg" />
         {/* <svg>
           <path
@@ -482,6 +483,9 @@ function SearchInfo() {
             fill="black"
           />
         </svg> */}
+=======
+        <img src="./images/info.svg" alt="./images/info.png" />
+>>>>>>> a5694b07fee67994efde6d54792c02919bf7dde9
       </InfoImg>
     </InfoContainer>
   );

@@ -16,13 +16,15 @@ import {
   FavWeathersContainer,
   MyPageTopContainer,
 } from "./MyPageTop.style";
-
+import { useSelector } from "react-redux";
 function MyPageTop({
   openCloseModalHandler,
   loginUserInfo,
-  isLogin,
+
   allUserWeather,
 }) {
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
+
   const weather = [
     {
       id: 1,
