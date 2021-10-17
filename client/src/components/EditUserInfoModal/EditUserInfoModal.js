@@ -8,20 +8,11 @@ import {
   AllPasswordContainer,
   WeatherBox,
 } from "./EditUserInfoModal.style";
-import {
-  ConfirmButton,
-  CancelButton,
-  ButtonContainer,
-} from "../Modal/Modal.style";
+import { ConfirmButton, CancelButton, ButtonContainer } from "../Modal/Modal.style";
 
 import { InputLabel } from "../../pages/LoginPage/LoginPage.style";
 
-import {
-  Sunny,
-  Cloud,
-  Rain,
-  Snow,
-} from "../../pages/SignupPage/SignupPage.style";
+import { Sunny, Cloud, Rain, Snow } from "../../pages/SignupPage/SignupPage.style";
 
 import {
   PasswordContainer,
@@ -92,9 +83,7 @@ function EditUserInfoModal({
       isNewCheckInput.isPassword = passwordHandle(e.target.value);
       SetIsCheckInput(isNewCheckInput);
     } else if (e.target.id === "passwordConfirm") {
-      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(
-        e.target.value
-      );
+      isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(e.target.value);
       SetIsCheckInput(isNewCheckInput);
     }
   };
@@ -104,9 +93,7 @@ function EditUserInfoModal({
       return null;
     }
 
-    let check = password.match(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-    );
+    let check = password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
     return password.length > 7 && password.length < 17 && check ? true : false;
   };
 
@@ -127,32 +114,16 @@ function EditUserInfoModal({
         <FixedDiv margin={"0 0 20px 0"}>{loginUserInfo.email}</FixedDiv>
         <span>좋아하는 날씨</span>
         <WeatherBox>
-          <Sunny
-            isSunny={isWeather.sunny}
-            id="0"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Sunny isSunny={isWeather.sunny} id="0" onClick={(e) => weatherCheckHandle(e)}>
             맑음
           </Sunny>
-          <Cloud
-            isCloud={isWeather.cloud}
-            id="1"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Cloud isCloud={isWeather.cloud} id="1" onClick={(e) => weatherCheckHandle(e)}>
             구름
           </Cloud>
-          <Rain
-            isRain={isWeather.rain}
-            id="2"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Rain isRain={isWeather.rain} id="2" onClick={(e) => weatherCheckHandle(e)}>
             비
           </Rain>
-          <Snow
-            isSnow={isWeather.snow}
-            id="3"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
+          <Snow isSnow={isWeather.snow} id="3" onClick={(e) => weatherCheckHandle(e)}>
             눈
           </Snow>
         </WeatherBox>
@@ -181,10 +152,7 @@ function EditUserInfoModal({
               onChange={(e) => inputValueHandle(e)}
               onKeyUp={(e) => inputValidHandle(e)}
             />
-            <PasswordConfirmMessage
-              margin={"0"}
-              isPasswordConfirm={isCheckInput.isPasswordConfirm}
-            >
+            <PasswordConfirmMessage margin={"0"} isPasswordConfirm={isCheckInput.isPasswordConfirm}>
               {isCheckInput.isPasswordConfirm === null
                 ? null
                 : isCheckInput.isPasswordConfirm

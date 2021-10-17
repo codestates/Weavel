@@ -31,10 +31,18 @@ const dropzone = {
   position: "relative",
 };
 
-function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
+function EditUploadCopy({
+  fileInfo,
+  setFileHandle,
+  photoIdx,
+  allPhotoInfo,
+  token,
+  loginUserInfo,
+  setPhotoIdx,
+}) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
-
+  console.log(token);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
@@ -58,7 +66,6 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
   ));
 
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks
     files.forEach((file) => URL.revokeObjectURL(file.preview));
     setFile(true);
     if (files[0]) {
@@ -74,8 +81,20 @@ function Previews({ fileInfo, setFileHandle, photoIdx, allPhotoInfo }) {
   return (
     <div style={dropzone} {...getRootProps({ className: "dropzone" })}>
       <input {...getInputProps()} />
-      <PhotoBackground>{!file ? <></> : <aside>{thumbs}</aside>}</PhotoBackground>
+      <PhotoBackground>
+        {files[0] ? (
+          <aside>{thumbs}</aside>
+        ) : (
+          <aside>
+            <div style={thumb}>
+              <div style={thumbInner}>
+                <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} style={img} />
+              </div>
+            </div>
+          </aside>
+        )}
+      </PhotoBackground>
     </div>
   );
 }
-export default Previews;
+export default EditUploadCopy;
