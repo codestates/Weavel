@@ -86,17 +86,15 @@ app.use("/weather", weatherrouter);
 app.use("/weatherAPI", weatherAPIrouter);
 
 //https, 서버실행
-const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
-let server;
-if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
-  const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
-  const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");
-  const credentials = { key: privateKey, cert: certificate };
+//서버실행
+const PORT = process.env.SERVER_PORT || 4000;
+const HOST = process.env.SERVER_HOST;
 
-  server = https.createServer(credentials, app);
-  server.listen(HTTPS_PORT, () => console.log("server runnning"));
-} else {
-  server = app.listen(HTTPS_PORT);
-}
+app.get("/", (req, res) => {
+  res.status(200).send("Hello world");
+});
 
-module.exports = server;
+app.listen(PORT, HOST, () => {
+  console.log(`Server Listening on ${HOST}:${PORT}`);
+});
+
