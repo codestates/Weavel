@@ -85,7 +85,7 @@ app.use("/weather", weatherrouter);
 app.use("/weatherAPI", weatherAPIrouter);
 
 //서버실행
-const PORT = process.env.SERVER_PORT || 4000;
+const PORT = process.env.SERVER_PORT || 80;
 const HOST = process.env.SERVER_HOST;
 
 app.get("/", (req, res) => {
