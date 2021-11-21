@@ -99,13 +99,13 @@ function App() {
     axios(
       {
         method: "post",
-        url: "http://localhost:4000/user/logout",
+        url: "https://server.weavel.site/user/logout",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       },
-      { withCredentials: true }
+      { withCredentials: true },
     )
       .then((res) => {
         // setIsLogin(false);
@@ -125,7 +125,7 @@ function App() {
   const putUserInfo = (weather, password, email) => {
     axios
       .put(
-        "http://localhost:4000/user",
+        "https://server.weavel.site/user",
         {
           email: email,
           password: password,
@@ -136,7 +136,7 @@ function App() {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       )
       .then((res) => console.log(res));
   };
@@ -148,7 +148,7 @@ function App() {
 
     // axios
     //   .post(
-    //     "http://localhost:4000/user/login",
+    //     "https://server.weavel.site/user/login",
     //     {
     //       email: inputId,
     //       password: inputPw,
@@ -179,7 +179,7 @@ function App() {
   const getUserInfo = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/user",
+      url: "https://server.weavel.site/user",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -211,7 +211,7 @@ function App() {
   const DeleteUser = () => {
     axios({
       method: "delete",
-      url: "http://localhost:4000/user",
+      url: "https://server.weavel.site/user",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -226,7 +226,7 @@ function App() {
   const getAllPhotosInfo = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/photo/info",
+      url: "https://server.weavel.site/photo/info",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -243,7 +243,7 @@ function App() {
   const getPhotos = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/photo?id=1",
+      url: "https://server.weavel.site/photo?id=1",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "image/jpg",
@@ -259,7 +259,7 @@ function App() {
   const getAllUserWeather = () => {
     axios({
       method: "get",
-      url: "http://localhost:4000/user/weather",
+      url: "https://server.weavel.site/user/weather",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

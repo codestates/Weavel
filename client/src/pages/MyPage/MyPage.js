@@ -58,16 +58,34 @@ function MyPage({
     }
     setIsModal(newIsModal);
   };
-  const { photoUpload, editUserInfo, deleteAccount, deletePhoto, newPhotoUpload, clickPhoto } =
-    isModal;
+  const {
+    photoUpload,
+    editUserInfo,
+    deleteAccount,
+    deletePhoto,
+    newPhotoUpload,
+    clickPhoto,
+  } = isModal;
 
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow =
-      photoUpload || editUserInfo || deleteAccount || deletePhoto || newPhotoUpload || clickPhoto
+      photoUpload ||
+      editUserInfo ||
+      deleteAccount ||
+      deletePhoto ||
+      newPhotoUpload ||
+      clickPhoto
         ? "hidden"
         : "auto";
-  }, [photoUpload, editUserInfo, deleteAccount, deletePhoto, newPhotoUpload, clickPhoto]);
+  }, [
+    photoUpload,
+    editUserInfo,
+    deleteAccount,
+    deletePhoto,
+    newPhotoUpload,
+    clickPhoto,
+  ]);
 
   const weatherCheckHandle = (e) => {
     let newWeather = { ...isWeather };
@@ -124,7 +142,7 @@ function MyPage({
   function handleDeletePhoto(e) {
     axios
       .delete(
-        "http://localhost:4000/photo",
+        "https://server.weavel.site/photo",
 
         {
           headers: {

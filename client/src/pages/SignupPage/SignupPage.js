@@ -111,7 +111,7 @@ function SignupPage() {
       SetIsCheckInput(isNewCheckInput);
     } else if (e.target.id === "passwordConfirm") {
       isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(
-        e.target.value
+        e.target.value,
       );
       SetIsCheckInput(isNewCheckInput);
     }
@@ -122,7 +122,7 @@ function SignupPage() {
       return null;
     }
     let check = email.match(
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
     );
 
     return email.indexOf(".") !== -1 && check ? true : false;
@@ -134,7 +134,7 @@ function SignupPage() {
     }
 
     let check = password.match(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
     );
     return password.length > 7 && password.length < 17 && check ? true : false;
   };
@@ -168,14 +168,14 @@ function SignupPage() {
   const handlesignin = (e, arrEditWeather) => {
     axios
       .post(
-        "http://localhost:4000/user/signup",
+        "https://server.weavel.site/user/signup",
         {
           name: name,
           email: email,
           password: password,
           weather: arrEditWeather,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       )
 
       .then((res) => {
@@ -189,11 +189,11 @@ function SignupPage() {
   const handleConfirmEmail = (e) => {
     axios
       .get(
-        `http://localhost:4000/user/email?email=${email}`,
+        `https://server.weavel.site/user/email?email=${email}`,
         {
           email: email,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       )
       .then((res) => {
         console.log(res);
