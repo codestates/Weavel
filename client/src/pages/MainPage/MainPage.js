@@ -69,7 +69,7 @@ function MainPage() {
 
   const getAreaWeather = (x, y, date) => {
     axios
-      .get("http://localhost:4000/weather/area", {
+      .get("https://server.weavel.site/weather/area", {
         params: {
           nx: x,
           ny: y,
@@ -84,7 +84,7 @@ function MainPage() {
   const getCityWeather = (weather, day, time, area) => {
     console.log(weather, day, time, area);
     axios
-      .get("http://localhost:4000/weather/city", {
+      .get("https://server.weavel.site/weather/city", {
         params: {
           city: area,
           day: day,

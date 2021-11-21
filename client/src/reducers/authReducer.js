@@ -5,13 +5,13 @@ export const setAuth = createAsyncThunk(
   "authReducer/setAuth",
   async ({ email, password }) => {
     return await axios.post(
-      "http://localhost:4000/user/login",
+      "https://server.weavel.site/user/login",
       { email: email, password: password },
       {
         withCredentials: true,
-      }
+      },
     );
-  }
+  },
 );
 
 let initialState = {
