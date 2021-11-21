@@ -21,55 +21,55 @@ app.use(
 
 // 전국 날씨 API Get 요청 예약 (데이터 받는 가능시간 00시 03시, 06시, 09시, 12시, 15시, 18시, 21시)
 schedule.scheduleJob("0 0 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=01");
+  axios.get("https://server.weavel.site/weatherAPI?id=01");
 });
 schedule.scheduleJob("0 3 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=02");
+  axios.get("https://server.weavel.site/weatherAPI?id=02");
 });
 schedule.scheduleJob("0 6 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=03");
+  axios.get("https://server.weavel.site/weatherAPI?id=03");
 });
 schedule.scheduleJob("0 9 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=04");
+  axios.get("https://server.weavel.site/weatherAPI?id=04");
 });
 schedule.scheduleJob("0 11 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=05");
+  axios.get("https://server.weavel.site/weatherAPI?id=05");
 });
 schedule.scheduleJob("0 12 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=06");
+  axios.get("https://server.weavel.site/weatherAPI?id=06");
 });
 schedule.scheduleJob("0 14 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=07");
+  axios.get("https://server.weavel.site/weatherAPI?id=07");
 });
 schedule.scheduleJob("0 16 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=08");
+  axios.get("https://server.weavel.site/weatherAPI?id=08");
 });
 schedule.scheduleJob("0 19 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=09");
+  axios.get("https://server.weavel.site/weatherAPI?id=09");
 });
 schedule.scheduleJob("0 20 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=10");
+  axios.get("https://server.weavel.site/weatherAPI?id=10");
 });
 schedule.scheduleJob("0 30 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=11");
+  axios.get("https://server.weavel.site/weatherAPI?id=11");
 });
 schedule.scheduleJob("0 35 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=12");
+  axios.get("https://server.weavel.site/weatherAPI?id=12");
 });
 schedule.scheduleJob("0 38 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=13");
+  axios.get("https://server.weavel.site/weatherAPI?id=13");
 });
 schedule.scheduleJob("0 41 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=14");
+  axios.get("https://server.weavel.site/weatherAPI?id=14");
 });
 schedule.scheduleJob("0 44 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=15");
+  axios.get("https://server.weavel.site/weatherAPI?id=15");
 });
 schedule.scheduleJob("0 50 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=16");
+  axios.get("https://server.weavel.site/weatherAPI?id=16");
 });
 schedule.scheduleJob("0 55 6/12 * * *", () => {
-  axios.get("http://localhost:4000/weatherAPI?id=17");
+  axios.get("https://server.weavel.site/weatherAPI?id=17");
 });
 
 //라우터 경로
