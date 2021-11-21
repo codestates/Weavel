@@ -58,13 +58,18 @@ function MyPagePhotos({
               name={"clickPhoto"}
               id={idx}
             >
-              <Photo src={`http://localhost:4000/${photo.image}`} />
+              <Photo src={`https://server.weavel.site/${photo.image}`} />
               <PhotoInfoContainer>
                 <PhotoDate>
-                  {photo.date === "날짜 정보가 없습니다" ? "날짜 정보가 없습니다" : photo.date}
+                  {photo.date === "날짜 정보가 없습니다"
+                    ? "날짜 정보가 없습니다"
+                    : photo.date}
                 </PhotoDate>
                 <PhotoAreaWeather>
-                  {photo.area === "위치 정보가 없습니다" ? "위치 정보가 없습니다" : photo.area},{" "}
+                  {photo.area === "위치 정보가 없습니다"
+                    ? "위치 정보가 없습니다"
+                    : photo.area}
+                  ,{" "}
                   {photo.weather === "1"
                     ? "맑음"
                     : photo.weather === "2"
@@ -108,7 +113,9 @@ function MyPagePhotos({
         {isModal.clickPhoto ? (
           <ModalContainer onClick={openCloseModalHandler}>
             <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
-              <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} />
+              <img
+                src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
+              />
             </ClickPhotoModal>
           </ModalContainer>
         ) : null}

@@ -31,7 +31,14 @@ const dropzone = {
   position: "relative",
 };
 
-function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token, loginUserInfo }) {
+function EditUploadCopy({
+  fileInfo,
+  setFileHandle,
+  photoIdx,
+  allPhotoInfo,
+  token,
+  loginUserInfo,
+}) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
   console.log(token);
@@ -80,7 +87,10 @@ function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token
           <aside>
             <div style={thumb}>
               <div style={thumbInner}>
-                <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} style={img} />
+                <img
+                  src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
+                  style={img}
+                />
               </div>
             </div>
           </aside>

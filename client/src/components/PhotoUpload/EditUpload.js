@@ -50,8 +50,8 @@ function EditUpload({
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
   });
@@ -88,7 +88,7 @@ function EditUpload({
               <div style={thumb} key={file.name}>
                 <div style={thumbInner}>
                   <img
-                    src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
+                    src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
                     style={img}
                   />
                 </div>
