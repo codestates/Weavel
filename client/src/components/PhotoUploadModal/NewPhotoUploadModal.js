@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { ConfirmButton, CancelButton, ButtonContainer } from "../Modal/Modal.style";
+import {
+  ConfirmButton,
+  CancelButton,
+  ButtonContainer,
+} from "../Modal/Modal.style";
 import axios from "axios";
 import { InputLabel, EmailInput } from "../../pages/LoginPage/LoginPage.style";
 import { area } from "./SearchData";
 import AutoComplete from "./AutoComplete";
-import { Sunny, Cloud, Rain, Snow } from "../../pages/SignupPage/SignupPage.style";
+import {
+  Sunny,
+  Cloud,
+  Rain,
+  Snow,
+} from "../../pages/SignupPage/SignupPage.style";
 
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
 import { PhotoUploadContainer } from "./PhotoUploadModal.style";
@@ -85,7 +94,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     console.log(e);
     axios
       .post(
-        "http://localhost:4000/photo/",
+        "https://server.weavel.site/photo/",
         formData,
         {
           headers: {
@@ -112,7 +121,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const handlePhotoInfoUpload = (e, photo) => {
     axios
       .post(
-        "http://localhost:4000/photo/info",
+        "https://server.weavel.site/photo/info",
         {
           id: photo.id,
           filename: photo.filename,
@@ -174,10 +183,18 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
           >
             구름
           </Cloud>
-          <Rain isRainPhoto={isPhotoWeather.rain} id="3" onClick={(e) => weatherButtonHandler(e)}>
+          <Rain
+            isRainPhoto={isPhotoWeather.rain}
+            id="3"
+            onClick={(e) => weatherButtonHandler(e)}
+          >
             비
           </Rain>
-          <Snow isSnowPhoto={isPhotoWeather.snow} id="4" onClick={(e) => weatherButtonHandler(e)}>
+          <Snow
+            isSnowPhoto={isPhotoWeather.snow}
+            id="4"
+            onClick={(e) => weatherButtonHandler(e)}
+          >
             눈
           </Snow>
         </WeatherBox>
@@ -190,7 +207,9 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>업로드</ConfirmButton>
+            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>
+              업로드
+            </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
           </ButtonContainer>
         </span>

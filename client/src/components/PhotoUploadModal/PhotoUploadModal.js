@@ -26,7 +26,7 @@
 //     const getAllPhotosInfo = (token) => {
 //       axios({
 //         method: "get",
-//         url: "http://localhost:4000/photo/info",
+//         url: "https://server.weavel.site/photo/info",
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "application/json",
@@ -80,7 +80,7 @@
 //   // 사진 수정
 //   const handlePhotoEdit = (e) => {
 //     axios
-//       .put(`http://localhost:4000/photo/id=?${allPhotoInfo[photoIdx].id}`, formData, {
+//       .put(`https://server.weavel.site/photo/id=?${allPhotoInfo[photoIdx].id}`, formData, {
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "multipart/form-data",
@@ -102,7 +102,7 @@
 //   const handlePhotoInfoEdit = (e) => {
 //     axios
 //       .put(
-//         "http://localhost:4000/photo/info",
+//         "https://server.weavel.site/photo/info",
 
 //         {
 //           headers: {
@@ -233,7 +233,7 @@
 //     const getAllPhotosInfo = (token) => {
 //       axios({
 //         method: "get",
-//         url: "http://localhost:4000/photo/info",
+//         url: "https://server.weavel.site/photo/info",
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "application/json",
@@ -310,7 +310,7 @@
 //     console.log(e);
 //     axios
 //       .post(
-//         "http://localhost:4000/photo/",
+//         "https://server.weavel.site/photo/",
 //         formData,
 //         {
 //           headers: {
@@ -337,7 +337,7 @@
 //   const handlePhotoInfoUpload = (e, photo) => {
 //     axios
 //       .post(
-//         "http://localhost:4000/photo/info",
+//         "https://server.weavel.site/photo/info",
 //         {
 //           id: photo.id,
 //           filename: photo.filename,
@@ -429,19 +429,34 @@
 // export default PhotoUploadModal;
 
 import React, { useEffect, useState } from "react";
-import { ConfirmButton, CancelButton, ButtonContainer } from "../Modal/Modal.style";
+import {
+  ConfirmButton,
+  CancelButton,
+  ButtonContainer,
+} from "../Modal/Modal.style";
 import axios from "axios";
 import { InputLabel, EmailInput } from "../../pages/LoginPage/LoginPage.style";
 import { area } from "./SearchData";
 import AutoComplete from "./AutoComplete";
-import { Sunny, Cloud, Rain, Snow } from "../../pages/SignupPage/SignupPage.style";
+import {
+  Sunny,
+  Cloud,
+  Rain,
+  Snow,
+} from "../../pages/SignupPage/SignupPage.style";
 
 import { WeatherBox } from "../EditUserInfoModal/EditUserInfoModal.style";
 import { PhotoUploadContainer } from "./PhotoUploadModal.style";
 import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style";
 import EditUploadCopy from "../PhotoUpload/EditUploadCopy";
 
-function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token, photoIdx, allPhotoInfo }) {
+function PhotoUploadModal({
+  openCloseModalHandler,
+  loginUserInfo,
+  token,
+  photoIdx,
+  allPhotoInfo,
+}) {
   useEffect(() => {
     const showWeather = { ...isnowPhotoWeather };
     if (allPhotoInfo[photoIdx].weather === "1") {
@@ -474,7 +489,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token, photoId
   const handlePhotoUpload = (e) => {
     axios
       .put(
-        `http://localhost:4000/photo?id=${allPhotoInfo[photoIdx].id}`,
+        `https://server.weavel.site/photo?id=${allPhotoInfo[photoIdx].id}`,
         formData,
         {
           headers: {
@@ -496,7 +511,7 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token, photoId
   const handlePhotoInfoUpload = (e) => {
     axios
       .put(
-        "http://localhost:4000/photo/info",
+        "https://server.weavel.site/photo/info",
         {
           filename: allPhotoInfo[photoIdx].filename,
           id: allPhotoInfo[photoIdx].id,
@@ -664,7 +679,9 @@ function PhotoUploadModal({ openCloseModalHandler, loginUserInfo, token, photoId
         />
         <span>
           <ButtonContainer>
-            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>업로드</ConfirmButton>
+            <ConfirmButton onClick={(e) => handlePhotoUpload(e)}>
+              업로드
+            </ConfirmButton>
             <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
           </ButtonContainer>
         </span>
