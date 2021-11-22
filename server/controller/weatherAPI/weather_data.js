@@ -8,14 +8,12 @@ const { weather_data } = require("../../models");
 
 module.exports = async (req, res) => {
   try {
-    const id = req.query.id;
+    const id = req.query.id; // 지역
+    const arr = req.body; // 지역 좌표 배열
 
     // DB 특정지역 날씨 삭제 (날씨 최신화)
     const find = await weather_data.findAll({ where: { city: id } });
     if (find) await weather_data.destroy({ where: { city: id } });
-
-    // 지역 좌표 배열
-    const arr = req.body;
 
     //코드 지연 타이머 함수
     function sleep(ms) {
@@ -109,18 +107,17 @@ module.exports = async (req, res) => {
       }
 
       if (result.length === 0) {
-        return;
+        return res
+          .status(201)
+          .json({ message: "해당 city의 모든 날씨를 받아왔습니다" });
       }
     }
 
     //데이터 받아오기
     weatherApi(arr);
     reWeatherApi(arr);
-
-    return res
-      .status(201)
-      .json({ message: "해당 city의 모든 날씨를 받아왔습니다" });
   } catch (err) {
     console.log(err);
+    return res.status(501).json({ message: "서버 에러 입니다." });
   }
 };
