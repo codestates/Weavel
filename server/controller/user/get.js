@@ -30,5 +30,6 @@ module.exports = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    return res.status(501).json({ message: "서버 에러 입니다." });
   }
 };
