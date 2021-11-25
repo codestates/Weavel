@@ -34,7 +34,6 @@ function MyPagePhotos({
   isPhotoWeather,
   OnlyOneWeatherHandle,
 }) {
-  console.log("dyrlrlrlrl", allPhotoInfo);
   function photoEditHandler(e) {
     openCloseModalHandler(e);
   }

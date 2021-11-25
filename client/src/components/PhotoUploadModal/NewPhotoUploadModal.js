@@ -21,7 +21,6 @@ import { EditInfoContainer } from "../EditUserInfoModal/EditUserInfoModal.style"
 import PhotoUpload from "../PhotoUpload/PhotoUpload";
 
 function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
-  console.log(token);
   const [photoInfo, setphotoInfo] = useState({
     weather: "5",
     date: "날짜 정보를 입력해주세요",
@@ -74,8 +73,6 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
     }
     newphotoInfo.weather = isPhotoWeather.num;
     setphotoInfo(newphotoInfo);
-    console.log(newphotoInfo);
-    console.log("!!!!", fileInfo.image);
   }
 
   const [fileInfo, setFileInfo] = useState({
@@ -91,7 +88,6 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
 
   // 사진 업로드
   const handlePhotoUpload = (e) => {
-    console.log(e);
     axios
       .post(
         "https://server.weavel.site/photo/",
@@ -102,11 +98,9 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
             "Content-Type": "multipart/form-data",
           },
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log("데이터 콘솔로그", res.data);
-        console.log(res.data.message);
         handlePhotoInfoUpload(e, res.data.data);
       })
       .catch((err) => {
@@ -133,10 +127,9 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
             "Content-Type": "application/json",
           },
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
         openCloseModalHandler(e);
       })
       .catch((err) => {

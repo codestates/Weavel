@@ -30,8 +30,6 @@ function MyPage({
   const [keyword, setKeyword] = useState("");
   const [isModal, setIsModal] = useState({});
 
-  console.log("요기요", allPhotoInfo);
-
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const openCloseModalHandler = (e) => {
@@ -134,7 +132,6 @@ function MyPage({
   };
   const weatherAndPhotoIdxHandle = (e) => {
     setPhotoIdx(e.target.id);
-    console.log(e.target.id);
   };
   // onst userId = req.userId;
   //   const { id, weather, date, area, filename }
@@ -158,10 +155,9 @@ function MyPage({
             area: allPhotoInfo[photoIdx].area,
             filename: allPhotoInfo[photoIdx].filename,
           },
-        },
+        }
       )
       .then((res) => {
-        console.log(res);
         openCloseModalHandler(e);
       })
       .catch((err) => {
