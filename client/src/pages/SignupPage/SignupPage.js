@@ -25,7 +25,7 @@ import {
   SubmitSignup,
 } from "./SignupPage.style";
 import axios from "axios";
-
+import { useHistory } from "react-router";
 import { UnderLine } from "../LoginPage/LoginPage.style";
 
 function SignupPage() {
@@ -35,7 +35,7 @@ function SignupPage() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [isSubmitValid, setIsSubmitValid] = useState(false);
-
+  const history = useHistory();
   const isValidInput = {
     isEmail: null,
     isPassword: null,
@@ -90,7 +90,7 @@ function SignupPage() {
 
   useEffect(() => {
     if (
-      name.length > 5 &&
+      name.length >= 2 &&
       isCheckInput.isEmail &&
       isCheckInput.isPassword &&
       isCheckInput.isPasswordConfirm
@@ -111,7 +111,7 @@ function SignupPage() {
       SetIsCheckInput(isNewCheckInput);
     } else if (e.target.id === "passwordConfirm") {
       isNewCheckInput.isPasswordConfirm = isPasswordConfirmHandle(
-        e.target.value,
+        e.target.value
       );
       SetIsCheckInput(isNewCheckInput);
     }
@@ -122,7 +122,7 @@ function SignupPage() {
       return null;
     }
     let check = email.match(
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
     );
 
     return email.indexOf(".") !== -1 && check ? true : false;
@@ -134,7 +134,7 @@ function SignupPage() {
     }
 
     let check = password.match(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     );
     return password.length > 7 && password.length < 17 && check ? true : false;
   };
@@ -175,12 +175,13 @@ function SignupPage() {
           password: password,
           weather: arrEditWeather,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
 
       .then((res) => {
         if (res.status === 201) {
           // 메인 페이지로 이동
+          history.push("/login");
         }
       })
       .catch((error) => console.log("Error", error.message));
@@ -193,10 +194,9 @@ function SignupPage() {
         {
           email: email,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
         if (res.data.message === "이메일이 중복되지 않습니다.") {
           isCheckEmail.isSuccess = true;
           isCheckEmail.isFail = false;

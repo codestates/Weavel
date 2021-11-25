@@ -41,7 +41,6 @@ function EditUploadCopy({
 }) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
-  console.log(token);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
@@ -50,8 +49,8 @@ function EditUploadCopy({
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });
