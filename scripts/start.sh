@@ -9,4 +9,5 @@ export DATABASE_HOST=$(aws ssm get-parameters --region ap-northeast-2 --names DA
 export API_KEY=$(aws ssm get-parameters --region ap-northeast-2 --names API_KEY --query Parameters[0].Value | sed 's/"//g')
 export ACCESS_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names ACCESS_SECRET --query Parameters[0].Value | sed 's/"//g')
 
+pm2 ls
 authbind --deep pm2 start index.js

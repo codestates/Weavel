@@ -26,7 +26,6 @@ module.exports = async (req, res) => {
     if (day === "2") {
       dayCode = moment().add(2, "days").format("YYYYMMDD"); //모레
     }
-    console.log("day", dayCode);
 
     // 약속된 날씨 코드  맑음(0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
     // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
@@ -52,7 +51,6 @@ module.exports = async (req, res) => {
         city: city,
         date: dayCode,
         time: time,
-
         [or]: [
           { [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] },
           { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] },
@@ -63,7 +61,6 @@ module.exports = async (req, res) => {
     // 좌표 추출
     const result = [];
     const end = [];
-
     for (let i = 0; i < find.length; i++) {
       const xy = [];
       xy.push(find[i].nx);

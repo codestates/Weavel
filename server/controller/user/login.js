@@ -5,10 +5,10 @@ const crypto = require("crypto");
 module.exports = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     const findUser = await user.findOne({
       where: { email: email },
     });
-
     // 이메일이 없을 때
     if (!findUser) {
       return res.status(404).json({ message: "회원을 찾을수 없습니다." });

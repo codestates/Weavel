@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
         .json({ message: "사진파일 이름 정보가 없습니다." });
     }
 
-    //!파일네임이 같아아 수정될 수 있도록 해야함
+    //!파일네임이 같아야 수정될 수 있도록 해야함
     const edit = await photo.update(
       {
         weather: weather,

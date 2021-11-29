@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
       },
       { where: { id: id, filename: filename } },
     );
-    console.log("---------------------", info);
+
     if (info[0] === 0) {
       return res
         .status(404)
