@@ -18,12 +18,10 @@ module.exports = async (req, res) => {
     if (!where) {
       return res.status(409).json({ message: "사진을 저장하지 못하였습니다." });
     }
-    return res
-      .status(200)
-      .json({
-        data: { id: id, filename: filename },
-        message: "사진이 저장 완료 되었습니다.",
-      });
+    return res.status(200).json({
+      data: { id: id, filename: filename },
+      message: "사진이 저장 완료 되었습니다.",
+    });
   } catch (err) {
     console.log(err);
     return res.status(501).json({ message: "서버 에러 입니다." });

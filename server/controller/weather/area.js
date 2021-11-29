@@ -7,6 +7,7 @@ const { or, and, gt, lt } = Sequelize.Op;
 
 module.exports = async (req, res) => {
   try {
+    // 좌표
     const nx = req.query.nx;
     const ny = req.query.ny;
     // 현재시간
@@ -33,6 +34,7 @@ module.exports = async (req, res) => {
       data.push(e.value);
       return result.push(data);
     });
+
     if (weather.length === 0) {
       return res.status(404).json({ message: "조회된 데이터가 없습니다." });
     }

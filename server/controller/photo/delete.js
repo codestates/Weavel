@@ -40,15 +40,15 @@ module.exports = async (req, res) => {
         filename: filename,
       },
     });
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", path);
+
     if (!path) {
       return res
         .status(409)
         .json({ massage: "삭제 되었거나, 존재하지않는 정보입니다." });
     }
 
-    // 파일 삭제 = 파일이 존재한다면 true 그렇지 않은 경우 false 반환
     if (fs.existsSync(path.image)) {
+      // 파일 삭제 = 파일이 존재한다면 true 그렇지 않은 경우 false 반환
       fs.unlinkSync(path.image); // unlinkSync 파일 삭제
     } else {
       return res
@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
         filename: filename,
       },
     });
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", info);
+
     if (!info) {
       return res.status(404).json({ massage: "이미 삭제된 정보입니다." });
     }
