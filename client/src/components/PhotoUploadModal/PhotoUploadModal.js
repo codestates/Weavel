@@ -483,7 +483,6 @@ function PhotoUploadModal({
     area: "위치 정보가 없습니다",
     comment: "코멘트 정보가 없습니다",
   });
-  console.log("333333343434343434", photoInfo);
   // 사진 업로드
 
   const handlePhotoUpload = (e) => {
@@ -497,11 +496,10 @@ function PhotoUploadModal({
             "Content-Type": "multipart/form-data",
           },
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
         handlePhotoInfoUpload(e);
-        console.log(res.data.date);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -526,10 +524,9 @@ function PhotoUploadModal({
             "Content-Type": "application/json",
           },
         },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
         openCloseModalHandler(e);
       })
       .catch((err) => {
@@ -582,7 +579,6 @@ function PhotoUploadModal({
     }
     newphotoInfo.weather = isnowPhotoWeather.num;
     setphotoInfo(newphotoInfo);
-    console.log(photoInfo);
     // if (isPhotoWeather.sunny === true) {
     //   newphotoInfo.weather = "1";
     // } else if (isPhotoWeather.sunny === true) {

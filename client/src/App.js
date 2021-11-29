@@ -56,7 +56,6 @@ function App() {
     name: "코드몬",
     weather: [],
   });
-  console.log(`loginUserInfo`, loginUserInfo);
 
   const [allUserWeather, setAllUserWeather] = useState([]);
   const [allPhotoInfo, setAllPhotoInfo] = useState([]);
@@ -105,7 +104,7 @@ function App() {
           "Content-Type": "application/json",
         },
       },
-      { withCredentials: true },
+      { withCredentials: true }
     )
       .then((res) => {
         // setIsLogin(false);
@@ -123,22 +122,20 @@ function App() {
   // };
 
   const putUserInfo = (weather, password, email) => {
-    axios
-      .put(
-        "https://server.weavel.site/user",
-        {
-          email: email,
-          password: password,
-          weather: weather,
+    axios.put(
+      "https://server.weavel.site/user",
+      {
+        email: email,
+        password: password,
+        weather: weather,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        },
-      )
-      .then((res) => console.log(res));
+      }
+    );
   };
 
   const dispatch = useDispatch();
@@ -217,8 +214,6 @@ function App() {
         "Content-Type": "application/json",
       },
       withCredentials: true,
-    }).then((res) => {
-      console.log(res);
     });
   };
 
@@ -234,8 +229,6 @@ function App() {
       withCredentials: true,
     }).then((res) => {
       setAllPhotoInfo(res.data);
-      console.log(allPhotoInfo);
-      console.log("사진정보받기~~~~~", res.data);
     });
   };
 
@@ -250,7 +243,6 @@ function App() {
       },
       withCredentials: true,
     }).then((res) => {
-      console.log("afdadfd", res.data);
       setPhoto(res.data);
     });
   };
