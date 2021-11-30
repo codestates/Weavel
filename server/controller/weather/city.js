@@ -81,15 +81,15 @@ module.exports = async (req, res) => {
         }
       }
       if (end.length === 0) {
-        return res.status(404).json({ message: "데이터가 없습니다." });
+        return res.status(200).json({ message: "데이터가 없습니다." });
       }
       return res.status(200).send(end);
     }
 
+    // 비, 눈 날씨에 해당
     if (result.length === 0) {
-      return res.status(404).json({ message: "데이터가 없습니다." });
+      return res.status(200).json({ message: "데이터가 없습니다." });
     }
-
     return res.status(200).send(result);
   } catch (err) {
     console.log(err);
