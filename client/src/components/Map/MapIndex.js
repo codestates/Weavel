@@ -46,22 +46,24 @@ function MapIndex({
   const [lenderMap, setLenderMap] = useState(areas[showArea]);
 
   useEffect(() => {
-    let city = {};
-    nowWeather.map((coordinate) => {
-      const [x, y] = coordinate;
-      for (let area in lenderMap) {
-        const mapArea = { ...lenderMap[area] };
-        if (!city[area]) {
-          city[area] = mapArea;
-        }
-        if (city[area]) {
-          if (city[area].x === x && city[area].y === y) {
-            city[area].isShow = false;
+    if (nowWeather[0] !== undefined) {
+      let city = {};
+      nowWeather.map((coordinate) => {
+        const [x, y] = coordinate;
+        for (let area in lenderMap) {
+          const mapArea = { ...lenderMap[area] };
+          if (!city[area]) {
+            city[area] = mapArea;
+          }
+          if (city[area]) {
+            if (city[area].x === x && city[area].y === y) {
+              city[area].isShow = false;
+            }
           }
         }
-      }
-      setLenderMap(city);
-    });
+        setLenderMap(city);
+      });
+    }
   }, [nowWeather]);
 
   useEffect(() => {

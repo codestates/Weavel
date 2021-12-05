@@ -152,7 +152,12 @@ function SearchDetail({
   });
 
   useEffect(() => {
-    if (allSelect.weather && allSelect.day && allSelect.time && allSelect.area) {
+    if (
+      allSelect.weather &&
+      allSelect.day &&
+      allSelect.time &&
+      allSelect.area
+    ) {
       setIsSelectSuccess(false);
     } else {
       setIsSelectSuccess(true);
@@ -218,7 +223,12 @@ function SearchDetail({
       setSelectTitle({ ...selectTitle });
       setIsActivation({ isOpen: false, isLender: true });
       showAreaHandle(areaTitle.id);
-      getSearchHandle(weatherTitle.id, dayTitle.id, `${timeTitle.id}00`, areaTitle.id);
+      getSearchHandle(
+        weatherTitle.id,
+        dayTitle.id,
+        `${timeTitle.id}00`,
+        areaTitle.id
+      );
     }
   };
 
@@ -227,12 +237,13 @@ function SearchDetail({
       <SelectListContainer>
         <SelectListBox>
           <SelectList>
-            {weatherSelect.map((weather) => {
+            {weatherSelect.map((weather, idx) => {
               return (
                 <WeatherItem
                   selectId={weather.isSelect}
                   onClick={(e) => weatherSelectHandle(e)}
                   id={weather.id}
+                  key={idx}
                 >
                   {weather.isSelect ? (
                     <div>
@@ -251,9 +262,14 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <SelectList>
-            {daySelect.map((day) => {
+            {daySelect.map((day, idx) => {
               return (
-                <DayItem selectId={day.isSelect} onClick={(e) => daySelectHandle(e)} id={day.id}>
+                <DayItem
+                  selectId={day.isSelect}
+                  onClick={(e) => daySelectHandle(e)}
+                  id={day.id}
+                  key={idx}
+                >
                   {day.isSelect ? (
                     <div>
                       <img src={day.click} />
@@ -271,16 +287,21 @@ function SearchDetail({
         </SelectListBox>
         <SelectListBox>
           <ArrowPosition id={"up"} onClick={(e) => onButtonClick(e)}>
-            <img id={"up"} onClick={(e) => onButtonClick(e)} src="./images/top_arrow.svg" />
+            <img
+              id={"up"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/top_arrow.svg"
+            />
           </ArrowPosition>
           <SelectList>
-            {timeSelect.map((time) => {
+            {timeSelect.map((time, idx) => {
               return (
                 <TimeItem
                   selectId={time.isSelect}
                   onClick={(e) => timeSelectHandle(e)}
                   id={time.id}
                   ref={(el) => (timeScroll.current[time.id] = el)}
+                  key={idx}
                 >
                   {time.time}
                 </TimeItem>
@@ -288,17 +309,22 @@ function SearchDetail({
             })}
           </SelectList>
           <ArrowPosition id={"down"} onClick={(e) => onButtonClick(e)}>
-            <img id={"down"} onClick={(e) => onButtonClick(e)} src="./images/bottom_arrow.svg" />
+            <img
+              id={"down"}
+              onClick={(e) => onButtonClick(e)}
+              src="./images/bottom_arrow.svg"
+            />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>
           <SelectList area={"5px 0 5px 30px"} padding={"0 32px 0 32px"}>
-            {areaSelect.map((area) => {
+            {areaSelect.map((area, idx) => {
               return (
                 <AreaItem
                   selectId={area.isSelect}
                   onClick={(e) => areaSelectHandle(e)}
                   id={area.id}
+                  key={idx}
                 >
                   {area.area}
                 </AreaItem>

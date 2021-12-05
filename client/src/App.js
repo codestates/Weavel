@@ -302,6 +302,9 @@ function App() {
     });
     setAllPhotoInfo(newSearchPhotoInfo);
   };
+  // const refreshHandle = () => {
+  //   window.location.reload();
+  // };
 
   return (
     <BrowserRouter>
@@ -309,12 +312,23 @@ function App() {
         <Header>
           <HeaderBox logo={"logo"}>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Logo src="./images/logo.svg"></Logo>
+              <Logo
+                src="./images/logo.svg"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              ></Logo>
             </Link>
           </HeaderBox>
           <MenuContainer>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Menu>홈</Menu>
+              <Menu
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                홈
+              </Menu>
             </Link>
             <Link to="/mypage" style={{ textDecoration: "none" }}>
               <Menu>마이페이지</Menu>

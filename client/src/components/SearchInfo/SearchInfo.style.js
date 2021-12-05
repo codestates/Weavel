@@ -33,11 +33,11 @@ export const InfoContents = styled.div`
   }
 `;
 
-export const InfoImg = styled.div`
+export const InfoImgContainer = styled.div`
   margin-right: 0;
-  img {
-    width: 490px;
-  }
+`;
+export const InfoImg = styled.img`
+  width: 490px;
 `;
 
 export const LoginButton = styled.button`
