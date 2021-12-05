@@ -3,7 +3,7 @@ import {
   InfoContainer,
   InfoContentsContainer,
   InfoContents,
-  // LoginButton,
+  InfoImgContainer,
   InfoImg,
 } from "./SearchInfo.style";
 
@@ -25,9 +25,9 @@ function SearchInfo() {
           {/* <LoginButton>로그인</LoginButton> */}
         </InfoContents>
       </InfoContentsContainer>
-      <InfoImg>
-        <img src="./images/info.svg" alt="./images/info.png" />
-      </InfoImg>
+      <InfoImgContainer>
+        <InfoImg src="./images/info.svg" alt="info" />
+      </InfoImgContainer>
     </InfoContainer>
   );
 }
