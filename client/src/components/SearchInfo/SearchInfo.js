@@ -26,7 +26,7 @@ function SearchInfo() {
         </InfoContents>
       </InfoContentsContainer>
       <InfoImgContainer>
-        <InfoImg src="./images/info.svg" alt="info" />
+        <InfoImg src="./images/info.png" alt="info" />
       </InfoImgContainer>
     </InfoContainer>
   );

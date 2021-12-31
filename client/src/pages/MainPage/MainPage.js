@@ -93,10 +93,12 @@ function MainPage() {
       })
       .then((res) => {
         setNowWeather(res.data);
-        console.log(res.data);
+        if (res.data.message) {
+          alert("조건에 맞는 정보가 없습니다.");
+        }
       })
       .catch((err) => {
-        console.log("err~!!!!");
+        console.log(err);
       });
   };
 

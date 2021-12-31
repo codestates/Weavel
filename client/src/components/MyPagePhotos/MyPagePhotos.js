@@ -57,7 +57,10 @@ function MyPagePhotos({
               name={"clickPhoto"}
               id={idx}
             >
-              <Photo src={`https://server.weavel.site/${photo.image}`} />
+              <Photo
+                src={`https://server.weavel.site/${photo.image}`}
+                alt="photo"
+              />
               <PhotoInfoContainer>
                 <PhotoDate>
                   {photo.date === "날짜 정보가 없습니다"
@@ -114,6 +117,7 @@ function MyPagePhotos({
             <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
               <img
                 src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
+                alt="clickPhoto"
               />
             </ClickPhotoModal>
           </ModalContainer>

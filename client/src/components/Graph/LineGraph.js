@@ -1,7 +1,6 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import styled from "styled-components";
-import { dummy } from "./data";
 
 export const Container = styled.div`
   display: flex;
