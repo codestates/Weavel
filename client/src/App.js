@@ -36,7 +36,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth, setLogOut } from "./reducers/authReducer";
 
 function App() {
-  // const [isLogin, setIsLogin] = useState(false);
   const isLogin = useSelector((state) => state.authReducer.isLogin);
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   useEffect(() => {
@@ -107,19 +106,12 @@ function App() {
       { withCredentials: true }
     )
       .then((res) => {
-        // setIsLogin(false);
-        // replace by redux
         dispatch(setLogOut());
         openCloseModalHandler(e);
-        // test();
         history.push("/home");
       })
       .catch((error) => console.log("Error", error.message));
   };
-
-  // const test = () => {
-  //   history.push("/home");
-  // };
 
   const putUserInfo = (weather, password, email) => {
     axios.put(
@@ -143,34 +135,7 @@ function App() {
   const handleLoginButton = (e, email, password) => {
     e.preventDefault();
 
-    // axios
-    //   .post(
-    //     "https://server.weavel.site/user/login",
-    //     {
-    //       email: inputId,
-    //       password: inputPw,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((res) => {
-    //     setIsLogin(true);
-    // setToken(res.data.data.accessToken);
-    // getUserInfo(res.data.data.accessToken);
-    // getPhotos(res.data.data.accessToken);
-    // getAllPhotosInfo(res.data.data.accessToken);
-    // getAllUserWeather(res.data.data.accessToken);
-    //   })
-    //   .catch((err) => {
-    //     console.error(`signin error: ${err.message}`);
-    //     setIsValid(true);
-    //   });
-
     dispatch(setAuth({ email: email, password: password }));
-    // setToken(accessToken);
-    // getUserInfo(accessToken);
-    // getPhotos(accessToken);
-    // getAllPhotosInfo(accessToken);
-    // getAllUserWeather(accessToken);
   };
 
   const getUserInfo = (token) => {
@@ -199,10 +164,6 @@ function App() {
       setLoginUserInfo({ id, email, name, weather });
     });
   };
-
-  // const DeleteUserHandler = (token) => {
-  //   DeleteUser(token);
-  // };
 
   // 회원 탈퇴
   const DeleteUser = () => {
@@ -302,9 +263,6 @@ function App() {
     });
     setAllPhotoInfo(newSearchPhotoInfo);
   };
-  // const refreshHandle = () => {
-  //   window.location.reload();
-  // };
 
   return (
     <BrowserRouter>
@@ -314,6 +272,7 @@ function App() {
             <Link to="/" style={{ textDecoration: "none" }}>
               <Logo
                 src="./images/logo.svg"
+                alt="logo"
                 onClick={() => {
                   window.location.reload();
                 }}
@@ -405,7 +364,7 @@ function App() {
         <FooterContents>
           <a href="https://github.com/codestates/Weavel/wiki" target="_blank">
             <FooterProjectLink>
-              <img src="./images/githubLogo.svg" />
+              <img src="./images/githubLogo.svg" alt="githubLogo" />
               <span>Codemon</span>
             </FooterProjectLink>
           </a>
