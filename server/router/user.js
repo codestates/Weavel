@@ -1,10 +1,21 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const { body, validationResult } = require("express-validator");
 const { accessToken } = require("../middleware/accessToken");
 const { usersController } = require("../controller");
 
 // 회원가입 POST /user/signup
-router.post("/signup", usersController.signup);
+router.post(
+  "/signup",
+  body("name").notEmpty().withMessage("이름을 입력해주세요"),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  },
+  usersController.signup,
+);
 
 // 로그인 POST /user/login
 router.post("/login", usersController.login);
