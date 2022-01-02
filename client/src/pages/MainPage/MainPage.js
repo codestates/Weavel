@@ -121,7 +121,7 @@ function MainPage() {
 
   useEffect(() => {
     const date = new Date();
-    const month = date.getMonth() + 1;
+    let month = date.getMonth() + 1;
     if (month < 10) {
       month = `0${month}`;
     }
