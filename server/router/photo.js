@@ -1,6 +1,5 @@
-var express = require("express");
-var router = express.Router();
-
+const express = require("express");
+const router = express.Router();
 const { accessToken } = require("../middleware/accessToken");
 const { photoController } = require("../controller");
 const { upload } = require("../middleware/multer");
