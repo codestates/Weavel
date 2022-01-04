@@ -4,16 +4,27 @@ const { body, validationResult } = require("express-validator");
 const { accessToken } = require("../middleware/accessToken");
 const { usersController } = require("../controller");
 
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
+  }
+  return res.status(400).json({ message: errors.array()[0].msg });
+};
+
 // 회원가입 POST /user/signup
 router.post(
   "/signup",
-  body("name").notEmpty().withMessage("이름을 입력해주세요"),
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-  },
+  [
+    body("name")
+      .trim()
+      .isLength({ min: 2 })
+      .withMessage("이름을 두글자 이상 입력해주세요"),
+    body("email").isEmail().withMessage("이메일을 입력해주세요"),
+    body("password").notEmpty().withMessage("비밀번호를 입력해주세요"),
+    body("weather").notEmpty().withMessage("날씨를 입력해주세요"),
+    validate,
+  ],
   usersController.signup,
 );
 
