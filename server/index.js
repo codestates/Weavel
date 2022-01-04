@@ -66,7 +66,7 @@ schedule.scheduleJob("0 15 7 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=15");
 });
 schedule.scheduleJob("0 20 7 * * *", () => {
-  axios.get("https://server.weavel.site/weatherAPI?id=116");
+  axios.get("https://server.weavel.site/weatherAPI?id=16");
 });
 schedule.scheduleJob("0 25 7 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=17");
