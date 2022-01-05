@@ -1,16 +1,51 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const { body, header } = require("express-validator");
+const { validateError } = require("../middleware/vaildator");
 const { accessToken } = require("../middleware/accessToken");
 const { usersController } = require("../controller");
 
 // 회원가입 POST /user/signup
-router.post("/signup", usersController.signup);
+router.post(
+  "/signup",
+  [
+    body("name")
+      .trim()
+      .isLength({ min: 2 })
+      .withMessage("이름을 두글자 이상 입력해주세요"),
+    body("email").isEmail().withMessage("이메일을 입력해주세요"),
+    body("password")
+      .notEmpty()
+      .withMessage("비밀번호를 입력해주세요")
+      .isLength({ min: 8, max: 16 })
+      .withMessage("8~16자리 비밀번호를 입력해주세요"),
+    body("weather").isArray().withMessage("날씨를 입력해주세요"),
+    validateError,
+  ],
+  usersController.signup,
+);
 
 // 로그인 POST /user/login
-router.post("/login", usersController.login);
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("이메일을 입력해주세요"),
+    body("password")
+      .notEmpty()
+      .withMessage("비밀번호를 입력해주세요")
+      .isLength({ min: 8, max: 16 })
+      .withMessage("8~16자리 비밀번호를 입력해주세요"),
+    validateError,
+  ],
+  usersController.login,
+);
 
 // 로그아웃 POST /user
-router.post("/logout", usersController.logout);
+router.post(
+  "/logout",
+  [header("authorization").notEmpty().withMessage("이미 로그아웃 되었습니다.")],
+  usersController.logout,
+);
 
 // 회원탈퇴 DELETE /user
 router.delete("/", accessToken, usersController.delete);

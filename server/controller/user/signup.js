@@ -5,36 +5,36 @@ const crypto = require("crypto");
 module.exports = async (req, res) => {
   try {
     const { name, email, password, weather } = req.body;
-    const findUser = await user.findOne({ where: { email: email } });
+    const overlapEmail = await user.findOne({ where: { email: email } });
     const salt = crypto.randomBytes(64).toString("hex");
     const encryptedPassword = crypto
       .pbkdf2Sync(password, salt, 9999, 64, "sha512")
       .toString("base64");
 
-    if (findUser) {
+    if (overlapEmail) {
       return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
     } else {
-      // user 생성
-      const newUser = await user.create({
+      const createUser = await user.create({
         name,
         email,
         salt,
         password: encryptedPassword,
       });
+      const createUserId = createUser.id;
+      const result = { createUserId, name, email, weather };
 
-      // email로 생성한 유저 조회
-      const userId = newUser.id;
+      function createWeatherRelation() {
+        async function createRelationDB(userId, weatherId) {
+          return await user_weather.create({ userId, weatherId });
+        }
 
-      const createRelation = async (userId, weatherId) => {
-        return await user_weather.create({ userId, weatherId });
-      };
+        const afewCreateWeather = weather.map((weatherCode) =>
+          createRelationDB(createUserId, weatherCode + 1),
+        );
+        Promise.all(afewCreateWeather);
+      }
 
-      const proWeather = weather.map((weatherCode) =>
-        createRelation(userId, weatherCode + 1),
-      );
-      Promise.all(proWeather);
-
-      const result = { userId, name, email, weather };
+      createWeatherRelation();
 
       return res
         .status(201)
