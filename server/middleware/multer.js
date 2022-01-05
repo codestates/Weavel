@@ -1,6 +1,6 @@
 const multer = require("multer");
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   // 경로 설정 함수
   destination: function (req, file, cb) {
     cb(null, "uploads/"); // cb 콜백함수를 통해 경로 설정
