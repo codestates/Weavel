@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { body, header } = require("express-validator");
+const { body, header, query } = require("express-validator");
 const { validateError } = require("../middleware/vaildator");
 const { accessToken } = require("../middleware/accessToken");
 const { usersController } = require("../controller");
@@ -19,7 +19,7 @@ router.post(
       .withMessage("비밀번호를 입력해주세요")
       .isLength({ min: 8, max: 16 })
       .withMessage("8~16자리 비밀번호를 입력해주세요"),
-    body("weather").isArray().withMessage("날씨를 입력해주세요"),
+    body("weather").isArray().withMessage("배열에 날씨코드를 입력해주세요"),
     validateError,
   ],
   usersController.signup,
@@ -51,10 +51,31 @@ router.post(
 router.delete("/", accessToken, usersController.delete);
 
 // 유저정보수정 PUT /user
-router.put("/", accessToken, usersController.put);
+router.put(
+  "/",
+  [
+    body("email").isEmail().withMessage("이메일을 입력해주세요"),
+    body("password")
+      .notEmpty()
+      .withMessage("비밀번호를 입력해주세요")
+      .isLength({ min: 8, max: 16 })
+      .withMessage("8~16자리 비밀번호를 입력해주세요"),
+    body("weather").isArray().withMessage("배열에 날씨코드를 입력해주세요"),
+    validateError,
+  ],
+  accessToken,
+  usersController.put,
+);
 
 // 이메일중복검사 GET /user/email?={email}
-router.get("/email", usersController.email);
+router.get(
+  "/email",
+  [
+    query("email").isEmail().withMessage("이메일을 입력해주세요"),
+    validateError,
+  ],
+  usersController.email,
+);
 
 // 유저정보요청 GET /user
 router.get("/", accessToken, usersController.get);
