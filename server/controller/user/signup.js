@@ -14,31 +14,33 @@ module.exports = async (req, res) => {
     if (overlapEmail) {
       return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
     } else {
-      const createUser = await user.create({
-        name,
-        email,
-        salt,
-        password: encryptedPassword,
-      });
-      const createUserId = createUser.id;
-      const result = { createUserId, name, email, weather };
+      async function createUser() {
+        const createUser = await user.create({
+          name,
+          email,
+          salt,
+          password: encryptedPassword,
+        });
+        const createUserId = createUser.id;
+        const result = { createUserId, name, email, weather };
+        return res
+          .status(201)
+          .json({ date: result, message: "회원가입이 완료되었습니다" });
+      }
 
-      function createWeatherRelation() {
+      async function createWeatherRelation() {
         async function createRelationDB(userId, weatherId) {
           return await user_weather.create({ userId, weatherId });
         }
-
+        const createUserId = await user.findOne({ where: { email: email } });
         const afewCreateWeather = weather.map((weatherCode) =>
-          createRelationDB(createUserId, weatherCode + 1),
+          createRelationDB(createUserId.id, weatherCode + 1),
         );
         Promise.all(afewCreateWeather);
       }
 
       createWeatherRelation();
-
-      return res
-        .status(201)
-        .json({ date: result, message: "회원가입이 완료되었습니다" });
+      createUser();
     }
   } catch (err) {
     console.log(err);

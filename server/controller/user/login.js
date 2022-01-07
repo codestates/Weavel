@@ -1,7 +1,6 @@
 const { user } = require("../../models");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const accessToken = require("../../middleware/accessToken");
 
 module.exports = async (req, res) => {
   try {
