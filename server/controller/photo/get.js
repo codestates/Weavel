@@ -1,5 +1,6 @@
 const { photo } = require("../../models");
 var fs = require("fs");
+
 module.exports = async (req, res) => {
   try {
     const userId = req.userId;
@@ -16,6 +17,6 @@ module.exports = async (req, res) => {
     });
   } catch (err) {
     console.log("err");
-    res.status(400).json({ message: "서버 에러입니다." });
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };

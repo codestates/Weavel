@@ -3,7 +3,7 @@ const { user_weather } = require("../../models");
 
 module.exports = async (req, res) => {
   try {
-    function headerError() {
+    function headerErorr() {
       const header = req.headers;
       if (!header) {
         return res.status(403).json({ message: "잘못된 요청입니다." });
@@ -17,10 +17,10 @@ module.exports = async (req, res) => {
       return res.status(200).json({ message: "회원탈퇴가 완료 되었습니다." });
     }
 
-    headerError();
+    headerErorr();
     deleteUser();
   } catch (err) {
-    console.log(err);
-    return res.status(501).json({ message: "서버 에러 입니다." });
+    console.log("err", err);
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };

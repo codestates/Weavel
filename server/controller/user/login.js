@@ -9,13 +9,13 @@ module.exports = async (req, res) => {
       where: { email: email },
     });
 
-    function userConfirm() {
+    function userConfirm(findUser) {
       if (!findUser) {
         return res.status(404).json({ message: "회원을 찾을수 없습니다." });
       }
     }
 
-    function passwordConfirm() {
+    function passwordConfirm(findUser, password) {
       const dbPassword = findUser.password;
       const salt = findUser.salt;
 
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    function createAccessToken() {
+    function createAccessToken(findUser) {
       const payload = {
         id: findUser.id,
         email: findUser.email,
@@ -43,15 +43,15 @@ module.exports = async (req, res) => {
       return accessToken;
     }
 
-    userConfirm();
-    passwordConfirm();
+    userConfirm(findUser);
+    passwordConfirm(findUser, password);
 
     return res.status(200).json({
-      data: { accessToken: createAccessToken(), id: findUser.id },
+      data: { accessToken: createAccessToken(findUser), id: findUser.id },
       message: "로그인에 성공하였습니다.",
     });
   } catch (err) {
-    console.log(err);
-    return res.status(501).json({ message: "서버 에러 입니다." });
+    console.log("err", err);
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };
