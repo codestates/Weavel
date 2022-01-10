@@ -35,7 +35,7 @@ module.exports = {
         if (!Info) {
           new errorMessage("일치하는 유저가 존재하지").respond();
         }
-        req.cookies.id = Info.id;
+        req.userId = Info.id;
         next();
       });
     }
