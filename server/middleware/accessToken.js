@@ -5,29 +5,42 @@ module.exports = {
   accessToken: async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
-      res
-        .status(400)
-        .json({ data: null, message: "access token이 유효하지 않습니다." });
-    } else {
-      const token = authHeader.split(" ")[1];
-      const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      const userInfo = await user.findOne({
-        where: { id: data.id },
-      });
-
-      if (!userInfo) {
-        res.status(401).json({
+    class errorMessage {
+      constructor(phrase) {
+        this.phrase = phrase;
+      }
+      respond() {
+        return res.status(400).json({
           data: null,
-          message: "access token 일치하는 유저가 없습니다.",
+          message: `access token ${this.phrase} 않습니다.`,
         });
-      } else {
-        //console.log(userInfo.dataValues);
-        // delete userInfo.dataValues.password;
-        // res.status(200).json({ data: { userInfo: userInfo.dataValues }, message: "ok" });
-        req.userId = userInfo.dataValues.id; // req.customData
-        next();
       }
     }
+
+    function checkAccessToken(authHeader) {
+      if (!authHeader) {
+        new errorMessage("존재하지").respond();
+      }
+    }
+
+    function tokenConfim(authHeader) {
+      const token = authHeader.split(" ")[1];
+      jwt.verify(token, process.env.ACCESS_SECRET, async (err, decode) => {
+        if (err) {
+          new errorMessage("유효하지").respond();
+        }
+        const Info = await user.findOne({
+          where: { id: decode.id },
+        });
+        if (!Info) {
+          new errorMessage("일치하는 유저가 존재하지").respond();
+        }
+        req.cookies.id = Info.id;
+        next();
+      });
+    }
+
+    checkAccessToken(authHeader);
+    tokenConfim(authHeader);
   },
 };

@@ -6,7 +6,6 @@ module.exports = async (req, res) => {
 
     async function emailConfirmation(email) {
       const result = await user.findOne({ where: { email: email } });
-
       if (result) {
         return res.status(200).json({ message: `이메일이 중복됩니다.` });
       }
@@ -16,7 +15,7 @@ module.exports = async (req, res) => {
 
     emailConfirmation(email);
   } catch (err) {
-    console.log(err);
-    return res.status(501).json({ message: "서버 에러 입니다." });
+    console.log("err", err);
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };

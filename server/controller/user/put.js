@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    async function deleteWeatherRelation() {
+    async function deleteWeatherRelation(userId) {
       return await user_weather.destroy({ where: { userId: userId } });
     }
 
@@ -23,16 +23,15 @@ module.exports = async (req, res) => {
       return await user_weather.create({ userId, weatherId });
     }
 
-    async function putWeatherRelation() {
-      deleteWeatherRelation();
-
+    async function putWeatherRelation(userId, weather) {
+      deleteWeatherRelation(userId);
       const afewCreateWeather = weather.map((weatherCode) =>
         createRelationDB(userId, weatherCode + 1),
       );
       Promise.all(afewCreateWeather);
     }
 
-    async function putpasswordUser() {
+    async function putUserPassword(userId, password) {
       const salt = crypto.randomBytes(64).toString("hex");
       const encryptedPassword = crypto
         .pbkdf2Sync(password, salt, 9999, 64, "sha512")
@@ -50,10 +49,10 @@ module.exports = async (req, res) => {
     }
 
     headerError();
-    putWeatherRelation();
-    putpasswordUser();
+    putWeatherRelation(userId, weather);
+    putUserPassword(userId, password);
   } catch (err) {
-    console.log(err);
-    return res.status(501).json({ message: "서버 에러 입니다." });
+    console.log("err", err);
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };

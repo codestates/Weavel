@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     }
     clearToken();
   } catch (err) {
-    console.log(err);
-    return res.status(501).json({ message: "서버 에러 입니다." });
+    console.log("err", err);
+    return res.status(400).json({ message: "서버 에러입니다." });
   }
 };
