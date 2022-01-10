@@ -1,11 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const { accessToken } = require("../middleware/accessToken");
+const { body, header, query } = require("express-validator");
+const { validateError } = require("../middleware/vaildator");
 const { photoController } = require("../controller");
 const { upload } = require("../middleware/multer");
 
 // GET	/photo 사진 조회하기
-router.get("/", accessToken, photoController.get);
+router.get(
+  "/",
+  [
+    query("id")
+      .notEmpty()
+      .withMessage("id가 비워졌습니다.")
+      .isInt()
+      .withMessage("번호를 입력해주세요"),
+    validateError,
+  ],
+  accessToken,
+  photoController.get,
+);
 
 // GET	/photo 사진정보 불러오기
 router.get("/info", accessToken, photoController.info_get);

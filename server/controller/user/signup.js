@@ -30,13 +30,13 @@ module.exports = async (req, res) => {
         .pbkdf2Sync(password, salt, 9999, 64, "sha512")
         .toString("base64");
 
-      const createUser = await user.create({
+      const createUserDB = await user.create({
         name,
         email,
         salt,
         password: encryptedPassword,
       });
-      const createUserId = createUser.id;
+      const createUserId = createUserDB.id;
       const result = { createUserId, name, email, weather };
 
       createWeatherRelation(createUserId);
