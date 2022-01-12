@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
     }
     return res.status(200).json(result);
   } catch (err) {
-    console.log(err);
+    console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });
   }
 };
