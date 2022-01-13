@@ -8,39 +8,46 @@ const { or, and, gt, lt } = Sequelize.Op;
 module.exports = async (req, res) => {
   try {
     // 좌표
-    const nx = req.query.nx;
-    const ny = req.query.ny;
-    // 현재시간
-    const time = Number(moment().format("HH") + "00");
-    // 현재날짜
-    const today = moment().format("YYYYMMDD");
+    const nxCoordinate = req.query.nx;
+    const nyCoordinate = req.query.ny;
 
-    // POP 강수확률,  REH 습도,  TMP 1시간 기온
-    const weather = await weather_data.findAll({
+    const findAllTimeWeatherData = await weather_data.findAll({
       where: {
-        nx: nx,
-        ny: ny,
+        nx: nxCoordinate,
+        ny: nyCoordinate,
         [or]: [{ category: "TMP" }, { category: "POP" }, { category: "REH" }],
+        // POP 강수확률, REH 습도, TMP 1시간 기온
       },
     });
 
-    // 날씨 데이터 추출
-    const result = [];
-    weather.filter((e) => {
-      const data = [];
-      data.push(e.date);
-      data.push(e.time);
-      data.push(e.category);
-      data.push(e.value);
-      return result.push(data);
-    });
-
-    if (weather.length === 0) {
-      return res.status(404).json({ message: "조회된 데이터가 없습니다." });
+    function checkExistWeatherData(findAllTimeWeatherData) {
+      if (findAllTimeWeatherData.length === 0) {
+        return res.status(404).json({ message: "조회된 데이터가 없습니다." });
+      }
     }
-    return res.status(200).json(result);
+
+    function fillterWeatherData(findAllTimeWeatherData) {
+      const resultWeather = findAllTimeWeatherData.filter((e) => {
+        const result = [];
+        result.push(e.date);
+        result.push(e.time);
+        result.push(e.category);
+        result.push(e.value);
+        return result;
+      });
+
+      return res.status(200).json(resultWeather);
+    }
+
+    checkExistWeatherData(findAllTimeWeatherData);
+    fillterWeatherData(findAllTimeWeatherData);
   } catch (err) {
     console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });
   }
 };
+
+// 현재시간
+//const time = Number(moment().format("HH") + "00");
+// 현재날짜
+//const today = moment().format("YYYYMMDD");

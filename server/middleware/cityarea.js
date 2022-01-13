@@ -1,24 +1,24 @@
 module.exports = {
-  cityarea: async (req, res, next) => {
-    const id = req.query.id;
-    console.log(id);
-    if (id === "01") req.body = arr1;
-    if (id === "02") req.body = arr2;
-    if (id === "03") req.body = arr3;
-    if (id === "04") req.body = arr4;
-    if (id === "05") req.body = arr5;
-    if (id === "06") req.body = arr6;
-    if (id === "07") req.body = arr7;
-    if (id === "08") req.body = arr8;
-    if (id === "09") req.body = arr9;
-    if (id === "10") req.body = arr10;
-    if (id === "11") req.body = arr11;
-    if (id === "12") req.body = arr12;
-    if (id === "13") req.body = arr13;
-    if (id === "14") req.body = arr14;
-    if (id === "15") req.body = arr15;
-    if (id === "16") req.body = arr16;
-    if (id === "17") req.body = arr17;
+  cityarea: (req, res, next) => {
+    const cityId = req.query.id;
+    console.log(cityId);
+    if (cityId === "01") req.body = arr1;
+    if (cityId === "02") req.body = arr2;
+    if (cityId === "03") req.body = arr3;
+    if (cityId === "04") req.body = arr4;
+    if (cityId === "05") req.body = arr5;
+    if (cityId === "06") req.body = arr6;
+    if (cityId === "07") req.body = arr7;
+    if (cityId === "08") req.body = arr8;
+    if (cityId === "09") req.body = arr9;
+    if (cityId === "10") req.body = arr10;
+    if (cityId === "11") req.body = arr11;
+    if (cityId === "12") req.body = arr12;
+    if (cityId === "13") req.body = arr13;
+    if (cityId === "14") req.body = arr14;
+    if (cityId === "15") req.body = arr15;
+    if (cityId === "16") req.body = arr16;
+    if (cityId === "17") req.body = arr17;
     console.log("-------------->", req.body);
     next();
   },
