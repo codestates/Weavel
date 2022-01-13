@@ -7,90 +7,116 @@ const { or, and, gt, lt } = Sequelize.Op;
 
 module.exports = async (req, res) => {
   try {
-    const city = req.query.city;
-    const day = req.query.day;
-    const time = req.query.time;
-    const weather = req.query.weather;
-    let dayCode = "";
-    let SKYvalue = "";
-    let PTYvalue = "";
+    const cityCode = req.query.city;
+    const dayCode = req.query.day;
+    const timeFourCode = req.query.time;
+    const weatherCode = req.query.weather;
+    let dateEightCode = "";
+    let skyValueCode = "";
+    let ptyValueCode = "";
 
-    // pty는 만족하나 sky는 만족 x
-    // 약속된 날짜 코드 오늘(0), 내일(1), 모레(2)
-    if (day === "0") {
-      dayCode = moment().format("YYYYMMDD");
-    }
-    if (day === "1") {
-      dayCode = moment().add(1, "days").format("YYYYMMDD"); //내일
-    }
-    if (day === "2") {
-      dayCode = moment().add(2, "days").format("YYYYMMDD"); //모레
-    }
-
-    // 약속된 날씨 코드  맑음(0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
-    // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
-    // 날씨별 값 부여
-    if (weather === "0") {
-      SKYvalue = "1";
-      PTYvalue = "0";
-    }
-    if (weather === "1") {
-      SKYvalue = ["3", "4"];
-      PTYvalue = "0";
-    }
-    if (weather === "2") {
-      PTYvalue = ["1", "4"];
-    }
-    if (weather === "3") {
-      PTYvalue = ["2", "3"];
+    function changeDayCode() {
+      //오늘(0), 내일(1), 모레(2)
+      if (dayCode === "0") {
+        dateEightCode = moment().format("YYYYMMDD");
+      }
+      if (dayCode === "1") {
+        dateEightCode = moment().add(1, "days").format("YYYYMMDD"); //내일
+      }
+      if (dayCode === "2") {
+        dateEightCode = moment().add(2, "days").format("YYYYMMDD"); //모레
+      }
     }
 
-    // category 해당 추출
-    const find = await weather_data.findAll({
+    function changeWeatherValue(weatherCode) {
+      // 약속된 날씨 코드  맑음(0 - SKY(1), PTY(0)), 구름 (1 - SKY(3, 4), PTY(0) ), 비(2 - PTY(1, 4) ), 눈(3 - PTY(2, 3)
+      // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
+      // 날씨별 값 부여
+      if (weatherCode === "0") {
+        skyValueCode = "1";
+        ptyValueCode = "0";
+      }
+      if (weatherCode === "1") {
+        skyValueCode = ["3", "4"];
+        ptyValueCode = "0";
+      }
+      if (weatherCode === "2") {
+        ptyValueCode = ["1", "4"];
+      }
+      if (weatherCode === "3") {
+        ptyValueCode = ["2", "3"];
+      }
+    }
+
+    changeDayCode(dayCode);
+    changeWeatherValue(weatherCode);
+
+    const extractWeatherData = await weather_data.findAll({
       where: {
-        city: city,
-        date: dayCode,
-        time: time,
+        city: cityCode,
+        date: dateEightCode,
+        time: timeFourCode,
         [or]: [
-          { [and]: [{ category: "SKY" }, { [or]: { value: SKYvalue } }] },
-          { [and]: [{ category: "PTY" }, { [or]: { value: PTYvalue } }] },
+          { [and]: [{ category: "SKY" }, { [or]: { value: skyValueCode } }] },
+          { [and]: [{ category: "PTY" }, { [or]: { value: ptyValueCode } }] },
         ],
       },
     });
 
-    // 좌표 추출
-    const result = [];
-    const end = [];
-    for (let i = 0; i < find.length; i++) {
-      const xy = [];
-      xy.push(find[i].nx);
-      xy.push(find[i].ny);
-      result.push(xy);
-    }
+    const coordinateAllResult = extractWeatherData.map((coordinate) => {
+      let xy = [];
+      xy.push(coordinate.nx);
+      xy.push(coordinate.ny);
+      return xy;
+    });
 
-    // 날씨 맑음, 흐림은 중복조건이 있음으로 체크 이중반복문
-    if (weather === "1" || weather === "0") {
-      for (let i = 0; i < result.length; i++) {
-        for (let j = i + 1; j < result.length; j++) {
-          if (result[i][0] === result[j][0] && result[i][1] === result[j][1]) {
-            end.push(result[i]);
+    function removeRepetitionCoordinate(coordinateAllResult) {
+      const result = [];
+      for (let i = 0; i < coordinateAllResult.length; i++) {
+        for (let j = i + 1; j < coordinateAllResult.length; j++) {
+          if (
+            coordinateAllResult[i][0] === coordinateAllResult[j][0] &&
+            coordinateAllResult[i][1] === coordinateAllResult[j][1]
+          ) {
+            result.push(coordinateAllResult[i]);
             break;
           } else {
             break;
           }
         }
       }
-      if (end.length === 0) {
-        return res.status(200).json({ message: "데이터가 없습니다." });
-      }
-      return res.status(200).send(end);
+      return result;
     }
 
-    // 비, 눈 날씨에 해당
-    if (result.length === 0) {
-      return res.status(200).json({ message: "데이터가 없습니다." });
+    function sunnyAndCloudy(coordinateAllResult) {
+      // 맑음, 흐림은 중복조건이 있음으로 중복제거필요
+      const result = removeRepetitionCoordinate(coordinateAllResult);
+
+      if (result.length === 0) {
+        return res.status(200).json({ message: "데이터가 없습니다." });
+      }
+      return res.status(200).send(result);
     }
-    return res.status(200).send(result);
+
+    function rainAndSnow(coordinateAllResult) {
+      if (weatherCode === "2" || weatherCode === "3") {
+        if (coordinateAllResult.length === 0) {
+          return res.status(200).json({ message: "데이터가 없습니다." });
+        }
+        return res.status(200).send(coordinateAllResult);
+      }
+    }
+
+    function resultCoordinate(weatherCode, coordinateAllResult) {
+      if (weatherCode === "0" || weatherCode === "1") {
+        sunnyAndCloudy(coordinateAllResult);
+      }
+      if (weatherCode === "2" || weatherCode === "3") {
+        rainAndSnow(coordinateAllResult);
+      }
+    }
+
+    resultCoordinate(weatherCode, coordinateAllResult);
   } catch (err) {
     console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });
