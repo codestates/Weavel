@@ -1,7 +1,4 @@
-require("dotenv").config();
 const axios = require("axios");
-const express = require("express");
-const app = express();
 const schedule = require("node-schedule");
 
 // 전국 날씨 API Get 요청 예약 (데이터 받는 가능시간 00시 03시, 06시, 09시, 12시, 15시, 18시, 21시)
@@ -21,7 +18,7 @@ schedule.scheduleJob("0 20 6 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=05");
 });
 schedule.scheduleJob("0 25 6 * * *", () => {
-  axios.get("https://server.weavel.site/weatherAPI?id=016");
+  axios.get("https://server.weavel.site/weatherAPI?id=06");
 });
 schedule.scheduleJob("0 30 6 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=07");
@@ -29,8 +26,8 @@ schedule.scheduleJob("0 30 6 * * *", () => {
 schedule.scheduleJob("0 35 6 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=08");
 });
-schedule.scheduleJob("0 40 6 * * *", () => {
-  axios.get("https://server.weavel.site/weatherAPI?id=09");
+schedule.scheduleJob("0 14 23 * * *", () => {
+  axios.get("http://localhost/weatherAPI?id=09");
 });
 schedule.scheduleJob("0 45 6 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=10");
@@ -56,3 +53,5 @@ schedule.scheduleJob("0 20 7 * * *", () => {
 schedule.scheduleJob("0 25 7 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=17");
 });
+
+module.exports = schedule;
