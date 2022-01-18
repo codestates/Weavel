@@ -119,6 +119,7 @@ function MainPage() {
     getAreaWeather(x, y, chartId);
   };
 
+
   useEffect(() => {
     const date = new Date();
     let month = date.getMonth() + 1;
