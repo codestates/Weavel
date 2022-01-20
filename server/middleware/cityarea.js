@@ -1,7 +1,6 @@
 module.exports = {
   cityarea: (req, res, next) => {
     const cityId = req.query.id;
-    console.log(cityId);
     if (cityId === "01") req.body = arr1;
     if (cityId === "02") req.body = arr2;
     if (cityId === "03") req.body = arr3;
@@ -19,7 +18,7 @@ module.exports = {
     if (cityId === "15") req.body = arr15;
     if (cityId === "16") req.body = arr16;
     if (cityId === "17") req.body = arr17;
-    console.log("-------------->", req.body);
+    console.log("-------------->", cityId, req.body);
     next();
   },
 };
