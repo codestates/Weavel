@@ -157,39 +157,43 @@ function MainPage() {
     for (let i = 0; i < areaWeatherData.length; i++) {
       if (areaWeatherData[i].category === "POP") {
         if (i < today) {
-          popArr[0].push(`${areaWeatherData[i].value}%`);
+          popArr[0].push(parseInt(areaWeatherData[i].value));
         } else if (i < tomorrow) {
-          popArr[1].push(`${areaWeatherData[i].value}%`);
+          popArr[1].push(parseInt(areaWeatherData[i].value));
         } else if (i < dayAfterTomorrow) {
-          popArr[2].push(`${areaWeatherData[i].value}%`);
+          popArr[2].push(parseInt(areaWeatherData[i].value));
         }
       } else if (areaWeatherData[i].category === "TMP") {
         if (i < today) {
-          tmpArr[0].push(`${areaWeatherData[i].value}`);
+          tmpArr[0].push(parseInt(areaWeatherData[i].value));
         } else if (i < tomorrow) {
-          tmpArr[1].push(`${areaWeatherData[i].value}`);
+          tmpArr[1].push(parseInt(areaWeatherData[i].value));
         } else if (i < dayAfterTomorrow) {
-          tmpArr[2].push(`${areaWeatherData[i].value}`);
+          tmpArr[2].push(parseInt(areaWeatherData[i].value));
         }
       } else if (areaWeatherData[i].category === "REH") {
         if (i < today) {
-          rehArr[0].push(`${areaWeatherData[i].value}%`);
+          rehArr[0].push(parseInt(areaWeatherData[i].value));
         } else if (i < tomorrow) {
-          rehArr[1].push(`${areaWeatherData[i].value}%`);
+          rehArr[1].push(parseInt(areaWeatherData[i].value));
         } else if (i < dayAfterTomorrow) {
-          rehArr[2].push(`${areaWeatherData[i].value}%`);
+          rehArr[2].push(parseInt(areaWeatherData[i].value));
         }
       }
     }
-    console.log(popArr[0], "강수");
-    console.log(tmpArr[0], "기온");
-    console.log(rehArr[0], "습도");
+
     let graphData = [
       {
         options: {
           chart: {
             zoom: {
               enabled: false,
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            style: {
+              colors: ["#4d90fa"],
             },
           },
           xaxis: {
@@ -206,6 +210,25 @@ function MainPage() {
       },
       {
         options: {
+          chart: {
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: "top", // top, center, bottom
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            offsetY: -20,
+            style: {
+              fontSize: "12px",
+              colors: ["#2d2d2d"],
+            },
+          },
           xaxis: {
             categories: dayArr[date],
           },
@@ -219,6 +242,25 @@ function MainPage() {
       },
       {
         options: {
+          chart: {
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: "top", // top, center, bottom
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            offsetY: -20,
+            style: {
+              fontSize: "12px",
+              colors: ["#2d2d2d"],
+            },
+          },
           xaxis: {
             categories: dayArr[date],
           },
