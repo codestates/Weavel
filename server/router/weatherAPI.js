@@ -20,4 +20,19 @@ router.get(
   weatherAPIController.weather_data,
 );
 
+router.get(
+  "/recovery",
+  [
+    query("id")
+      .trim()
+      .notEmpty()
+      .withMessage("query(id)에 cityCode를 입력해주세요.")
+      .isInt()
+      .withMessage("query(id)에 cityCode를 번호를 입력해주세요"),
+    validateError,
+  ],
+  cityarea,
+  weatherAPIController.recovery_data,
+);
+
 module.exports = router;
