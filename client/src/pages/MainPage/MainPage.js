@@ -16,6 +16,7 @@ function MainPage() {
   const [graphOption, setGraphOption] = useState();
   const [nowWeather, setNowWeather] = useState([]);
   const [areaWeather, setAreaWeather] = useState([]);
+  const [dateInfo, setDateInfo] = useState([]);
   const [chartId, setChartId] = useState(0);
   const initGraph = [
     {
@@ -68,8 +69,8 @@ function MainPage() {
         },
       })
       .then((res) => {
-        console.log(res);
         setAreaWeather(res.data);
+        setDateInfo([res.data[0], res.data[54], res.data[155]]);
         dataHandle(res.data, date);
       });
   };
@@ -85,7 +86,6 @@ function MainPage() {
         },
       })
       .then((res) => {
-        // console.log(res);
         setNowWeather(res.data);
         setGraphOption(initGraph);
         if (res.data.message) {
@@ -313,7 +313,7 @@ function MainPage() {
       ></WeatherSearch>
       {isShowWeatherInfo ? (
         <WeatherInfo
-          areaWeather={areaWeather}
+          dateInfo={dateInfo}
           graphOption={graphOption}
           areaName={areaName}
           ChartHandle={ChartHandle}
