@@ -14,7 +14,13 @@ import {
   DaySelectButtonContainer,
 } from "./WeatherInfo.style";
 
-function WeatherInfo({ graphOption, areaWeather, areaName, ChartHandle, showChart, buttonColor }) {
+function WeatherInfo({
+  graphOption,
+  areaName,
+  ChartHandle,
+  showChart,
+  buttonColor,
+}) {
   const chartButtonIdx = (e) => {
     ChartHandle(e.target.id);
     showChart(e.target.id);
@@ -56,7 +62,7 @@ function WeatherInfo({ graphOption, areaWeather, areaName, ChartHandle, showChar
             <span>섭씨 (°C)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart areaWeather={areaWeather} graphOption={graphOption}></LineChart>
+            <LineChart graphOption={graphOption} TMPline={true}></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>
@@ -66,11 +72,7 @@ function WeatherInfo({ graphOption, areaWeather, areaName, ChartHandle, showChar
             <span>확률 (%)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart
-              areaWeather={areaWeather}
-              graphOption={graphOption}
-              POPbar={true}
-            ></LineChart>
+            <LineChart graphOption={graphOption} POPbar={true}></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>
@@ -80,7 +82,7 @@ function WeatherInfo({ graphOption, areaWeather, areaName, ChartHandle, showChar
             <span>상대습도 (%)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart REHbar={true} graphOption={graphOption}></LineChart>
+            <LineChart graphOption={graphOption} REHbar={true}></LineChart>
           </InfoItemItem>
         </InfoContainer>
       </WeatherInfoContainer>

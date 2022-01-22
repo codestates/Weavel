@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     setToken(accessToken);
     getUserInfo(accessToken);
-    getPhotos(accessToken);
+    // getPhotos(accessToken);
     getAllPhotosInfo(accessToken);
     getAllUserWeather(accessToken);
   }, [accessToken]);
@@ -58,7 +58,6 @@ function App() {
 
   const [allUserWeather, setAllUserWeather] = useState([]);
   const [allPhotoInfo, setAllPhotoInfo] = useState([]);
-  const [photo, setPhoto] = useState([]);
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -97,7 +96,7 @@ function App() {
     axios(
       {
         method: "post",
-        url: "https://server.weavel.site/user/logout",
+        url: `${process.env.REACT_APP_API_URL}/user/logout`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -115,7 +114,7 @@ function App() {
 
   const putUserInfo = (weather, password, email) => {
     axios.put(
-      "https://server.weavel.site/user",
+      `${process.env.REACT_APP_API_URL}/user`,
       {
         email: email,
         password: password,
@@ -141,7 +140,7 @@ function App() {
   const getUserInfo = (token) => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -169,7 +168,7 @@ function App() {
   const DeleteUser = () => {
     axios({
       method: "delete",
-      url: "https://server.weavel.site/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -182,7 +181,7 @@ function App() {
   const getAllPhotosInfo = (token) => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/photo/info",
+      url: `${process.env.REACT_APP_API_URL}/photo/info`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -193,26 +192,11 @@ function App() {
     });
   };
 
-  //사진 받기
-  const getPhotos = (token) => {
-    axios({
-      method: "get",
-      url: "https://server.weavel.site/photo?id=1",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "image/jpg",
-      },
-      withCredentials: true,
-    }).then((res) => {
-      setPhoto(res.data);
-    });
-  };
-
   // 모든 회원 날씨 정보
   const getAllUserWeather = () => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/user/weather",
+      url: `${process.env.REACT_APP_API_URL}/user/weather`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

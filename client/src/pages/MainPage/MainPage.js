@@ -13,12 +13,13 @@ function MainPage() {
     setIsShowWeatherInfo(boolean);
   };
 
-  const [graphOption, setGraphOption] = useState([
+  const [graphOption, setGraphOption] = useState();
+  const [nowWeather, setNowWeather] = useState([]);
+  const [areaWeather, setAreaWeather] = useState([]);
+  const [chartId, setChartId] = useState(0);
+  const initGraph = [
     {
       options: {
-        chart: {
-          id: "basic-bar",
-        },
         xaxis: {
           categories: [],
         },
@@ -32,9 +33,6 @@ function MainPage() {
     },
     {
       options: {
-        chart: {
-          id: "basic-bar",
-        },
         xaxis: {
           categories: [],
         },
@@ -48,9 +46,6 @@ function MainPage() {
     },
     {
       options: {
-        chart: {
-          id: "basic-bar",
-        },
         xaxis: {
           categories: [],
         },
@@ -62,20 +57,18 @@ function MainPage() {
         },
       ],
     },
-  ]);
-  const [nowWeather, setNowWeather] = useState([]);
-  const [areaWeather, setAreaWeather] = useState([]);
-  const [chartId, setChartId] = useState(0);
-
+  ];
+  //상세날씨정보
   const getAreaWeather = (x, y, date) => {
     axios
-      .get("https://server.weavel.site/weather/area", {
+      .get(`${process.env.REACT_APP_API_URL}/weather/area`, {
         params: {
           nx: x,
           ny: y,
         },
       })
       .then((res) => {
+        console.log(res);
         setAreaWeather(res.data);
         dataHandle(res.data, date);
       });
@@ -83,7 +76,7 @@ function MainPage() {
 
   const getCityWeather = (weather, day, time, area) => {
     axios
-      .get("https://server.weavel.site/weather/city", {
+      .get(`${process.env.REACT_APP_API_URL}/weather/city`, {
         params: {
           city: area,
           day: day,
@@ -92,7 +85,9 @@ function MainPage() {
         },
       })
       .then((res) => {
+        // console.log(res);
         setNowWeather(res.data);
+        setGraphOption(initGraph);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
         }
@@ -119,7 +114,6 @@ function MainPage() {
     getAreaWeather(x, y, chartId);
   };
 
-
   useEffect(() => {
     const date = new Date();
     let month = date.getMonth() + 1;
@@ -128,70 +122,90 @@ function MainPage() {
     }
     const nowDate = `${date.getFullYear()}${month}${date.getDate()}`;
     const nowTime = `${date.getHours()}`;
+    console.log(nowTime);
     setDateTime({
       date: nowDate,
       time: nowTime,
     });
+    setGraphOption(initGraph);
   }, []);
 
-  const dataHandle = (areaWeather, date) => {
+  const dataHandle = (areaWeatherData, date) => {
     let dayArr = [[], [], []];
     let popArr = [[], [], []];
     let tmpArr = [[], [], []];
     let rehArr = [[], [], []];
 
-    let today = (24 - dateTime.time) * 3;
+    let today = 54;
     let tomorrow = 24 * 3 + today;
     let dayAfterTomorrow = 24 * 3 + tomorrow;
     //15 16~87     72+16+72
     let rootIdx = 2;
-    for (let i = 0; i < areaWeather.length; i++) {
+    for (let i = 0; i < areaWeatherData.length; i++) {
       if (rootIdx - i === 0 && i < today) {
-        dayArr[0].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        dayArr[0].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
         rootIdx += 3;
       } else if (rootIdx - i === 0 && i < tomorrow) {
-        dayArr[1].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        dayArr[1].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
         rootIdx += 3;
       } else if (rootIdx - i === 0 && i < dayAfterTomorrow) {
-        dayArr[2].push(`${areaWeather[i][1].slice(0, 2)}시`);
+        dayArr[2].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
         rootIdx += 3;
       }
     }
 
-    for (let i = 0; i < areaWeather.length; i++) {
-      if (areaWeather[i][2] === "POP") {
+    for (let i = 0; i < areaWeatherData.length; i++) {
+      if (areaWeatherData[i].category === "POP") {
         if (i < today) {
-          popArr[0].push(`${areaWeather[i][3]}%`);
+          popArr[0].push(`${areaWeatherData[i].value}%`);
         } else if (i < tomorrow) {
-          popArr[1].push(`${areaWeather[i][3]}%`);
+          popArr[1].push(`${areaWeatherData[i].value}%`);
         } else if (i < dayAfterTomorrow) {
-          popArr[2].push(`${areaWeather[i][3]}%`);
+          popArr[2].push(`${areaWeatherData[i].value}%`);
         }
-      } else if (areaWeather[i][2] === "TMP") {
+      } else if (areaWeatherData[i].category === "TMP") {
         if (i < today) {
-          tmpArr[0].push(`${areaWeather[i][3]}`);
+          tmpArr[0].push(`${areaWeatherData[i].value}`);
         } else if (i < tomorrow) {
-          tmpArr[1].push(`${areaWeather[i][3]}`);
+          tmpArr[1].push(`${areaWeatherData[i].value}`);
         } else if (i < dayAfterTomorrow) {
-          tmpArr[2].push(`${areaWeather[i][3]}`);
+          tmpArr[2].push(`${areaWeatherData[i].value}`);
         }
-      } else if (areaWeather[i][2] === "REH") {
+      } else if (areaWeatherData[i].category === "REH") {
         if (i < today) {
-          rehArr[0].push(`${areaWeather[i][3]}%`);
+          rehArr[0].push(`${areaWeatherData[i].value}%`);
         } else if (i < tomorrow) {
-          rehArr[1].push(`${areaWeather[i][3]}%`);
+          rehArr[1].push(`${areaWeatherData[i].value}%`);
         } else if (i < dayAfterTomorrow) {
-          rehArr[2].push(`${areaWeather[i][3]}%`);
+          rehArr[2].push(`${areaWeatherData[i].value}%`);
         }
       }
     }
-
+    console.log(popArr[0], "강수");
+    console.log(tmpArr[0], "기온");
+    console.log(rehArr[0], "습도");
     let graphData = [
       {
         options: {
           chart: {
-            id: "basic-bar",
+            zoom: {
+              enabled: false,
+            },
           },
+          xaxis: {
+            categories: dayArr[date],
+          },
+        },
+
+        series: [
+          {
+            name: "기온",
+            data: tmpArr[date],
+          },
+        ],
+      },
+      {
+        options: {
           xaxis: {
             categories: dayArr[date],
           },
@@ -205,25 +219,6 @@ function MainPage() {
       },
       {
         options: {
-          chart: {
-            id: "basic-bar",
-          },
-          xaxis: {
-            categories: dayArr[date],
-          },
-        },
-        series: [
-          {
-            name: "기온",
-            data: tmpArr[date],
-          },
-        ],
-      },
-      {
-        options: {
-          chart: {
-            id: "basic-bar",
-          },
           xaxis: {
             categories: dayArr[date],
           },
