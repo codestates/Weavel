@@ -106,7 +106,6 @@ module.exports = async (req, res) => {
         const findWeatherData = await weather_data.findOne({
           where: { nx: nx, ny: ny },
         });
-        console.log("--findWeatherData---", findWeatherData);
         if (!findWeatherData) {
           let URL = weatherDataURL(area);
           downloadWeatherDataAPI(URL, cityId);
@@ -117,7 +116,7 @@ module.exports = async (req, res) => {
     findMissingData(areaArray, cityId);
     return res
       .status(201)
-      .json({ message: "해당 city의 모든 날씨를 받아왔습니다." });
+      .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
   } catch (err) {
     console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });
