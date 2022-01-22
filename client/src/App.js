@@ -253,25 +253,17 @@ function App() {
       <Container>
         <Header>
           <HeaderBox logo={"logo"}>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <Logo
-                src="./images/logo.svg"
-                alt="logo"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              ></Logo>
-            </Link>
+            <Logo
+              src="./images/logo.svg"
+              alt="logo"
+              onClick={() => {
+                window.location.replace("/");
+              }}
+            ></Logo>
           </HeaderBox>
           <MenuContainer>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Menu
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                홈
-              </Menu>
+              <Menu>홈</Menu>
             </Link>
             <Link to="/mypage" style={{ textDecoration: "none" }}>
               <Menu>마이페이지</Menu>
