@@ -69,6 +69,7 @@ function MainPage() {
         },
       })
       .then((res) => {
+        console.log(res.data, "getArea");
         setAreaWeather(res.data);
         setDateInfo([res.data[0], res.data[54], res.data[155]]);
         dataHandle(res.data, date);
@@ -87,6 +88,7 @@ function MainPage() {
       })
       .then((res) => {
         setNowWeather(res.data);
+        console.log(res.data);
         setGraphOption(initGraph);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
@@ -320,7 +322,9 @@ function MainPage() {
           showChart={showChart}
           buttonColor={buttonColor}
         ></WeatherInfo>
-      ) : null}
+      ) : (
+        <></>
+      )}
     </MainPageContainer>
   );
 }

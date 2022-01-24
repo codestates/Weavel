@@ -9,6 +9,7 @@ import {
   TimeItem,
   AreaItem,
   SearchButton,
+  SideArea,
 } from "./SearchDetail.style";
 
 function SearchDetail({
@@ -21,28 +22,28 @@ function SearchDetail({
   const weather = [
     {
       id: 0,
-      weather: "맑은 날이 좋아요",
+      weather: "맑은 날",
       click: "./images/sunny.svg",
       unClick: "./images/unCLickedSunny.svg",
       isSelect: false,
     },
     {
       id: 1,
-      weather: "구름 낀 날이 좋아요",
+      weather: "구름 낀 날",
       click: "./images/cloudy.svg",
       unClick: "./images/unCLickedCloudy.svg",
       isSelect: false,
     },
     {
       id: 2,
-      weather: "비오는 날이 좋아요",
+      weather: "비오는 날",
       click: "./images/rainy.svg",
       unClick: "./images/unCLickedRainy.svg",
       isSelect: false,
     },
     {
       id: 3,
-      weather: "눈오는 날이 좋아요",
+      weather: "눈오는 날",
       click: "./images/snowy.svg",
       unClick: "./images/unCLickedSnowy.svg",
       isSelect: false,
@@ -235,8 +236,9 @@ function SearchDetail({
   return (
     <>
       <SelectListContainer>
-        <SelectListBox>
-          <SelectList>
+        <SelectListBox width="true">
+          <SideArea />
+          <SelectList width="true">
             {weatherSelect.map((weather, idx) => {
               return (
                 <WeatherItem
@@ -247,11 +249,11 @@ function SearchDetail({
                 >
                   {weather.isSelect ? (
                     <div>
-                      <img src={weather.click} />
+                      <img src={weather.click} alt="weatherClick" />
                     </div>
                   ) : (
                     <div>
-                      <img src={weather.unClick} />
+                      <img src={weather.unClick} alt="weatherUnClick" />
                     </div>
                   )}
                   {weather.weather}
@@ -259,9 +261,10 @@ function SearchDetail({
               );
             })}
           </SelectList>
+          <SideArea />
         </SelectListBox>
         <SelectListBox>
-          <SelectList>
+          <SelectList around="true">
             {daySelect.map((day, idx) => {
               return (
                 <DayItem
@@ -272,11 +275,11 @@ function SearchDetail({
                 >
                   {day.isSelect ? (
                     <div>
-                      <img src={day.click} />
+                      <img src={day.click} alt="dayClick" />
                     </div>
                   ) : (
                     <div>
-                      <img src={day.unClick} />
+                      <img src={day.unClick} alt="dayUnClick" />
                     </div>
                   )}
                   {day.day}
@@ -291,6 +294,7 @@ function SearchDetail({
               id={"up"}
               onClick={(e) => onButtonClick(e)}
               src="./images/top_arrow.svg"
+              alt="upArrow"
             />
           </ArrowPosition>
           <SelectList>
@@ -313,11 +317,12 @@ function SearchDetail({
               id={"down"}
               onClick={(e) => onButtonClick(e)}
               src="./images/bottom_arrow.svg"
+              alt="downArrow"
             />
           </ArrowPosition>
         </SelectListBox>
         <SelectListBox border={"none"}>
-          <SelectList area={"5px 0 5px 30px"} padding={"0 32px 0 32px"}>
+          <SelectList wrap="true" area={"5px 0 5px 0"} padding={"10px"}>
             {areaSelect.map((area, idx) => {
               return (
                 <AreaItem

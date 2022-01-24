@@ -1,22 +1,28 @@
 import styled from "styled-components";
 
 export const SelectListContainer = styled.div`
-  width: 1044px;
+  width: 100%;
   height: 312px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding-left: 1px;
+  justify-content: space-between;
+  @media screen and (max-width: 500px) {
+    height: 240px;
+  }
 `;
 
 export const SelectListBox = styled.div`
-  width: 232px;
+  width: 100%;
   height: 292px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-right: ${(props) => props.border || "1px solid #dcdcdc"};
+  flex-direction: ${(props) => (props.width ? "row" : "")};
+  @media screen and (max-width: 500px) {
+    height: 220px;
+  }
 `;
 
 export const ArrowPosition = styled.div`
@@ -26,54 +32,102 @@ export const ArrowPosition = styled.div`
   cursor: pointer;
   img {
     width: 25px;
+    @media screen and (max-width: 500px) {
+      width: 20px;
+    }
   }
 `;
 
 export const SelectList = styled.div`
+  width: ${(props) => (props.width ? "90px" : "100%")};
   height: 230px;
   overflow: scroll;
-  font-family: Roboto;
+  font-family: "Roboto";
+  padding-left: ${(props) => props.padding || "0"};
   margin: ${(props) => props.area || "5px 0 5px 0"};
+  flex-wrap: ${(props) => (props.wrap ? "wrap" : "")};
+  display: ${(props) =>
+    props.wrap || props.around || props.width ? "flex" : "block"};
+  flex-direction: ${(props) => (props.around || props.width ? "column" : "")};
+  justify-content: ${(props) =>
+    props.around || props.width ? "space-around" : ""};
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
   }
+  @media screen and (max-width: 500px) {
+    height: 180px;
+    width: ${(props) => (props.width ? "60px" : "100%")};
+  }
+`;
+
+export const SideArea = styled.div`
+  flex: 1;
 `;
 
 export const WeatherItem = styled.div`
   display: flex;
+  width: 100%;
+  /* justify-content: center; */
+  align-items: center;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
-  padding-right: 40px;
-  margin-bottom: 44px;
   cursor: pointer;
-
   div {
     margin-right: 10px;
+    height: 18px;
+    @media screen and (max-width: 500px) {
+      margin-right: 5px;
+      height: 10px;
+    }
+  }
+  img {
+    @media screen and (max-width: 500px) {
+      width: 10px;
+    }
   }
 `;
+
 export const DayItem = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
-  margin-bottom: 44px;
   cursor: pointer;
-
   div {
     margin-right: 10px;
+    height: 18px;
+    @media screen and (max-width: 500px) {
+      margin-right: 5px;
+      height: 10px;
+    }
+  }
+  img {
+    @media screen and (max-width: 500px) {
+      width: 10px;
+    }
   }
 `;
+
 export const TimeItem = styled.div`
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
+  /* width: 100%; */
   text-align: center;
-  width: 40px;
   height: 19px;
   margin: 9px 0 9px 0;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    height: 14px;
+  }
 `;
-export const AreaItem = styled.div`
+
+export const AreaItem = styled.span`
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
-  display: inline-block;
   margin: 0 18px 20px 18px;
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    margin: 0 9px 10px 9px;
+  }
 `;
 
 export const SearchButton = styled.div`

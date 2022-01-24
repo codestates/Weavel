@@ -20,18 +20,25 @@ function WeatherSearch({
   dateTime,
   weatherColor,
 }) {
-  const [isActivation, setIsActivation] = useState({ isOpen: false, isLender: false });
+  const [isActivation, setIsActivation] = useState({
+    isOpen: false,
+    isLender: false,
+  });
+  const [isInfoImg, setIsInfoImg] = useState(true);
 
   const activationHandle = () => {
     const isOpen = { ...isActivation };
     isOpen.isOpen = !isActivation.isOpen;
     isOpen.isLender = false;
     setIsActivation(isOpen);
+    setTimeout(() => {
+      setIsInfoImg(!isOpen.isOpen);
+    }, 500);
     searchWeatherHandle(false);
   };
 
   const [selectTitle, setSelectTitle] = useState({
-    weather: "날씨를 선택하세요",
+    weather: `날씨를 선택하세요`,
     day: "날짜를 선택하세요",
     time: "시간을 선택하세요",
     area: "지역을 선택하세요",
@@ -46,7 +53,7 @@ function WeatherSearch({
   return (
     <SearchContainer>
       <WeatherSelectContainer isActivation={isActivation}>
-        <SelectContainer isActivation={isActivation.isOpen} onClick={() => activationHandle()}>
+        <SelectContainer onClick={() => activationHandle()}>
           <SelectBoxContainer>
             <SelectBox>
               <span>날씨</span>
@@ -84,8 +91,10 @@ function WeatherSearch({
             getSearchHandle={getSearchHandle}
             dateTime={dateTime}
           />
-        ) : (
+        ) : isInfoImg ? (
           <SearchInfo />
+        ) : (
+          <></>
         )}
       </WeatherSelectContainer>
     </SearchContainer>

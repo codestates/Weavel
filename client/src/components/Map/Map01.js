@@ -1,9 +1,11 @@
 import React from "react";
 import { Path } from "./MapIndex.style";
+import { Map01SVG } from "./Map01.style";
 
 function Map01({ pickMap, lenderMap, weatherColor }) {
   return (
-    <svg width="900" height="600" viewBox="10 -20 800 600" cursor="pointer">
+    // <svg width="900" height="600" viewBox="10 -20 800 600" cursor="pointer">
+    <Map01SVG viewBox="10 -20 800 600">
       <Path
         weatherColor={weatherColor}
         lenderMap={lenderMap["0"].isShow}
@@ -429,7 +431,7 @@ function Map01({ pickMap, lenderMap, weatherColor }) {
       >
         중랑구
       </text>
-    </svg>
+    </Map01SVG>
   );
 }
 
