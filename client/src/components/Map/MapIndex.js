@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { debounce } from "lodash";
-
 import Map01 from "./Map01";
 import Map02 from "./Map02";
 import Map03 from "./Map03";
@@ -73,24 +71,6 @@ function MapIndex({
     return setLenderMap(areas[showArea]);
   }, []);
 
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  const handleResize = debounce(() => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-  }, 1000);
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <MapContainer>
       {showArea === "01" ? (
@@ -98,7 +78,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "02" ? (
@@ -106,7 +85,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "03" ? (
@@ -114,7 +92,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "04" ? (
@@ -122,7 +99,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "05" ? (
@@ -130,7 +106,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "06" ? (
@@ -138,7 +113,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "07" ? (
@@ -146,7 +120,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "08" ? (
@@ -154,7 +127,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "09" ? (
@@ -162,7 +134,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "10" ? (
@@ -170,7 +141,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "11" ? (
@@ -178,7 +148,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "12" ? (
@@ -186,7 +155,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "13" ? (
@@ -194,7 +162,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "14" ? (
@@ -202,7 +169,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "15" ? (
@@ -210,7 +176,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "16" ? (
@@ -218,7 +183,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
       {showArea === "17" ? (
@@ -226,7 +190,6 @@ function MapIndex({
           weatherColor={weatherColor}
           lenderMap={lenderMap}
           pickMap={pickMap}
-          width={windowSize.width}
         />
       ) : null}
     </MapContainer>

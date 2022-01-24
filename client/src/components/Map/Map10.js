@@ -2,7 +2,7 @@ import React from "react";
 import { Path } from "./MapIndex.style";
 import { MapSVG } from "./MapNumber.style";
 
-function Map10({ pickMap, lenderMap, weatherColor, width }) {
+function Map10({ pickMap, lenderMap, weatherColor }) {
   return (
     <MapSVG width="900px" height="600px" viewBox="0 -35 800 640">
       <Path
