@@ -69,6 +69,7 @@ function MainPage() {
         },
       })
       .then((res) => {
+        console.log(res, "getArea");
         setAreaWeather(res.data);
         setDateInfo([res.data[0], res.data[54], res.data[155]]);
         dataHandle(res.data, date);
@@ -87,6 +88,7 @@ function MainPage() {
       })
       .then((res) => {
         setNowWeather(res.data);
+        console.log(res.data, "nowWeather res");
         setGraphOption(initGraph);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
@@ -189,6 +191,7 @@ function MainPage() {
             zoom: {
               enabled: false,
             },
+            width: "100%",
           },
           dataLabels: {
             enabled: true,
@@ -212,6 +215,7 @@ function MainPage() {
         options: {
           chart: {
             type: "bar",
+            width: "100%",
           },
           plotOptions: {
             bar: {
@@ -244,6 +248,7 @@ function MainPage() {
         options: {
           chart: {
             type: "bar",
+            width: "100%",
           },
           plotOptions: {
             bar: {
@@ -320,7 +325,9 @@ function MainPage() {
           showChart={showChart}
           buttonColor={buttonColor}
         ></WeatherInfo>
-      ) : null}
+      ) : (
+        <></>
+      )}
     </MainPageContainer>
   );
 }

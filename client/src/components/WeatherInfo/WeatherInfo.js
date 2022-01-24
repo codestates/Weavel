@@ -52,7 +52,7 @@ function WeatherInfo({
     showChart("0");
   }, []);
   return (
-    <div>
+    <>
       <WeatherInfoContainer>
         <TitleContainer>
           <InfoTitle>{areaName}의 날씨 정보</InfoTitle>
@@ -111,7 +111,7 @@ function WeatherInfo({
           </InfoItemItem>
         </InfoContainer>
       </WeatherInfoContainer>
-    </div>
+    </>
   );
 }
 

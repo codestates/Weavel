@@ -5,7 +5,6 @@ import {
   Route,
   Switch,
   useHistory,
-  Redirect,
   Link,
 } from "react-router-dom";
 
@@ -18,6 +17,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import { ModalContainer } from "./pages/MyPage/MyPage.style";
 import {
+  MainContainer,
   Container,
   Header,
   HeaderBox,
@@ -250,6 +250,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* <MainContainer> */}
       <Container>
         <Header>
           <HeaderBox logo={"logo"}>
@@ -263,7 +264,7 @@ function App() {
           </HeaderBox>
           <MenuContainer>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Menu>홈</Menu>
+              <Menu margin="0 20.5px 0 20.5px">홈</Menu>
             </Link>
             <Link to="/mypage" style={{ textDecoration: "none" }}>
               <Menu>마이페이지</Menu>
@@ -360,6 +361,7 @@ function App() {
           </FooterTeamLink>
         </FooterContents>
       </Footer>
+      {/* </MainContainer> */}
     </BrowserRouter>
   );
 }

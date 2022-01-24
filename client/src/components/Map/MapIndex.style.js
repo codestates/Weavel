@@ -6,6 +6,12 @@ export const MapContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1060px) {
+  }
+  @media screen and (max-width: 500px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 export const Path = styled.path`

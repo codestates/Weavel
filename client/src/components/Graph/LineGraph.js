@@ -3,6 +3,7 @@ import ApexCharts from "react-apexcharts";
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,24 +22,24 @@ class LineChart extends Component {
             options={this.props.graphOption[1].options}
             series={this.props.graphOption[1].series}
             type="bar"
-            width="1000"
-            height="300"
+            // width="100%"
+            // height="300"
           />
         ) : this.props.REHbar ? (
           <ApexCharts
             options={this.props.graphOption[2].options}
             series={this.props.graphOption[2].series}
             type="bar"
-            width="1000"
-            height="300"
+            // width="100%"
+            // height="300"
           />
         ) : this.props.TMPline ? (
           <ApexCharts
             options={this.props.graphOption[0].options}
             series={this.props.graphOption[0].series}
             type="line"
-            width="1000"
-            height="300"
+            // width="100%"
+            // height="300"
           />
         ) : (
           <></>
