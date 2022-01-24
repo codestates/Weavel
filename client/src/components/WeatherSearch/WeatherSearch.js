@@ -40,10 +40,10 @@ function WeatherSearch({
   };
 
   const [selectTitle, setSelectTitle] = useState({
-    weather: `날씨를 선택하세요`,
-    day: "날짜를 선택하세요",
-    time: "시간을 선택하세요",
-    area: "지역을 선택하세요",
+    weather: `선택해 주세요`,
+    day: "선택해 주세요",
+    time: "선택해 주세요",
+    area: "선택해 주세요",
   });
 
   const [showArea, setShowArea] = useState(null);
