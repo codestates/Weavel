@@ -1,9 +1,10 @@
 import React from "react";
 import { Path } from "./MapIndex.style";
+import { MapSVG } from "./MapNumber.style";
 
 function Map04({ pickMap, lenderMap, weatherColor }) {
   return (
-    <svg width="800" height="600" viewBox="0 -70 800 720" cursor="pointer">
+    <MapSVG width="800px" height="600px" viewBox="0 -70 800 720">
       <Path
         weatherColor={weatherColor}
         lenderMap={lenderMap["0"].isShow}
@@ -67,34 +68,88 @@ function Map04({ pickMap, lenderMap, weatherColor }) {
         onClick={(e) => pickMap("04", e)}
         d="m455.69 207.86l0-.75-.67-.29-1.04-.21-.71-.15-5.65-1.12-.56-.07-1.14-.23.04-.29-6.12-1.17-5.88-1.21-3.25-.64.31 4.28-1.5.53-.2.05-.08.03-.03.03-.01 0-.17.13-.06.08-.02.03-.01.01-1.36 2.75-.09.26-.01.06-.01.1.07.54.07.46 1.7 1.74.77-.05.86-.09 1.38-.52.18-.11.21-.13.12-.11.27-.31.31 3.56-.57.85-.15.3-.02.04-.4.42-.59.62-1.14.93-.26.21-.23.18-.72.46-.03.02-.52.34-1.04.7-.72.51-.24.18-.38.26-.02.02-1.38 1.1.08.74.02.16.08.54.4 2.53 0 .02.27 2.05.13 1.6.17.08 11.93 5.3 1.98-.17 5.13-.45 9.91.28.13.02 1.83.21 2.95 1.28 3.6.24 2.12.13 1.05.04 7.96.48-.09-.16-.17-.89 0-.06-.02-.18-.03-.37 0-.03-.11-1.37-.04-.58 0-1.23 0-.01.05-.42.01-.09.03-.17.07-.5.07-.48.11-.52.64-1.42 1.02-.52.19-.89 2.53-1.99 1.62-.78.44-.23.3-.31.25-.41.14-.22.16-.27.35-.58.11-.21.09-.2 1.44-3.97-.49-1.19-1.13-3.91-.44-1.02-.89-2.04-2.64-1.56-.24-.12-2.58.78-.54.16-1.62.45-.06.02-.96.13-.27.03-.66.09-1.64.06-.05 0-.59-.03-.77-.11-.61-.17-2.96-.88-6.87-1.26-2.33.27.13-.05z"
       />
-      <text id={0} onClick={(e) => pickMap("04", e)} x="430" y="275" fill="#B0AFAF">
+      <text
+        id={0}
+        onClick={(e) => pickMap("04", e)}
+        x="430"
+        y="275"
+        fill="#B0AFAF"
+      >
         남구
       </text>
-      <text id={1} onClick={(e) => pickMap("04", e)} x="340" y="280" fill="#B0AFAF">
+      <text
+        id={1}
+        onClick={(e) => pickMap("04", e)}
+        x="340"
+        y="280"
+        fill="#B0AFAF"
+      >
         달서구
       </text>
-      <text id={2} onClick={(e) => pickMap("04", e)} x="280" y="420" fill="#B0AFAF">
+      <text
+        id={2}
+        onClick={(e) => pickMap("04", e)}
+        x="280"
+        y="420"
+        fill="#B0AFAF"
+      >
         달성군
       </text>
-      <text id={3} onClick={(e) => pickMap("04", e)} x="220" y="210" fill="#B0AFAF">
+      <text
+        id={3}
+        onClick={(e) => pickMap("04", e)}
+        x="220"
+        y="210"
+        fill="#B0AFAF"
+      >
         달성군
       </text>
-      <text id={4} onClick={(e) => pickMap("04", e)} x="565" y="130" fill="#B0AFAF">
+      <text
+        id={4}
+        onClick={(e) => pickMap("04", e)}
+        x="565"
+        y="130"
+        fill="#B0AFAF"
+      >
         동구
       </text>
-      <text id={5} onClick={(e) => pickMap("04", e)} x="420" y="130" fill="#B0AFAF">
+      <text
+        id={5}
+        onClick={(e) => pickMap("04", e)}
+        x="420"
+        y="130"
+        fill="#B0AFAF"
+      >
         북구
       </text>
-      <text id={6} onClick={(e) => pickMap("04", e)} x="380" y="215" fill="#B0AFAF">
+      <text
+        id={6}
+        onClick={(e) => pickMap("04", e)}
+        x="380"
+        y="215"
+        fill="#B0AFAF"
+      >
         서구
       </text>
-      <text id={7} onClick={(e) => pickMap("04", e)} x="530" y="275" fill="#B0AFAF">
+      <text
+        id={7}
+        onClick={(e) => pickMap("04", e)}
+        x="530"
+        y="275"
+        fill="#B0AFAF"
+      >
         수성구
       </text>
-      <text id={8} onClick={(e) => pickMap("04", e)} x="440" y="225" fill="#B0AFAF">
+      <text
+        id={8}
+        onClick={(e) => pickMap("04", e)}
+        x="440"
+        y="225"
+        fill="#B0AFAF"
+      >
         중구
       </text>
-    </svg>
+    </MapSVG>
   );
 }
 

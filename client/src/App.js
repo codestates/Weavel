@@ -10,14 +10,12 @@ import {
 
 import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
-import DeleteUserModalModal from "./components/Modal/DeleteUserModal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/MyPage/MyPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import { ModalContainer } from "./pages/MyPage/MyPage.style";
 import {
-  MainContainer,
   Container,
   Header,
   HeaderBox,
@@ -250,7 +248,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <MainContainer> */}
       <Container>
         <Header>
           <HeaderBox logo={"logo"}>
@@ -361,7 +358,6 @@ function App() {
           </FooterTeamLink>
         </FooterContents>
       </Footer>
-      {/* </MainContainer> */}
     </BrowserRouter>
   );
 }

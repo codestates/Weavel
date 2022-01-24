@@ -10,7 +10,8 @@ export const SelectContainer = styled.div`
   height: 81px;
   background: #fbfbfb;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
-  border-radius: 50px;
+  border-radius: ${(props) =>
+    props.isOpen ? "50px 50px 0 0" : props.isClose ? "50px 50px 0 0 " : "50px"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +19,14 @@ export const SelectContainer = styled.div`
   cursor: pointer;
   @media screen and (max-width: 500px) {
     height: 61px;
-    border-radius: 20px;
+    font-size: 12px;
+    border-radius: ${(props) =>
+      props.isOpen
+        ? "20px 20px 0 0"
+        : props.isClose
+        ? "20px 20px 0 0 "
+        : "20px"};
+    /* border-radius: 20px; */
   }
 `;
 
@@ -50,24 +58,27 @@ export const WeatherSelectContainer = styled.div`
   width: 100%;
   height: ${(props) =>
     props.isActivation.isLender
-      ? "700px"
+      ? "auto"
       : props.isActivation.isOpen
-      ? "390px"
-      : "81px"};
+      ? "310px"
+      : "0px"};
   background: #fbfbfb;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
-  border-radius: 50px;
+  border-radius: 0 0 50px 50px;
   font-family: "Roboto";
-  position: relative;
+  display: ${(props) => (props.isActivation.isLender ? "flex" : "")};
+  justify-content: ${(props) => (props.isActivation.isLender ? "center" : "")};
+  align-items: ${(props) => (props.isActivation.isLender ? "center" : "")};
   transition: 0.5s all;
+
   @media screen and (max-width: 500px) {
-    font-size: 10px;
+    font-size: 11px;
     height: ${(props) =>
       props.isActivation.isLender
-        ? "400px"
+        ? "auto"
         : props.isActivation.isOpen
-        ? "300px"
-        : "61px"};
-    border-radius: 20px;
+        ? "240px"
+        : "0px"};
+    border-radius: 0 0 20px 20px;
   }
 `;
