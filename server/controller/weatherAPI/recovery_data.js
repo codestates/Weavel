@@ -3,7 +3,6 @@ const cheerio = require("cheerio");
 const moment = require("moment");
 require("moment-timezone");
 moment.tz.setDefault("Asia/Seoul");
-const dotenv = require("dotenv");
 const { weather_data } = require("../../models");
 
 module.exports = async (req, res) => {
@@ -14,15 +13,6 @@ module.exports = async (req, res) => {
     function sleepTime(ms) {
       const wakeUpTime = Date.now() + ms;
       while (Date.now() < wakeUpTime) {}
-    }
-
-    function deleteOldWeatherData(cityId) {
-      const findOldWeatherData = weather_data.findAll({
-        where: { city: cityId },
-      });
-      if (findOldWeatherData) {
-        weather_data.destroy({ where: { city: cityId } });
-      }
     }
 
     function weatherDataURL(area) {
@@ -109,19 +99,24 @@ module.exports = async (req, res) => {
       sleepTime(5000);
     }
 
-    function saveWeatherData(areaArray, cityId) {
-      areaArray.map((area) => {
-        let URL = weatherDataURL(area);
-        downloadWeatherDataAPI(URL, cityId);
+    function findMissingData(areaArray) {
+      areaArray.map(async (area) => {
+        const nx = area[0];
+        const ny = area[1];
+        const findWeatherData = await weather_data.findOne({
+          where: { nx: nx, ny: ny },
+        });
+        if (!findWeatherData) {
+          let URL = weatherDataURL(area);
+          downloadWeatherDataAPI(URL, cityId);
+        }
       });
     }
 
-    deleteOldWeatherData(cityId);
-    saveWeatherData(areaArray, cityId);
-
+    findMissingData(areaArray, cityId);
     return res
       .status(201)
-      .json({ message: "해당 city의 모든 날씨를 받아왔습니다" });
+      .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
   } catch (err) {
     console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });

@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
     ) {
       cb(null, true);
     } else {
-      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"), false);
+      return cb(new Error(".png, .jpg .jpeg 만 가능합니다. "), false);
     }
   },
   limit: { fileSize: 5 * 1024 * 1024 },
