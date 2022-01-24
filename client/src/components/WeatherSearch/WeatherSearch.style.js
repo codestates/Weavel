@@ -18,6 +18,7 @@ export const SelectContainer = styled.div`
   cursor: pointer;
   @media screen and (max-width: 500px) {
     height: 61px;
+    border-radius: 20px;
   }
 `;
 

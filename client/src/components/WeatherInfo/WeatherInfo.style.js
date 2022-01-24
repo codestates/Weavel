@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const WeatherInfoContainer = styled.div`
-  width: 65.25rem;
+  width: 100%;
   height: 79.875rem;
   background: #fbfbfb;
   margin: 44px 0 60px 0;
@@ -25,7 +25,7 @@ export const InfoTitle = styled.div`
 
 export const InfoContainer = styled.div`
   height: 24.875rem;
-  width: 63.313rem;
+  width: 100%;
   border-top: 1px solid #dcdcdc;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ export const InfoItemTitle = styled.div`
   box-sizing: border-box;
   margin-top: 1.813rem;
   height: 1.813rem;
-  width: 63.313rem;
+  width: 100%;
   font-size: 1.25rem;
   font-weight: bold;
   line-height: 1.813rem;
@@ -45,7 +45,7 @@ export const InfoItemTitle = styled.div`
 export const InfoItemDate = styled.div`
   box-sizing: border-box;
   height: 1.813rem;
-  width: 63.313rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +59,7 @@ export const InfoItemDate = styled.div`
 export const InfoItemItem = styled.div`
   box-sizing: border-box;
   height: 19.125rem;
-  width: 63.313rem;
+  width: 100%;
   padding: 0 1.063rem 0 1.063rem;
 `;
 
@@ -87,6 +87,6 @@ export const DaySelectButtonContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 63.313rem;
+  width: 100%;
   align-items: center;
 `;

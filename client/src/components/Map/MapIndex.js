@@ -46,6 +46,7 @@ function MapIndex({
   const [lenderMap, setLenderMap] = useState(areas[showArea]);
 
   useEffect(() => {
+    console.log(nowWeather, "nowWeather");
     if (nowWeather[0] !== undefined) {
       let city = {};
       nowWeather.map((coordinate) => {
@@ -67,6 +68,8 @@ function MapIndex({
   }, [nowWeather]);
 
   useEffect(() => {
+    console.log(nowWeather, "nowWeather2");
+
     return setLenderMap(areas[showArea]);
   }, []);
 
