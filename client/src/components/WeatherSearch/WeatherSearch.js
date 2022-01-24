@@ -19,6 +19,7 @@ function WeatherSearch({
   nowWeather,
   dateTime,
   weatherColor,
+  setNowWeather,
 }) {
   const [isActivation, setIsActivation] = useState({
     isOpen: false,
@@ -31,6 +32,7 @@ function WeatherSearch({
     isOpen.isOpen = !isActivation.isOpen;
     isOpen.isLender = false;
     setIsActivation(isOpen);
+    setNowWeather([]);
     setTimeout(() => {
       setIsInfoImg(!isOpen.isOpen);
     }, 500);

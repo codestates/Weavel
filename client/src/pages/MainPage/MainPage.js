@@ -69,7 +69,6 @@ function MainPage() {
         },
       })
       .then((res) => {
-        console.log(res, "getArea");
         setAreaWeather(res.data);
         setDateInfo([res.data[0], res.data[54], res.data[155]]);
         dataHandle(res.data, date);
@@ -87,11 +86,11 @@ function MainPage() {
         },
       })
       .then((res) => {
-        setNowWeather(res.data);
-        console.log(res.data, "nowWeather res");
-        setGraphOption(initGraph);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
+        } else {
+          setNowWeather(res.data);
+          setGraphOption(initGraph);
         }
       })
       .catch((err) => {
@@ -315,6 +314,7 @@ function MainPage() {
         nowWeather={nowWeather}
         dateTime={dateTime}
         weatherColor={weatherColor}
+        setNowWeather={setNowWeather}
       ></WeatherSearch>
       {isShowWeatherInfo ? (
         <WeatherInfo
