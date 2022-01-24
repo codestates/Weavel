@@ -54,27 +54,31 @@ function WeatherSearch({
 
   return (
     <SearchContainer>
+      <SelectContainer
+        isOpen={isActivation.isOpen}
+        isClose={!isInfoImg}
+        onClick={() => activationHandle()}
+      >
+        <SelectBoxContainer>
+          <SelectBox>
+            <span>날씨</span>
+            <SelectContents>{selectTitle.weather}</SelectContents>
+          </SelectBox>
+          <SelectBox>
+            <span>날짜</span>
+            <SelectContents>{selectTitle.day}</SelectContents>
+          </SelectBox>
+          <SelectBox>
+            <span>시간</span>
+            <SelectContents>{selectTitle.time}</SelectContents>
+          </SelectBox>
+          <SelectBox line={"none"}>
+            <span>지역</span>
+            <SelectContents>{selectTitle.area}</SelectContents>
+          </SelectBox>
+        </SelectBoxContainer>
+      </SelectContainer>
       <WeatherSelectContainer isActivation={isActivation}>
-        <SelectContainer onClick={() => activationHandle()}>
-          <SelectBoxContainer>
-            <SelectBox>
-              <span>날씨</span>
-              <SelectContents>{selectTitle.weather}</SelectContents>
-            </SelectBox>
-            <SelectBox>
-              <span>날짜</span>
-              <SelectContents>{selectTitle.day}</SelectContents>
-            </SelectBox>
-            <SelectBox>
-              <span>시간</span>
-              <SelectContents>{selectTitle.time}</SelectContents>
-            </SelectBox>
-            <SelectBox line={"none"}>
-              <span>지역</span>
-              <SelectContents>{selectTitle.area}</SelectContents>
-            </SelectBox>
-          </SelectBoxContainer>
-        </SelectContainer>
         {isActivation.isLender ? (
           <MapIndex
             isShowWeatherInfo={isShowWeatherInfo}

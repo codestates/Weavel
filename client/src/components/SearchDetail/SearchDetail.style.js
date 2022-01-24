@@ -57,7 +57,7 @@ export const SelectList = styled.div`
   }
   @media screen and (max-width: 500px) {
     height: 180px;
-    width: ${(props) => (props.width ? "60px" : "100%")};
+    width: ${(props) => (props.width ? "65px" : "100%")};
   }
 `;
 
@@ -68,7 +68,6 @@ export const SideArea = styled.div`
 export const WeatherItem = styled.div`
   display: flex;
   width: 100%;
-  /* justify-content: center; */
   align-items: center;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   cursor: pointer;
@@ -76,7 +75,7 @@ export const WeatherItem = styled.div`
     margin-right: 10px;
     height: 18px;
     @media screen and (max-width: 500px) {
-      margin-right: 5px;
+      margin-right: 2px;
       height: 10px;
     }
   }
@@ -98,7 +97,7 @@ export const DayItem = styled.div`
     margin-right: 10px;
     height: 18px;
     @media screen and (max-width: 500px) {
-      margin-right: 5px;
+      margin-right: 2px;
       height: 10px;
     }
   }

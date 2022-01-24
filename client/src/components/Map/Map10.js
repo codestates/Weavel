@@ -1,10 +1,10 @@
 import React from "react";
 import { Path } from "./MapIndex.style";
-import { Map01SVG } from "./Map01.style";
-function Map10({ pickMap, lenderMap, weatherColor }) {
+import { MapSVG } from "./MapNumber.style";
+
+function Map10({ pickMap, lenderMap, weatherColor, width }) {
   return (
-    // <svg width="900" height="560" viewBox="0 -35 800 640" cursor="pointer">
-    <Map01SVG viewBox="0 -35 700 540">
+    <MapSVG width="900px" height="600px" viewBox="0 -35 800 640">
       <Path
         weatherColor={weatherColor}
         lenderMap={lenderMap["0"].isShow}
@@ -508,7 +508,7 @@ function Map10({ pickMap, lenderMap, weatherColor }) {
       >
         화성시
       </text>
-    </Map01SVG>
+    </MapSVG>
   );
 }
 
