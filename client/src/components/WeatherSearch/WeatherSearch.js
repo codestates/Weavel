@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SearchDetail from "../SearchDetail/SearchDetail";
 import SearchInfo from "../SearchInfo/SearchInfo";
 import MapIndex from "../Map/MapIndex";
+import { debounce } from "lodash";
 import {
   SearchContainer,
   SelectContainer,
@@ -40,11 +41,47 @@ function WeatherSearch({
   };
 
   const [selectTitle, setSelectTitle] = useState({
-    weather: `선택해 주세요`,
-    day: "선택해 주세요",
-    time: "선택해 주세요",
-    area: "선택해 주세요",
+    weather: `날씨를 선택하세요`,
+    day: "날짜를 선택하세요",
+    time: "시간을 선택하세요",
+    area: "지역을 선택하세요",
   });
+
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const handleResize = debounce(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, 1000);
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.width <= 500) {
+      setSelectTitle({
+        weather: `선택해 주세요`,
+        day: "선택해 주세요",
+        time: "선택해 주세요",
+        area: "선택해 주세요",
+      });
+    } else {
+      setSelectTitle({
+        weather: `날씨를 선택하세요`,
+        day: "날짜를 선택하세요",
+        time: "시간을 선택하세요",
+        area: "지역을 선택하세요",
+      });
+    }
+  }, [windowSize]);
 
   const [showArea, setShowArea] = useState(null);
 
