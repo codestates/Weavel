@@ -6,12 +6,12 @@ export const InfoContainer = styled.div`
   justify-content: space-between;
   margin-top: 72px;
   @media screen and (max-width: 1060px) {
-    margin-top: 36px;
+    margin-top: 50px;
     flex-direction: column;
     align-items: center;
   }
   @media screen and (max-width: 500px) {
-    margin-top: 0;
+    margin-top: 40px;
   }
 `;
 
