@@ -12,6 +12,9 @@ export const WeatherInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    border-radius: 20px;
+  }
 `;
 
 export const InfoTitle = styled.div`
@@ -21,6 +24,9 @@ export const InfoTitle = styled.div`
   font-weight: bold;
   font-size: 2rem;
   padding-left: 1.063rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const InfoContainer = styled.div`
@@ -77,6 +83,12 @@ export const DaySelectButton = styled.div`
   cursor: pointer;
   background: ${(props) => (props.buttonColor ? "#4D70FF" : "#FBFBFB")};
   color: ${(props) => (props.buttonColor ? "#FBFBFB" : "#4D70FF")};
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+    width: 2.288rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+  }
 `;
 
 export const DaySelectButtonContainer = styled.div`
