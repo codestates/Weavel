@@ -34,6 +34,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth, setLogOut } from "./reducers/authReducer";
 
 function App() {
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.authReducer.isLogin);
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   useEffect(() => {
@@ -45,7 +46,6 @@ function App() {
   }, [accessToken]);
 
   const [token, setToken] = useState("");
-  const [isValid, setIsValid] = useState(null);
   const history = useHistory();
   const [loginUserInfo, setLoginUserInfo] = useState({
     id: "guest",
@@ -126,8 +126,6 @@ function App() {
       }
     );
   };
-
-  const dispatch = useDispatch();
 
   const handleLoginButton = (e, email, password) => {
     e.preventDefault();
@@ -300,9 +298,6 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginPage
-                setIsValid={setIsValid}
-                isValid={isValid}
-                // isLogin={isLogin}
                 loginUserInfo={loginUserInfo}
                 handleLoginButton={handleLoginButton}
               />

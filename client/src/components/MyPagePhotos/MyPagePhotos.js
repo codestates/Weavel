@@ -58,7 +58,7 @@ function MyPagePhotos({
               id={idx}
             >
               <Photo
-                src={`https://server.weavel.site/${photo.image}`}
+                src={`${process.env.REACT_APP_API_URL}/${photo.image}`}
                 alt="photo"
               />
               <PhotoInfoContainer>
@@ -116,7 +116,7 @@ function MyPagePhotos({
           <ModalContainer onClick={openCloseModalHandler}>
             <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
               <img
-                src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
+                src={`${process.env.REACT_APP_API_URL}/${allPhotoInfo[photoIdx].image}`}
                 alt="clickPhoto"
               />
             </ClickPhotoModal>

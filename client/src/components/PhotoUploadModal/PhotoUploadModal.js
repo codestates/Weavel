@@ -26,7 +26,7 @@
 //     const getAllPhotosInfo = (token) => {
 //       axios({
 //         method: "get",
-//         url: "https://server.weavel.site/photo/info",
+//         url: "process.env.REACT_APP_API_URL/photo/info",
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "application/json",
@@ -80,7 +80,7 @@
 //   // 사진 수정
 //   const handlePhotoEdit = (e) => {
 //     axios
-//       .put(`https://server.weavel.site/photo/id=?${allPhotoInfo[photoIdx].id}`, formData, {
+//       .put(`process.env.REACT_APP_API_URL/photo/id=?${allPhotoInfo[photoIdx].id}`, formData, {
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "multipart/form-data",
@@ -102,7 +102,7 @@
 //   const handlePhotoInfoEdit = (e) => {
 //     axios
 //       .put(
-//         "https://server.weavel.site/photo/info",
+//         "process.env.REACT_APP_API_URL/photo/info",
 
 //         {
 //           headers: {
@@ -233,7 +233,7 @@
 //     const getAllPhotosInfo = (token) => {
 //       axios({
 //         method: "get",
-//         url: "https://server.weavel.site/photo/info",
+//         url: "process.env.REACT_APP_API_URL/photo/info",
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //           "Content-Type": "application/json",
@@ -310,7 +310,7 @@
 //     console.log(e);
 //     axios
 //       .post(
-//         "https://server.weavel.site/photo/",
+//         "process.env.REACT_APP_API_URL/photo/",
 //         formData,
 //         {
 //           headers: {
@@ -337,7 +337,7 @@
 //   const handlePhotoInfoUpload = (e, photo) => {
 //     axios
 //       .post(
-//         "https://server.weavel.site/photo/info",
+//         "process.env.REACT_APP_API_URL/photo/info",
 //         {
 //           id: photo.id,
 //           filename: photo.filename,
@@ -488,7 +488,7 @@ function PhotoUploadModal({
   const handlePhotoUpload = (e) => {
     axios
       .put(
-        `https://server.weavel.site/photo?id=${allPhotoInfo[photoIdx].id}`,
+        `${process.env.REACT_APP_API_URL}/photo?id=${allPhotoInfo[photoIdx].id}`,
         formData,
         {
           headers: {
@@ -509,7 +509,7 @@ function PhotoUploadModal({
   const handlePhotoInfoUpload = (e) => {
     axios
       .put(
-        "https://server.weavel.site/photo/info",
+        `${process.env.REACT_APP_API_URL}/photo/info`,
         {
           filename: allPhotoInfo[photoIdx].filename,
           id: allPhotoInfo[photoIdx].id,
