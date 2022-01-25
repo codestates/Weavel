@@ -63,7 +63,7 @@ export const WeatherSelectContainer = styled.div`
       ? "310px"
       : "0px"};
   background: #fbfbfb;
-  box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
   border-radius: 0 0 50px 50px;
   font-family: "Roboto";
   display: ${(props) => (props.isActivation.isLender ? "flex" : "")};
