@@ -118,7 +118,7 @@ export const FooterLine = styled.div`
         rgba(128, 185, 239, 0.1)
       ),
       #fbfbfb;
-    width: 1260px;
+    width: 100%;
   }
 `;
 

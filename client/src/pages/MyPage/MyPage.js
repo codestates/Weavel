@@ -139,7 +139,7 @@ function MyPage({
   function handleDeletePhoto(e) {
     axios
       .delete(
-        "https://server.weavel.site/photo",
+        `${process.env.REACT_APP_API_URL}/photo`,
 
         {
           headers: {

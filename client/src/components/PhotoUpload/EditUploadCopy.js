@@ -87,7 +87,7 @@ function EditUploadCopy({
             <div style={thumb}>
               <div style={thumbInner}>
                 <img
-                  src={`https://server.weavel.site/${allPhotoInfo[photoIdx].image}`}
+                  src={`${process.env.REACT_APP_API_URL}/${allPhotoInfo[photoIdx].image}`}
                   style={img}
                 />
               </div>
