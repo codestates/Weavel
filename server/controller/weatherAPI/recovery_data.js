@@ -5,7 +5,7 @@ require("moment-timezone");
 moment.tz.setDefault("Asia/Seoul");
 const { weather_data } = require("../../models");
 
-module.exports = async (req, res) => {
+module.exports = (req, res) => {
   try {
     const cityId = req.query.id;
     const areaArray = req.body;
@@ -99,24 +99,44 @@ module.exports = async (req, res) => {
       sleepTime(5000);
     }
 
+    function checkData(nx, ny) {
+      weather_data
+        .findOne({
+          where: { nx: nx, ny: ny },
+        })
+        .then((val) => {
+          console.log("---findWeatherData--->", val);
+          if (val === null) return true;
+          return false;
+        });
+    }
+
     function findMissingData(areaArray) {
-      areaArray.map(async (area) => {
+      let result = areaArray.filter((area) => {
         const nx = area[0];
         const ny = area[1];
-        const findWeatherData = await weather_data.findOne({
-          where: { nx: nx, ny: ny },
-        });
-        if (!findWeatherData) {
-          let URL = weatherDataURL(area);
-          downloadWeatherDataAPI(URL, cityId);
-        }
+        return checkData(nx, ny);
+      });
+
+      Promise.all([result]).then((result) => {
+        console.log("---result--->", result);
+        resaveWeatherData(result, cityId);
       });
     }
 
-    findMissingData(areaArray, cityId);
-    return res
-      .status(201)
-      .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
+    function resaveWeatherData(areaArray, cityId) {
+      areaArray.map((area) => {
+        let URL = weatherDataURL(area);
+        downloadWeatherDataAPI(URL, cityId);
+      });
+      return res
+        .status(201)
+        .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
+    }
+
+    findMissingData(areaArray);
+
+    // resaveWeatherData(area, cityId);
   } catch (err) {
     console.log("err", err);
     return res.status(501).json({ message: "서버 에러 입니다." });
