@@ -67,12 +67,12 @@ export const SideArea = styled.div`
 
 export const WeatherItem = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
   align-items: center;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   cursor: pointer;
   div {
-    margin-right: 10px;
+    margin-right: 5px;
     height: 18px;
     @media screen and (max-width: 500px) {
       margin-right: 2px;
@@ -94,7 +94,7 @@ export const DayItem = styled.div`
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   cursor: pointer;
   div {
-    margin-right: 10px;
+    margin-right: 5px;
     height: 18px;
     @media screen and (max-width: 500px) {
       margin-right: 2px;
