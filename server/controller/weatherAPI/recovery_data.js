@@ -5,7 +5,7 @@ require("moment-timezone");
 moment.tz.setDefault("Asia/Seoul");
 const { weather_data } = require("../../models");
 
-module.exports = async (req, res) => {
+module.exports = (req, res) => {
   try {
     const cityId = req.query.id;
     const areaArray = req.body;
@@ -15,15 +15,13 @@ module.exports = async (req, res) => {
       while (Date.now() < wakeUpTime) {}
     }
 
-    function weatherDataURL(area) {
+    function weatherDataURL(nx, ny) {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
       const day = moment().format("YYYYMMDD");
       const base_time = "0500"; // 호출 데이터 05시 고정
       // String(Number(moment().format("HH"))) - 1 + "00"; // 현재시간 -1
-      const nx = area[0];
-      const ny = area[1];
       const dataType = "XML";
       const allUrl =
         url +
@@ -76,7 +74,11 @@ module.exports = async (req, res) => {
 
     function downloadWeatherDataAPI(allUrl, cityId) {
       request(allUrl, (err, res, body) => {
-        $ = cheerio.load(body);
+        try {
+          $ = cheerio.load(body);
+        } catch (e) {
+          console.log(e);
+        }
         $("item").each(function (idx) {
           const nxFindXML = $(this).find("nx").text();
           const nyFindXML = $(this).find("ny").text();
@@ -99,21 +101,40 @@ module.exports = async (req, res) => {
       sleepTime(5000);
     }
 
-    function findMissingData(areaArray) {
-      areaArray.map(async (area) => {
-        const nx = area[0];
-        const ny = area[1];
-        const findWeatherData = await weather_data.findOne({
+    function checkData(nx, ny) {
+      weather_data
+        .count({
+          distinct: true,
           where: { nx: nx, ny: ny },
+        })
+        .then((val) => {
+          console.log("---findWeatherDataToCount--->", val);
+          if (val !== 335) {
+            return reSaveWeatherData(nx, ny, cityId);
+          }
+          return;
         });
-        if (!findWeatherData) {
-          let URL = weatherDataURL(area);
-          downloadWeatherDataAPI(URL, cityId);
-        }
+    }
+
+    function reSaveWeatherData(nx, ny, cityId) {
+      const URL = weatherDataURL(nx, ny);
+
+      Promise.all(URL).then((value) => {
+        const urlJoin = value.join("");
+        downloadWeatherDataAPI(urlJoin, cityId);
       });
     }
 
-    findMissingData(areaArray, cityId);
+    function findMissingData(areaArray) {
+      areaArray.map((area) => {
+        const nx = area[0];
+        const ny = area[1];
+        checkData(nx, ny);
+      });
+    }
+
+    findMissingData(areaArray);
+
     return res
       .status(201)
       .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
