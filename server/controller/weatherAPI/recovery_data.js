@@ -19,9 +19,8 @@ module.exports = (req, res) => {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
-      const day = moment().format("YYYYMMDD");
-      const base_time = "0500"; // 호출 데이터 05시 고정
-      // String(Number(moment().format("HH"))) - 1 + "00"; // 현재시간 -1
+      const day = moment(d.getTime()).add("-1", "d").format("YYYY/MM/DD");
+      const base_time = "2300";
       const dataType = "XML";
       const allUrl =
         url +
