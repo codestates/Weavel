@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const WeatherInfoContainer = styled.div`
   width: 100%;
-  height: 79.875rem;
+  /* height: 79.875rem; */
   background: #fbfbfb;
   margin: 44px 0 60px 0;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
@@ -25,12 +25,12 @@ export const InfoTitle = styled.div`
   font-size: 2rem;
   padding-left: 1.063rem;
   @media screen and (max-width: 500px) {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 `;
 
 export const InfoContainer = styled.div`
-  height: 24.875rem;
+  height: auto;
   width: 100%;
   border-top: 1px solid #dcdcdc;
   display: flex;
@@ -46,6 +46,9 @@ export const InfoItemTitle = styled.div`
   font-weight: bold;
   line-height: 1.813rem;
   padding: 0 1.063rem 0 1.063rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const InfoItemDate = styled.div`
@@ -60,11 +63,18 @@ export const InfoItemDate = styled.div`
     font-size: 1rem;
     color: #b0afaf;
   }
+  @media screen and (max-width: 500px) {
+    span {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const InfoItemItem = styled.div`
   box-sizing: border-box;
-  height: 19.125rem;
+  display: flex;
+  justify-content: center;
+  height: auto;
   width: 100%;
   padding: 0 1.063rem 0 1.063rem;
 `;

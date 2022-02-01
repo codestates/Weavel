@@ -11,7 +11,7 @@ export const SelectContainer = styled.div`
   background: #fbfbfb;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
   border-radius: ${(props) =>
-    props.isOpen ? "50px 50px 0 0" : props.isClose ? "50px 50px 0 0 " : "50px"};
+    props.isOpen ? "40px 40px 0 0" : props.isClose ? "40px 40px 0 0 " : "50px"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@ export const SelectBoxContainer = styled.div`
 export const SelectBox = styled.div`
   width: 100%;
   height: 62px;
-  border-right: ${(props) => props.line || "1px solid #dcdcdc"};
+  border-right: ${(props) => props.line || "1px dashed #dcdcdc"};
   display: flex;
   flex-direction: column;
   justify-content: center;
