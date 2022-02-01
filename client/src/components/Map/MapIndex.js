@@ -47,7 +47,7 @@ function MapIndex({
 
   useEffect(() => {
     if (nowWeather.length > 0 && Array.isArray(nowWeather[0])) {
-      console.log(nowWeather, "nowWeather");
+      // console.log(nowWeather, "nowWeather");
       let city = {};
       nowWeather.map((coordinate) => {
         const [x, y] = coordinate;

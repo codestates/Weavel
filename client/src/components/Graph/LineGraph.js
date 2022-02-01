@@ -22,24 +22,24 @@ class LineChart extends Component {
             options={this.props.graphOption[1].options}
             series={this.props.graphOption[1].series}
             type="bar"
-            // width="100%"
-            // height="300"
+            width={this.props.chartSize}
+            height="auto"
           />
         ) : this.props.REHbar ? (
           <ApexCharts
             options={this.props.graphOption[2].options}
             series={this.props.graphOption[2].series}
             type="bar"
-            // width="100%"
-            // height="300"
+            width={this.props.chartSize}
+            height="auto"
           />
         ) : this.props.TMPline ? (
           <ApexCharts
-            options={this.props.graphOption[0].options}
-            series={this.props.graphOption[0].series}
             type="line"
-            // width="100%"
-            // height="300"
+            series={this.props.series}
+            options={this.props.graphOption[0].options}
+            width={this.props.chartSize}
+            height="auto"
           />
         ) : (
           <></>

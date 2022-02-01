@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { debounce } from "lodash";
 import LineChart from "../Graph/LineGraph";
 
 import {
@@ -50,7 +50,31 @@ function WeatherInfo({
   };
   useEffect(() => {
     showChart("0");
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+  const [chartSize, setChartSize] = useState(0);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const handleResize = debounce(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, 100);
+
+  useEffect(() => {
+    if (windowSize.width >= 1060) {
+      setChartSize(900);
+    } else {
+      setChartSize(windowSize.width - 20);
+    }
+  }, [windowSize]);
   return (
     <>
       <WeatherInfoContainer>
@@ -87,7 +111,12 @@ function WeatherInfo({
             <span>섭씨 (°C)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart graphOption={graphOption} TMPline={true}></LineChart>
+            <LineChart
+              graphOption={graphOption}
+              series={graphOption[0].series}
+              TMPline={true}
+              chartSize={chartSize}
+            ></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>
@@ -97,7 +126,11 @@ function WeatherInfo({
             <span>확률 (%)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart graphOption={graphOption} POPbar={true}></LineChart>
+            <LineChart
+              graphOption={graphOption}
+              POPbar={true}
+              chartSize={chartSize}
+            ></LineChart>
           </InfoItemItem>
         </InfoContainer>
         <InfoContainer>
@@ -107,7 +140,11 @@ function WeatherInfo({
             <span>상대습도 (%)</span>
           </InfoItemDate>
           <InfoItemItem>
-            <LineChart graphOption={graphOption} REHbar={true}></LineChart>
+            <LineChart
+              graphOption={graphOption}
+              REHbar={true}
+              chartSize={chartSize}
+            ></LineChart>
           </InfoItemItem>
         </InfoContainer>
       </WeatherInfoContainer>

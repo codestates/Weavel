@@ -18,7 +18,7 @@ export const SelectListBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-right: ${(props) => props.border || "1px solid #dcdcdc"};
+  border-right: ${(props) => props.border || "1px dashed #dcdcdc"};
   flex-direction: ${(props) => (props.width ? "row" : "")};
   @media screen and (max-width: 500px) {
     height: 220px;
@@ -67,13 +67,12 @@ export const SideArea = styled.div`
 
 export const WeatherItem = styled.div`
   display: flex;
-  flex: 1;
   align-items: center;
   color: ${(props) => (props.selectId ? "#4D70FF" : "#b0afaf")};
   cursor: pointer;
   div {
     margin-right: 5px;
-    height: 18px;
+    height: 20px;
     @media screen and (max-width: 500px) {
       margin-right: 2px;
       height: 10px;

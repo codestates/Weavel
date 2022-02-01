@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchDetail from "../SearchDetail/SearchDetail";
 import SearchInfo from "../SearchInfo/SearchInfo";
 import MapIndex from "../Map/MapIndex";
