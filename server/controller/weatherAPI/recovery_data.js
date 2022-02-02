@@ -15,11 +15,13 @@ module.exports = (req, res) => {
       while (Date.now() < wakeUpTime) {}
     }
 
-    function weatherDataURL(nx, ny) {
+    function yesterdayWeatherDataURL(nx, ny) {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
-      const day = moment(d.getTime()).add("-1", "d").format("YYYY/MM/DD");
+      const day = moment(new Date().getTime())
+        .add("-1", "d")
+        .format("YYYYMMDD");
       const base_time = "2300";
       const dataType = "XML";
       const allUrl =
@@ -100,23 +102,8 @@ module.exports = (req, res) => {
       sleepTime(5000);
     }
 
-    function checkData(nx, ny) {
-      weather_data
-        .count({
-          distinct: true,
-          where: { nx: nx, ny: ny },
-        })
-        .then((val) => {
-          console.log("---findWeatherDataToCount--->", val);
-          if (val !== 335) {
-            return reSaveWeatherData(nx, ny, cityId);
-          }
-          return;
-        });
-    }
-
     function reSaveWeatherData(nx, ny, cityId) {
-      const URL = weatherDataURL(nx, ny);
+      const URL = yesterdayWeatherDataURL(nx, ny);
 
       Promise.all(URL).then((value) => {
         const urlJoin = value.join("");
@@ -124,11 +111,31 @@ module.exports = (req, res) => {
       });
     }
 
+    function deleteWeatherData(nx, ny) {
+      weather_data.destroy({ where: { nx: nx, ny: ny } });
+    }
+
+    function checkWeatherData(nx, ny) {
+      weather_data
+        .count({
+          distinct: true,
+          where: { nx: nx, ny: ny },
+        })
+        .then((countWeatherData) => {
+          console.log("------>", countWeatherData);
+          if (countWeatherData !== 365) {
+            deleteWeatherData(nx, ny);
+            return reSaveWeatherData(nx, ny, cityId);
+          }
+          return;
+        });
+    }
+
     function findMissingData(areaArray) {
       areaArray.map((area) => {
         const nx = area[0];
         const ny = area[1];
-        checkData(nx, ny);
+        checkWeatherData(nx, ny);
       });
     }
 

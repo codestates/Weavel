@@ -17,21 +17,14 @@ module.exports = async (req, res) => {
     }
 
     function deleteOldWeatherData(cityId) {
-      const findOldWeatherData = weather_data.findAll({
-        where: { city: cityId },
-      });
-      if (findOldWeatherData) {
-        weather_data.destroy({ where: { city: cityId } });
-      }
+      weather_data.destroy({ where: { city: cityId } });
     }
 
     function weatherDataURL(area) {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
-      const day = moment(new Date().getTime())
-        .add("-1", "d")
-        .format("YYYYMMDD");
+      const day = moment(new Date().getTime()).format("YYYYMMDD");
       const base_time = "2300";
       console.log("=====>", day);
       const nx = area[0];
