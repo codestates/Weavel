@@ -26,7 +26,6 @@ module.exports = async (req, res) => {
       const key = process.env.API_KEY;
       const day = moment(new Date().getTime()).format("YYYYMMDD");
       const base_time = "2300";
-      console.log("=====>", day);
       const nx = area[0];
       const ny = area[1];
       const dataType = "XML";

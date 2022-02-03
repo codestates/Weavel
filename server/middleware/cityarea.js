@@ -18,7 +18,6 @@ module.exports = {
     if (cityId === "15") req.body = arr15;
     if (cityId === "16") req.body = arr16;
     if (cityId === "17") req.body = arr17;
-    console.log("-------------->", cityId, req.body);
     next();
   },
 };
