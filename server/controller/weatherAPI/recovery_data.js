@@ -45,7 +45,7 @@ module.exports = (req, res) => {
     }
 
     // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
-    async function saveWeather_data(
+    async function saveWeatherData(
       nxFindXML,
       nyFindXML,
       cityId,
@@ -88,7 +88,7 @@ module.exports = (req, res) => {
           const categoryFindXML = $(this).find("category").text();
           const valueFindXML = $(this).find("fcstValue").text();
 
-          saveWeather_data(
+          saveWeatherData(
             nxFindXML,
             nyFindXML,
             cityId,
@@ -111,8 +111,16 @@ module.exports = (req, res) => {
       });
     }
 
-    function deleteWeatherData(nx, ny) {
+    function resetWeatherData(nx, ny) {
       weather_data.destroy({ where: { nx: nx, ny: ny } });
+    }
+
+    function countCheckWeatherData(countWeatherData, nx, ny) {
+      if (countWeatherData !== 365) {
+        resetWeatherData(nx, ny);
+        return reSaveWeatherData(nx, ny, cityId);
+      }
+      return;
     }
 
     function checkWeatherData(nx, ny) {
@@ -122,12 +130,8 @@ module.exports = (req, res) => {
           where: { nx: nx, ny: ny },
         })
         .then((countWeatherData) => {
-          console.log("------>", countWeatherData);
-          if (countWeatherData !== 365) {
-            deleteWeatherData(nx, ny);
-            return reSaveWeatherData(nx, ny, cityId);
-          }
-          return;
+          console.log("countWeatherData", countWeatherData);
+          countCheckWeatherData(countWeatherData, nx, ny);
         });
     }
 
