@@ -2,9 +2,9 @@ const axios = require("axios");
 const schedule = require("node-schedule");
 
 // 전국 날씨 API Get 요청 예약 (기상청 데이터 데이터 제공시간 02시, 05시, 08시, 11시, 14시, 17시, 20시, 23시)
-// 해당 API는 05시 데이터만 사용
+// 해당 API는 23시 데이터만 사용
 schedule.scheduleJob("0 0 23 * * *", () => {
-  axios.get("https://server.weavel.site/weatherAPI?id=01");
+  axios.get("http://server.weavel.site/weatherAPI?id=01");
 });
 schedule.scheduleJob("0 3 23 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI?id=02");
@@ -107,3 +107,5 @@ schedule.scheduleJob("0 25 1/6 * * *", () => {
 schedule.scheduleJob("0 30 1/6 * * *", () => {
   axios.get("https://server.weavel.site/weatherAPI/recovery?id=17");
 });
+
+module.exports = schedule;
