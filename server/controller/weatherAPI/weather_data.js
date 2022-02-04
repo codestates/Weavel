@@ -24,7 +24,9 @@ module.exports = async (req, res) => {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
-      const day = moment(new Date().getTime()).format("YYYYMMDD");
+      const day = moment(new Date().getTime())
+        .add("-1", "d")
+        .format("YYYYMMDD");
       const base_time = "2300";
       const nx = area[0];
       const ny = area[1];
@@ -100,7 +102,7 @@ module.exports = async (req, res) => {
           );
         });
       });
-      sleepTime(5000);
+      sleepTime(1000);
     }
 
     function saveAreaWeatherData(areaArray, cityId) {

@@ -73,13 +73,11 @@ module.exports = (req, res) => {
       }
     }
 
-    function downloadWeatherDataAPI(allUrl, cityId) {
-      request(allUrl, (err, res, body) => {
-        try {
-          $ = cheerio.load(body);
-        } catch (e) {
-          console.log(e);
-        }
+    function downloadWeatherDataAPI(nx, ny, cityId) {
+      const URL = yesterdayWeatherDataURL(nx, ny);
+
+      request(URL, (err, res, body) => {
+        $ = cheerio.load(body);
         $("item").each(function (idx) {
           const nxFindXML = $(this).find("nx").text();
           const nyFindXML = $(this).find("ny").text();
@@ -99,51 +97,49 @@ module.exports = (req, res) => {
           );
         });
       });
-      sleepTime(5000);
-    }
-
-    function reSaveWeatherData(nx, ny, cityId) {
-      const URL = yesterdayWeatherDataURL(nx, ny);
-
-      Promise.all(URL).then((value) => {
-        const urlJoin = value.join("");
-        downloadWeatherDataAPI(urlJoin, cityId);
-      });
+      sleepTime(1000);
     }
 
     function resetWeatherData(nx, ny) {
       weather_data.destroy({ where: { nx: nx, ny: ny } });
     }
 
-    function countCheckWeatherData(countWeatherData, nx, ny) {
-      if (countWeatherData !== 365) {
-        resetWeatherData(nx, ny);
-        return reSaveWeatherData(nx, ny, cityId);
-      }
-      return;
-    }
-
-    function checkWeatherData(nx, ny) {
-      weather_data
-        .count({
-          distinct: true,
-          where: { nx: nx, ny: ny },
-        })
-        .then((countWeatherData) => {
-          console.log("countWeatherData", countWeatherData);
-          countCheckWeatherData(countWeatherData, nx, ny);
-        });
-    }
-
-    function findMissingData(areaArray) {
-      areaArray.map((area) => {
-        const nx = area[0];
-        const ny = area[1];
-        checkWeatherData(nx, ny);
+    function countWeatherData(nx, ny) {
+      return weather_data.count({
+        distinct: true,
+        where: { city: cityId, nx: nx, ny: ny },
       });
     }
 
-    findMissingData(areaArray);
+    function countCheckWeatherData(count, nx, ny, cityId) {
+      if (count !== 365) {
+        if (count !== 0) resetWeatherData(nx, ny);
+        downloadWeatherDataAPI(nx, ny, cityId);
+      }
+    }
+
+    async function checkWeatherData(nx, ny, cityId) {
+      let count = new Promise((resolve, reject) => {
+        resolve(countWeatherData(nx, ny, cityId));
+      });
+
+      count.then((value) => {
+        console.log("countdata=>>>>>", value);
+        countCheckWeatherData(value, nx, ny, cityId);
+      });
+    }
+
+    async function findMissingData(areaArray, cityId) {
+      await Promise.all(
+        areaArray.map(async (area) => {
+          const nx = area[0];
+          const ny = area[1];
+          checkWeatherData(nx, ny, cityId);
+        }),
+      );
+    }
+
+    findMissingData(areaArray, cityId);
 
     return res
       .status(201)
