@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const WeatherInfoContainer = styled.div`
-  width: 65.25rem;
-  height: 79.875rem;
+  width: 100%;
+  /* height: 79.875rem; */
   background: #fbfbfb;
   margin: 44px 0 60px 0;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
@@ -12,6 +12,9 @@ export const WeatherInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    border-radius: 20px;
+  }
 `;
 
 export const InfoTitle = styled.div`
@@ -21,11 +24,14 @@ export const InfoTitle = styled.div`
   font-weight: bold;
   font-size: 2rem;
   padding-left: 1.063rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const InfoContainer = styled.div`
-  height: 24.875rem;
-  width: 63.313rem;
+  height: auto;
+  width: 100%;
   border-top: 1px solid #dcdcdc;
   display: flex;
   flex-direction: column;
@@ -35,17 +41,20 @@ export const InfoItemTitle = styled.div`
   box-sizing: border-box;
   margin-top: 1.813rem;
   height: 1.813rem;
-  width: 63.313rem;
+  width: 100%;
   font-size: 1.25rem;
   font-weight: bold;
   line-height: 1.813rem;
   padding: 0 1.063rem 0 1.063rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const InfoItemDate = styled.div`
   box-sizing: border-box;
   height: 1.813rem;
-  width: 63.313rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,12 +63,19 @@ export const InfoItemDate = styled.div`
     font-size: 1rem;
     color: #b0afaf;
   }
+  @media screen and (max-width: 500px) {
+    span {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const InfoItemItem = styled.div`
   box-sizing: border-box;
-  height: 19.125rem;
-  width: 63.313rem;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  width: 100%;
   padding: 0 1.063rem 0 1.063rem;
 `;
 
@@ -77,6 +93,12 @@ export const DaySelectButton = styled.div`
   cursor: pointer;
   background: ${(props) => (props.buttonColor ? "#4D70FF" : "#FBFBFB")};
   color: ${(props) => (props.buttonColor ? "#FBFBFB" : "#4D70FF")};
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+    width: 2.288rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+  }
 `;
 
 export const DaySelectButtonContainer = styled.div`
@@ -87,6 +109,6 @@ export const DaySelectButtonContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 63.313rem;
+  width: 100%;
   align-items: center;
 `;

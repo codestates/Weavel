@@ -90,7 +90,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const handlePhotoUpload = (e) => {
     axios
       .post(
-        "https://server.weavel.site/photo/",
+        `${process.env.REACT_APP_API_URL}/photo`,
         formData,
         {
           headers: {
@@ -115,7 +115,7 @@ function NewPhotoUploadModal({ openCloseModalHandler, loginUserInfo, token }) {
   const handlePhotoInfoUpload = (e, photo) => {
     axios
       .post(
-        "https://server.weavel.site/photo/info",
+        `${process.env.REACT_APP_API_URL}/photo/info`,
         {
           id: photo.id,
           filename: photo.filename,

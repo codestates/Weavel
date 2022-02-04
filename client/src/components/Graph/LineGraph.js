@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Chart from "react-apexcharts";
+import ApexCharts from "react-apexcharts";
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,39 +16,35 @@ class LineChart extends Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="row">
-          <div className="mixed-chart">
-            <Container>
-              {this.props.POPbar ? (
-                <Chart
-                  options={this.props.graphOption[0].options}
-                  series={this.props.graphOption[0].series}
-                  type="bar"
-                  width="1000"
-                  height="300"
-                />
-              ) : this.props.REHbar ? (
-                <Chart
-                  options={this.props.graphOption[2].options}
-                  series={this.props.graphOption[2].series}
-                  type="bar"
-                  width="1000"
-                  height="300"
-                />
-              ) : (
-                <Chart
-                  options={this.props.graphOption[1].options}
-                  series={this.props.graphOption[1].series}
-                  type="line"
-                  width="1000"
-                  height="300"
-                />
-              )}
-            </Container>
-          </div>
-        </div>
-      </div>
+      <Container>
+        {this.props.POPbar ? (
+          <ApexCharts
+            options={this.props.graphOption[1].options}
+            series={this.props.graphOption[1].series}
+            type="bar"
+            width={this.props.chartSize}
+            height="auto"
+          />
+        ) : this.props.REHbar ? (
+          <ApexCharts
+            options={this.props.graphOption[2].options}
+            series={this.props.graphOption[2].series}
+            type="bar"
+            width={this.props.chartSize}
+            height="auto"
+          />
+        ) : this.props.TMPline ? (
+          <ApexCharts
+            type="line"
+            series={this.props.series}
+            options={this.props.graphOption[0].options}
+            width={this.props.chartSize}
+            height="auto"
+          />
+        ) : (
+          <></>
+        )}
+      </Container>
     );
   }
 }

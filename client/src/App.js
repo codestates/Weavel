@@ -5,13 +5,11 @@ import {
   Route,
   Switch,
   useHistory,
-  Redirect,
   Link,
 } from "react-router-dom";
 
 import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
-import DeleteUserModalModal from "./components/Modal/DeleteUserModal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/MyPage/MyPage";
@@ -36,18 +34,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth, setLogOut } from "./reducers/authReducer";
 
 function App() {
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.authReducer.isLogin);
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   useEffect(() => {
     setToken(accessToken);
     getUserInfo(accessToken);
-    getPhotos(accessToken);
+    // getPhotos(accessToken);
     getAllPhotosInfo(accessToken);
     getAllUserWeather(accessToken);
   }, [accessToken]);
 
   const [token, setToken] = useState("");
-  const [isValid, setIsValid] = useState(null);
   const history = useHistory();
   const [loginUserInfo, setLoginUserInfo] = useState({
     id: "guest",
@@ -58,7 +56,6 @@ function App() {
 
   const [allUserWeather, setAllUserWeather] = useState([]);
   const [allPhotoInfo, setAllPhotoInfo] = useState([]);
-  const [photo, setPhoto] = useState([]);
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -97,7 +94,7 @@ function App() {
     axios(
       {
         method: "post",
-        url: "https://server.weavel.site/user/logout",
+        url: `${process.env.REACT_APP_API_URL}/user/logout`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -115,7 +112,7 @@ function App() {
 
   const putUserInfo = (weather, password, email) => {
     axios.put(
-      "https://server.weavel.site/user",
+      `${process.env.REACT_APP_API_URL}/user`,
       {
         email: email,
         password: password,
@@ -130,8 +127,6 @@ function App() {
     );
   };
 
-  const dispatch = useDispatch();
-
   const handleLoginButton = (e, email, password) => {
     e.preventDefault();
 
@@ -141,7 +136,7 @@ function App() {
   const getUserInfo = (token) => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -169,7 +164,7 @@ function App() {
   const DeleteUser = () => {
     axios({
       method: "delete",
-      url: "https://server.weavel.site/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -182,7 +177,7 @@ function App() {
   const getAllPhotosInfo = (token) => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/photo/info",
+      url: `${process.env.REACT_APP_API_URL}/photo/info`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -193,26 +188,11 @@ function App() {
     });
   };
 
-  //사진 받기
-  const getPhotos = (token) => {
-    axios({
-      method: "get",
-      url: "https://server.weavel.site/photo?id=1",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "image/jpg",
-      },
-      withCredentials: true,
-    }).then((res) => {
-      setPhoto(res.data);
-    });
-  };
-
   // 모든 회원 날씨 정보
   const getAllUserWeather = () => {
     axios({
       method: "get",
-      url: "https://server.weavel.site/user/weather",
+      url: `${process.env.REACT_APP_API_URL}/user/weather`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -269,25 +249,17 @@ function App() {
       <Container>
         <Header>
           <HeaderBox logo={"logo"}>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <Logo
-                src="./images/logo.svg"
-                alt="logo"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              ></Logo>
-            </Link>
+            <Logo
+              src="./images/logo.svg"
+              alt="logo"
+              onClick={() => {
+                window.location.replace("/");
+              }}
+            ></Logo>
           </HeaderBox>
           <MenuContainer>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Menu
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                홈
-              </Menu>
+              <Menu margin="0 20.5px 0 20.5px">홈</Menu>
             </Link>
             <Link to="/mypage" style={{ textDecoration: "none" }}>
               <Menu>마이페이지</Menu>
@@ -326,9 +298,6 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginPage
-                setIsValid={setIsValid}
-                isValid={isValid}
-                // isLogin={isLogin}
                 loginUserInfo={loginUserInfo}
                 handleLoginButton={handleLoginButton}
               />

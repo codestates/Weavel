@@ -13,11 +13,88 @@ function MainPage() {
     setIsShowWeatherInfo(boolean);
   };
 
-  const [graphOption, setGraphOption] = useState([
+  const [graphOption, setGraphOption] = useState();
+  const [nowWeather, setNowWeather] = useState([]);
+  const [areaWeather, setAreaWeather] = useState([]);
+  const [dateInfo, setDateInfo] = useState([]);
+  const [chartId, setChartId] = useState(0);
+  const initGraph = [
+    {
+      // options: {
+      //   chart: {
+      //     zoom: {
+      //       enabled: false,
+      //     },
+      //   },
+      //   dataLabels: {
+      //     enabled: true,
+      //     style: {
+      //       colors: ["#4d90fa"],
+      //     },
+      //   },
+      //   xaxis: {
+      //     categories: dayArr[date],
+      //   },
+      // },
+
+      // series: [
+      //   {
+      //     name: "기온",
+      //     data: tmpArr[date],
+      //   },
+      // ],
+      options: {
+        chart: {
+          type: "bar",
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: "top", // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          offsetY: -20,
+          style: {
+            fontSize: "10px",
+            colors: ["#2d2d2d"],
+          },
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+
+      series: [
+        {
+          name: "기온",
+          data: [],
+        },
+      ],
+    },
     {
       options: {
         chart: {
-          id: "basic-bar",
+          type: "bar",
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: "top", // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          offsetY: -20,
+          style: {
+            fontSize: "10px",
+            colors: ["#2d2d2d"],
+          },
         },
         xaxis: {
           categories: [],
@@ -33,23 +110,23 @@ function MainPage() {
     {
       options: {
         chart: {
-          id: "basic-bar",
+          type: "bar",
         },
-        xaxis: {
-          categories: [],
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: "top", // top, center, bottom
+            },
+          },
         },
-      },
-      series: [
-        {
-          name: "기온",
-          data: [],
-        },
-      ],
-    },
-    {
-      options: {
-        chart: {
-          id: "basic-bar",
+        dataLabels: {
+          enabled: true,
+          offsetY: -20,
+          style: {
+            fontSize: "10px",
+            colors: ["#2d2d2d"],
+          },
         },
         xaxis: {
           categories: [],
@@ -62,14 +139,11 @@ function MainPage() {
         },
       ],
     },
-  ]);
-  const [nowWeather, setNowWeather] = useState([]);
-  const [areaWeather, setAreaWeather] = useState([]);
-  const [chartId, setChartId] = useState(0);
-
+  ];
+  //상세날씨정보
   const getAreaWeather = (x, y, date) => {
     axios
-      .get("https://server.weavel.site/weather/area", {
+      .get(`${process.env.REACT_APP_API_URL}/weather/area`, {
         params: {
           nx: x,
           ny: y,
@@ -77,13 +151,14 @@ function MainPage() {
       })
       .then((res) => {
         setAreaWeather(res.data);
+        setDateInfo([res.data[0], res.data[54], res.data[155]]);
         dataHandle(res.data, date);
       });
   };
 
   const getCityWeather = (weather, day, time, area) => {
     axios
-      .get("https://server.weavel.site/weather/city", {
+      .get(`${process.env.REACT_APP_API_URL}/weather/city`, {
         params: {
           city: area,
           day: day,
@@ -92,9 +167,12 @@ function MainPage() {
         },
       })
       .then((res) => {
-        setNowWeather(res.data);
+        console.log(res);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
+        } else {
+          setNowWeather(res.data);
+          setGraphOption(initGraph);
         }
       })
       .catch((err) => {
@@ -127,60 +205,62 @@ function MainPage() {
     }
     const nowDate = `${date.getFullYear()}${month}${date.getDate()}`;
     const nowTime = `${date.getHours()}`;
+    console.log(nowTime);
     setDateTime({
       date: nowDate,
       time: nowTime,
     });
+    setGraphOption(initGraph);
   }, []);
 
-  const dataHandle = (areaWeather, date) => {
-    let dayArr = [[], [], []];
+  const dataHandle = (areaWeatherData, date) => {
+    let dayArr = [];
     let popArr = [[], [], []];
     let tmpArr = [[], [], []];
     let rehArr = [[], [], []];
 
-    let today = (24 - dateTime.time) * 3;
-    let tomorrow = 24 * 3 + today;
-    let dayAfterTomorrow = 24 * 3 + tomorrow;
+    let day = 71;
+    let tomorrow = day * 2;
+    let dayAfterTomorrow = day * 3;
     //15 16~87     72+16+72
     let rootIdx = 2;
-    for (let i = 0; i < areaWeather.length; i++) {
-      if (rootIdx - i === 0 && i < today) {
-        dayArr[0].push(`${areaWeather[i][1].slice(0, 2)}시`);
+    for (let i = 0; i < areaWeatherData.length; i++) {
+      if (rootIdx - i === 0 && i <= day) {
+        dayArr.push(`${areaWeatherData[i].time.slice(0, 2)}시`);
         rootIdx += 3;
-      } else if (rootIdx - i === 0 && i < tomorrow) {
-        dayArr[1].push(`${areaWeather[i][1].slice(0, 2)}시`);
-        rootIdx += 3;
-      } else if (rootIdx - i === 0 && i < dayAfterTomorrow) {
-        dayArr[2].push(`${areaWeather[i][1].slice(0, 2)}시`);
-        rootIdx += 3;
+        // } else if (rootIdx - i === 0 && i < tomorrow) {
+        //   dayArr[1].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
+        //   rootIdx += 3;
+        // } else if (rootIdx - i === 0 && i < dayAfterTomorrow) {
+        //   dayArr[2].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
+        //   rootIdx += 3;
       }
     }
 
-    for (let i = 0; i < areaWeather.length; i++) {
-      if (areaWeather[i][2] === "POP") {
-        if (i < today) {
-          popArr[0].push(`${areaWeather[i][3]}%`);
-        } else if (i < tomorrow) {
-          popArr[1].push(`${areaWeather[i][3]}%`);
-        } else if (i < dayAfterTomorrow) {
-          popArr[2].push(`${areaWeather[i][3]}%`);
+    for (let i = 0; i < areaWeatherData.length; i++) {
+      if (areaWeatherData[i].category === "POP") {
+        if (i <= day) {
+          popArr[0].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= tomorrow) {
+          popArr[1].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= dayAfterTomorrow) {
+          popArr[2].push(parseInt(areaWeatherData[i].value));
         }
-      } else if (areaWeather[i][2] === "TMP") {
-        if (i < today) {
-          tmpArr[0].push(`${areaWeather[i][3]}`);
-        } else if (i < tomorrow) {
-          tmpArr[1].push(`${areaWeather[i][3]}`);
-        } else if (i < dayAfterTomorrow) {
-          tmpArr[2].push(`${areaWeather[i][3]}`);
+      } else if (areaWeatherData[i].category === "TMP") {
+        if (i <= day) {
+          tmpArr[0].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= tomorrow) {
+          tmpArr[1].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= dayAfterTomorrow) {
+          tmpArr[2].push(parseInt(areaWeatherData[i].value));
         }
-      } else if (areaWeather[i][2] === "REH") {
-        if (i < today) {
-          rehArr[0].push(`${areaWeather[i][3]}%`);
-        } else if (i < tomorrow) {
-          rehArr[1].push(`${areaWeather[i][3]}%`);
-        } else if (i < dayAfterTomorrow) {
-          rehArr[2].push(`${areaWeather[i][3]}%`);
+      } else if (areaWeatherData[i].category === "REH") {
+        if (i <= day) {
+          rehArr[0].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= tomorrow) {
+          rehArr[1].push(parseInt(areaWeatherData[i].value));
+        } else if (i <= dayAfterTomorrow) {
+          rehArr[2].push(parseInt(areaWeatherData[i].value));
         }
       }
     }
@@ -189,10 +269,61 @@ function MainPage() {
       {
         options: {
           chart: {
-            id: "basic-bar",
+            zoom: {
+              enabled: false,
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            style: {
+              colors: ["#4d90fa"],
+            },
           },
           xaxis: {
-            categories: dayArr[date],
+            type: "category",
+            categories: dayArr,
+            tickAmount: 3,
+            // tickPlacement: "on",
+          },
+        },
+
+        series: [
+          {
+            name: "기온",
+            data: tmpArr[date],
+          },
+        ],
+      },
+      {
+        options: {
+          chart: {
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: "top", // top, center, bottom
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            offsetY: -20,
+            style: {
+              fontSize: "10px",
+              colors: ["#4d90fa"],
+            },
+            background: {
+              enabled: true,
+              foreColor: "#ffffff",
+            },
+          },
+          xaxis: {
+            type: "category",
+            categories: dayArr,
+            tickAmount: 3,
+            tickPlacement: "on",
           },
         },
         series: [
@@ -205,26 +336,33 @@ function MainPage() {
       {
         options: {
           chart: {
-            id: "basic-bar",
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: "top", // top, center, bottom
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            offsetY: -20,
+            style: {
+              fontSize: "10px",
+              colors: ["#4d90fa"],
+            },
+            background: {
+              enabled: true,
+              foreColor: "#ffffff",
+            },
           },
           xaxis: {
-            categories: dayArr[date],
-          },
-        },
-        series: [
-          {
-            name: "기온",
-            data: tmpArr[date],
-          },
-        ],
-      },
-      {
-        options: {
-          chart: {
-            id: "basic-bar",
-          },
-          xaxis: {
-            categories: dayArr[date],
+            type: "category",
+            categories: dayArr,
+            tickAmount: 3,
+            tickPlacement: "on",
           },
         },
         series: [
@@ -272,17 +410,20 @@ function MainPage() {
         nowWeather={nowWeather}
         dateTime={dateTime}
         weatherColor={weatherColor}
+        setNowWeather={setNowWeather}
       ></WeatherSearch>
       {isShowWeatherInfo ? (
         <WeatherInfo
-          areaWeather={areaWeather}
+          dateInfo={dateInfo}
           graphOption={graphOption}
           areaName={areaName}
           ChartHandle={ChartHandle}
           showChart={showChart}
           buttonColor={buttonColor}
         ></WeatherInfo>
-      ) : null}
+      ) : (
+        <></>
+      )}
     </MainPageContainer>
   );
 }
