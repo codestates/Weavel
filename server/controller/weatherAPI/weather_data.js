@@ -24,7 +24,9 @@ module.exports = async (req, res) => {
       const url =
         "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
       const key = process.env.API_KEY;
-      const day = moment(new Date().getTime()).format("YYYYMMDD");
+      const day = moment(new Date().getTime())
+        .add("-1", "d")
+        .format("YYYYMMDD");
       const base_time = "2300";
       const nx = area[0];
       const ny = area[1];
@@ -50,7 +52,7 @@ module.exports = async (req, res) => {
     }
 
     // POP 강수확률, PTY 강수형태, REH 습도, SKY 하늘상태 TMP 1시간 기온
-    async function saveWeather_data(
+    async function saveWeatherData(
       nxFindXML,
       nyFindXML,
       cityId,
@@ -89,7 +91,7 @@ module.exports = async (req, res) => {
           const categoryFindXML = $(this).find("category").text();
           const valueFindXML = $(this).find("fcstValue").text();
 
-          saveWeather_data(
+          saveWeatherData(
             nxFindXML,
             nyFindXML,
             cityId,
@@ -100,10 +102,10 @@ module.exports = async (req, res) => {
           );
         });
       });
-      sleepTime(5000);
+      sleepTime(1000);
     }
 
-    function saveWeatherData(areaArray, cityId) {
+    function saveAreaWeatherData(areaArray, cityId) {
       areaArray.map((area) => {
         let URL = weatherDataURL(area);
         downloadWeatherDataAPI(URL, cityId);
@@ -111,7 +113,7 @@ module.exports = async (req, res) => {
     }
 
     deleteOldWeatherData(cityId);
-    saveWeatherData(areaArray, cityId);
+    saveAreaWeatherData(areaArray, cityId);
 
     return res
       .status(201)
