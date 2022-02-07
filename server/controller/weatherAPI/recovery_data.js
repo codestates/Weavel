@@ -129,7 +129,7 @@ module.exports = (req, res) => {
       });
     }
 
-    async function findMissingData(areaArray, cityId) {
+    async function findLostData(areaArray, cityId) {
       await Promise.all(
         areaArray.map(async (area) => {
           const nx = area[0];
@@ -139,7 +139,7 @@ module.exports = (req, res) => {
       );
     }
 
-    findMissingData(areaArray, cityId);
+    findLostData(areaArray, cityId);
 
     return res
       .status(201)
