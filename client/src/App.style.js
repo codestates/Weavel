@@ -10,6 +10,11 @@ export const Container = styled.div`
   align-items: center;
 `;
 
+export const HeaderContainer = styled.div`
+  width: 100%;
+  background: rgb(251, 251, 251);
+`;
+
 export const Header = styled.div`
   height: 80px;
   max-width: 1060px;
@@ -17,7 +22,6 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
 `;
 
 export const HeaderBox = styled.div`

@@ -38,14 +38,20 @@ function WeatherInfo({
     ChartHandle(e.target.id);
     showChart(e.target.id);
     if (e.target.id === "0") {
-      let date = dateInfo[0].date;
-      setDate(`${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6)}`);
+      let dataDate = dateInfo[0].date;
+      setDate(
+        `${dataDate.slice(0, 4)}.${dataDate.slice(4, 6)}.${dataDate.slice(6)}`
+      );
     } else if (e.target.id === "1") {
-      let date = dateInfo[1].date;
-      setDate(`${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6)}`);
+      let dataDate = dateInfo[1].date;
+      setDate(
+        `${dataDate.slice(0, 4)}.${dataDate.slice(4, 6)}.${dataDate.slice(6)}`
+      );
     } else if (e.target.id === "2") {
-      let date = dateInfo[2].date;
-      setDate(`${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6)}`);
+      let dataDate = dateInfo[2].date;
+      setDate(
+        `${dataDate.slice(0, 4)}.${dataDate.slice(4, 6)}.${dataDate.slice(6)}`
+      );
     }
   };
   useEffect(() => {
