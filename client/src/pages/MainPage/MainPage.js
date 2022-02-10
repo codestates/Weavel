@@ -20,29 +20,6 @@ function MainPage() {
   const [chartId, setChartId] = useState(0);
   const initGraph = [
     {
-      // options: {
-      //   chart: {
-      //     zoom: {
-      //       enabled: false,
-      //     },
-      //   },
-      //   dataLabels: {
-      //     enabled: true,
-      //     style: {
-      //       colors: ["#4d90fa"],
-      //     },
-      //   },
-      //   xaxis: {
-      //     categories: dayArr[date],
-      //   },
-      // },
-
-      // series: [
-      //   {
-      //     name: "기온",
-      //     data: tmpArr[date],
-      //   },
-      // ],
       options: {
         chart: {
           type: "bar",
@@ -151,7 +128,7 @@ function MainPage() {
       })
       .then((res) => {
         setAreaWeather(res.data);
-        setDateInfo([res.data[0], res.data[54], res.data[155]]);
+        setDateInfo([res.data[0], res.data[72], res.data[144]]);
         dataHandle(res.data, date);
       });
   };
@@ -205,7 +182,7 @@ function MainPage() {
     }
     const nowDate = `${date.getFullYear()}${month}${date.getDate()}`;
     const nowTime = `${date.getHours()}`;
-    console.log(nowTime);
+
     setDateTime({
       date: nowDate,
       time: nowTime,
@@ -222,18 +199,12 @@ function MainPage() {
     let day = 71;
     let tomorrow = day * 2;
     let dayAfterTomorrow = day * 3;
-    //15 16~87     72+16+72
+
     let rootIdx = 2;
     for (let i = 0; i < areaWeatherData.length; i++) {
       if (rootIdx - i === 0 && i <= day) {
         dayArr.push(`${areaWeatherData[i].time.slice(0, 2)}시`);
         rootIdx += 3;
-        // } else if (rootIdx - i === 0 && i < tomorrow) {
-        //   dayArr[1].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
-        //   rootIdx += 3;
-        // } else if (rootIdx - i === 0 && i < dayAfterTomorrow) {
-        //   dayArr[2].push(`${areaWeatherData[i].time.slice(0, 2)}시`);
-        //   rootIdx += 3;
       }
     }
 
@@ -283,7 +254,6 @@ function MainPage() {
             type: "category",
             categories: dayArr,
             tickAmount: 3,
-            // tickPlacement: "on",
           },
         },
 
