@@ -16,7 +16,7 @@ module.exports = {
     }
 
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
+    if (!(authHeader && authHeader.startsWith("Bearer "))) {
       return new errorMessage("존재하지").respond();
     }
 
