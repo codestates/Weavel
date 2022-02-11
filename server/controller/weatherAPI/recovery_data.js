@@ -123,10 +123,14 @@ module.exports = (req, res) => {
         resolve(countWeatherData(nx, ny, cityId));
       });
 
-      count.then((value) => {
-        console.log("countdata=>>>>>", value);
-        countCheckWeatherData(value, nx, ny, cityId);
-      });
+      count
+        .then((value) => {
+          console.log("countdata=>>>>>", value);
+          countCheckWeatherData(value, nx, ny, cityId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
     async function findLostData(areaArray, cityId) {

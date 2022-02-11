@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "jest --watchAll"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,10 @@
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "faker": "^6.6.6",
+    "jest": "^27.5.1",
+    "node-mocks-http": "^1.11.0",
     "nodemon": "^2.0.6",
     "sequelize-cli": "^6.2.0"
   }
