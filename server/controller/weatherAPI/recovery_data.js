@@ -123,13 +123,17 @@ module.exports = (req, res) => {
         resolve(countWeatherData(nx, ny, cityId));
       });
 
-      count.then((value) => {
-        console.log("countdata=>>>>>", value);
-        countCheckWeatherData(value, nx, ny, cityId);
-      });
+      count
+        .then((value) => {
+          console.log("countdata=>>>>>", value);
+          countCheckWeatherData(value, nx, ny, cityId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
-    async function findMissingData(areaArray, cityId) {
+    async function findLostData(areaArray, cityId) {
       await Promise.all(
         areaArray.map(async (area) => {
           const nx = area[0];
@@ -139,7 +143,7 @@ module.exports = (req, res) => {
       );
     }
 
-    findMissingData(areaArray, cityId);
+    findLostData(areaArray, cityId);
 
     return res
       .status(201)
