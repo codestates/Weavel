@@ -1,7 +1,8 @@
 const httpsMocks = require("node-mocks-http");
-const { accessToken } = require("../accessToken");
+const { accessToken } = require("../accessToken.js");
 const faker = require("faker");
 const jwt = require("jsonwebtoken");
+const { user } = require("../../models");
 
 jest.mock("jsonwebtoken");
 // jest.mock("../../models/user.js");
