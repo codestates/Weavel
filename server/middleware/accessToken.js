@@ -2,7 +2,7 @@ const { user } = require("../models");
 const jwt = require("jsonwebtoken");
 
 async function finduser(id) {
-  return await user.findOne({
+  return user.findOne({
     where: { id: id },
   });
 }
@@ -39,7 +39,5 @@ async function accessToken(req, res, next) {
   });
 }
 
-module.exports = {
-  finduser: finduser,
-  accessToken: accessToken,
-};
+exports.finduser = finduser;
+exports.accessToken = accessToken;

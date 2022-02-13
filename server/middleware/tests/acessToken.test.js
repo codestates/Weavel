@@ -1,5 +1,5 @@
 const httpMocks = require("node-mocks-http");
-const { accessToken, finduser } = require("../accessToken.js");
+const accessToken = require("../accessToken.js");
 const faker = require("faker");
 const jwt = require("jsonwebtoken");
 
@@ -15,7 +15,7 @@ describe("Token Middleware", () => {
     const response = httpMocks.createResponse();
     const next = jest.fn();
 
-    await accessToken(request, response, next);
+    await accessToken.accessToken(request, response, next);
 
     expect(response.statusCode).toBe(401);
     expect(response._getJSONData().message).toBe(
@@ -33,7 +33,7 @@ describe("Token Middleware", () => {
     const response = httpMocks.createResponse();
     const next = jest.fn();
 
-    await accessToken(request, response, next);
+    await accessToken.accessToken(request, response, next);
 
     expect(response.statusCode).toBe(401);
     expect(response._getJSONData().message).toBe(
@@ -55,7 +55,7 @@ describe("Token Middleware", () => {
       callback(new Error("bad token"), undefined);
     });
 
-    await accessToken(request, response, next);
+    await accessToken.accessToken(request, response, next);
 
     expect(response.statusCode).toBe(401);
     expect(response._getJSONData().message).toBe(
@@ -64,7 +64,7 @@ describe("Token Middleware", () => {
     expect(next).not.toBeCalled();
   });
 
-  it("returns 401 when cannot find a user by id from the JWT", async () => {
+  it("유저를 찾을 수 없을 때 401 리턴", async () => {
     const token = faker.random.alphaNumeric(128);
     const userId = faker.random.alphaNumeric(32);
     const request = httpMocks.createRequest({
@@ -74,13 +74,16 @@ describe("Token Middleware", () => {
     });
     const response = httpMocks.createResponse();
     const next = jest.fn();
-
+    const user = jest.fn((id) => Promise.resolve(undefined));
     jwt.verify = jest.fn((token, secret, callback) => {
       callback(undefined, { id: userId });
     });
-    finduser = jest.fn((id) => Promise.resolve(undefined));
 
-    await accessToken(request, response, next);
+    accessToken.finduser = jest.fn(
+      async (id) => await Promise.resolve(undefined),
+    );
+
+    await accessToken.accessToken(request, response, next);
 
     expect(response.statusCode).toBe(401);
     expect(response._getJSONData().message).toBe(
