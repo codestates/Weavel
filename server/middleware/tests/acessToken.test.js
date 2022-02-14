@@ -1,5 +1,6 @@
 const httpMocks = require("node-mocks-http");
 const accessToken = require("../accessToken.js");
+const userDB = require("../../data/user");
 const faker = require("faker");
 const jwt = require("jsonwebtoken");
 
@@ -74,14 +75,12 @@ describe("Token Middleware", () => {
     });
     const response = httpMocks.createResponse();
     const next = jest.fn();
-    const user = jest.fn((id) => Promise.resolve(undefined));
+
     jwt.verify = jest.fn((token, secret, callback) => {
       callback(undefined, { id: userId });
     });
 
-    accessToken.finduser = jest.fn(
-      async (id) => await Promise.resolve(undefined),
-    );
+    userDB.findUserById = jest.fn((id) => Promise.resolve(undefined));
 
     await accessToken.accessToken(request, response, next);
 

@@ -1,11 +1,5 @@
-const { user } = require("../models");
+const userDB = require("../data/user");
 const jwt = require("jsonwebtoken");
-
-async function finduser(id) {
-  return user.findOne({
-    where: { id: id },
-  });
-}
 
 async function accessToken(req, res, next) {
   class errorMessage {
@@ -30,7 +24,7 @@ async function accessToken(req, res, next) {
     if (err) {
       return new errorMessage("유효하지").respond();
     }
-    const user = await finduser(decode.id);
+    const user = await userDB.findUserById(decode.id);
     if (!user) {
       return new errorMessage("일치하는 유저가 존재하지").respond();
     }
@@ -38,6 +32,6 @@ async function accessToken(req, res, next) {
     next();
   });
 }
-
-exports.finduser = finduser;
-exports.accessToken = accessToken;
+module.exports = {
+  accessToken,
+};
