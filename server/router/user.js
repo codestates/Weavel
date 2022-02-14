@@ -22,7 +22,7 @@ router.post(
     body("weather").isArray().withMessage("배열에 날씨코드를 입력해주세요"),
     validateError,
   ],
-  usersController.signup,
+  usersController.signup.signup,
 );
 
 // 로그인 POST /user/login
@@ -37,14 +37,19 @@ router.post(
       .withMessage("8~16자리 비밀번호를 입력해주세요"),
     validateError,
   ],
-  usersController.login,
+  usersController.login.login,
 );
 
 // 로그아웃 POST /user
 router.post(
   "/logout",
-  [header("authorization").notEmpty().withMessage("이미 로그아웃 되었습니다.")],
-  usersController.logout,
+  [
+    header("Authorization")
+      .trim()
+      .notEmpty()
+      .withMessage("이미 로그아웃 되었습니다."),
+  ],
+  usersController.logout.logout,
 );
 
 // 회원탈퇴 DELETE /user
@@ -64,7 +69,7 @@ router.put(
     validateError,
   ],
   accessToken,
-  usersController.put,
+  usersController.put.put,
 );
 
 // 이메일중복검사 GET /user/email?={email}
@@ -81,6 +86,6 @@ router.get(
 router.get("/", accessToken, usersController.get);
 
 // 날씨정보요청 GET /user/weather
-router.get("/weather", accessToken, usersController.weather);
+router.get("/weather", accessToken, usersController.weather.weather);
 
 module.exports = router;

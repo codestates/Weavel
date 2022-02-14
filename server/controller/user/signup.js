@@ -1,55 +1,60 @@
-const { user } = require("../../models");
-const { user_weather } = require("../../models");
 const crypto = require("crypto");
+const userDB = require("../../data/user");
+const userWeatherDB = require("../../data/user_weather");
 
-module.exports = async (req, res) => {
+async function resultUserbyEmail(email) {
+  const emailSearch = await userDB.findUserByEmail(email);
+  return emailSearch ? emailSearch : false;
+}
+
+function createCrypto(password) {
+  const salt = crypto.randomBytes(64).toString("hex");
+  const encryptedPassword = crypto
+    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
+    .toString("base64");
+
+  return [salt, encryptedPassword];
+}
+
+function createMapUserWeather(createUserId, weather) {
+  const afewCreateWeather = weather.map(async (weatherCode) =>
+    userWeatherDB.createUserWeather(createUserId, weatherCode + 1),
+  );
+  Promise.all(afewCreateWeather);
+}
+
+async function signup(req, res) {
   try {
     const { name, email, password, weather } = req.body;
 
-    async function emailConfirmation(email) {
-      const emailSearch = await user.findOne({ where: { email: email } });
-      if (emailSearch) {
-        return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
-      }
+    if (await resultUserbyEmail(email)) {
+      return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
     }
 
-    async function createRelationDB(userId, weatherId) {
-      return await user_weather.create({ userId, weatherId });
-    }
+    const [salt, encryptedPassword] = createCrypto(password);
+    const createUserData = await userDB.createUser(
+      name,
+      email,
+      salt,
+      encryptedPassword,
+    );
+    const createUserId = createUserData.id;
+    const result = { createUserId, name, email, weather };
 
-    function createWeatherRelation(createUserId) {
-      const afewCreateWeather = weather.map((weatherCode) =>
-        createRelationDB(createUserId, weatherCode + 1),
-      );
-      Promise.all(afewCreateWeather);
-    }
+    createMapUserWeather(createUserId, weather);
 
-    async function createUser(name, email, password, weather) {
-      const salt = crypto.randomBytes(64).toString("hex");
-      const encryptedPassword = crypto
-        .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-        .toString("base64");
-
-      const createUserDB = await user.create({
-        name,
-        email,
-        salt,
-        password: encryptedPassword,
-      });
-      const createUserId = createUserDB.id;
-      const result = { createUserId, name, email, weather };
-
-      createWeatherRelation(createUserId);
-
-      return res
-        .status(201)
-        .json({ date: result, message: "회원가입이 완료되었습니다" });
-    }
-
-    emailConfirmation(email);
-    createUser(name, email, password, weather);
+    return res
+      .status(201)
+      .json({ date: result, message: "회원가입이 완료되었습니다" });
   } catch (err) {
     console.log("err", err);
     return res.status(400).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  createCrypto,
+  resultUserbyEmail,
+  createMapUserWeather,
+  signup,
 };
