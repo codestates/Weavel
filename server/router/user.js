@@ -53,7 +53,7 @@ router.post(
 );
 
 // 회원탈퇴 DELETE /user
-router.delete("/", accessToken, usersController.delete);
+router.delete("/", accessToken, usersController.delete.deleteUser);
 
 // 유저정보수정 PUT /user
 router.put(
@@ -79,11 +79,11 @@ router.get(
     query("email").isEmail().withMessage("이메일을 입력해주세요"),
     validateError,
   ],
-  usersController.email,
+  usersController.checkEmail.checkEmail,
 );
 
 // 유저정보요청 GET /user
-router.get("/", accessToken, usersController.get);
+router.get("/", accessToken, usersController.get.get);
 
 // 날씨정보요청 GET /user/weather
 router.get("/weather", accessToken, usersController.weather.weather);

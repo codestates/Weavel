@@ -1,45 +1,35 @@
-const { user } = require("../../models");
-const { user_weather } = require("../../models");
+const userDB = require("../../data/user");
 
-module.exports = async (req, res) => {
+async function resultUserById(id) {
+  const searchUserId = await userDB.findUserById(id);
+  return searchUserId ? searchUserId : false;
+}
+
+async function get(req, res) {
   try {
-    async function userConfirmation() {
-      const userId = req.userId;
-      const findUser = await user.findOne({
-        where: { id: userId },
-      });
-      if (!findUser) {
-        return res
-          .status(404)
-          .json({ message: "해당 유저를 찾을 수 없습니다." });
-      }
+    const userId = req.userId;
+    const findUser = resultUserById(userId);
+
+    if (!findUser) {
+      return res.status(404).json({ message: "해당 유저를 찾을 수 없습니다." });
     }
 
-    const findUserInfo = await user.findAll({
-      where: { id: req.userId },
-      attributes: ["id", "email", "name"],
-      include: [
-        {
-          model: user_weather,
-          required: false,
-          attributes: ["weatherId"],
-        },
-      ],
-    });
+    const findUserInfo = await userDB.findUserInfo(userId);
     const { id, email, name, user_weathers } = findUserInfo[0].dataValues;
+    const weatherDB = user_weathers.map((el) => {
+      return el.dataValues.weatherId - 1;
+    });
 
-    function changeWeatherCode(id, email, name, user_weathers) {
-      const weather = [];
-      user_weathers.map((el) => weather.push(el.dataValues.weatherId - 1));
+    const result = { id, email, name, weatherDB };
 
-      const result = { id, email, name, weather };
-      return res.status(200).json({ data: result });
-    }
-
-    userConfirmation();
-    changeWeatherCode(id, email, name, user_weathers);
+    return res.status(200).json({ data: result });
   } catch (err) {
     console.log("err", err);
-    return res.status(400).json({ message: "서버 에러입니다." });
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  resultUserById,
+  get,
 };
