@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       user.hasMany(models.user_weather, {
         foreignKey: "userId",
       });
+      user.hasMany(models.photo, {
+        foreignKey: "userId",
+      });
     }
   }
   user.init(

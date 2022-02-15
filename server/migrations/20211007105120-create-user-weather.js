@@ -10,11 +10,12 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        field: "userId",
         references: {
           model: "user",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       weatherId: {
         type: Sequelize.INTEGER,
@@ -23,6 +24,8 @@ module.exports = {
           model: "weather",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
