@@ -19,14 +19,19 @@ router.get(
     validateError,
   ],
   accessToken,
-  photoController.get,
+  photoController.get.getPhoto,
 );
 
 // GET	/photo 사진정보 불러오기
-router.get("/info", accessToken, photoController.info_get);
+router.get("/info", accessToken, photoController.get_info.getPhotoInfo);
 
 // POST	/photo 사진 저장
-router.post("/", accessToken, upload.single("image"), photoController.post);
+router.post(
+  "/",
+  accessToken,
+  upload.single("image"),
+  photoController.post.postPhoto,
+);
 
 // POST	/photo/info 사진 정보 저장
 router.post(
@@ -63,7 +68,7 @@ router.post(
     validateError,
   ],
   accessToken,
-  photoController.info_post,
+  photoController.post_info.postPhotoInfo,
 );
 
 // PUT	/photo	사진 수정
@@ -80,7 +85,7 @@ router.put(
   ],
   accessToken,
   upload.single("image"),
-  photoController.put,
+  photoController.put.put,
 );
 
 // PUT	/photo/info 사진 정보 수정
@@ -118,7 +123,7 @@ router.put(
     validateError,
   ],
   accessToken,
-  photoController.info_put,
+  photoController.put_info.putPhotoInfo,
 );
 
 // DELETE	/photo	사진 삭제
@@ -152,7 +157,7 @@ router.delete(
     validateError,
   ],
   accessToken,
-  photoController.delete,
+  photoController.delete.deletePhotoWithInfo,
 );
 
 module.exports = router;
