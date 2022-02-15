@@ -1,11 +1,7 @@
 const crypto = require("crypto");
 const userDB = require("../../data/user");
 const userWeatherDB = require("../../data/user_weather");
-
-async function resultUserbyEmail(email) {
-  const emailSearch = await userDB.findUserByEmail(email);
-  return emailSearch ? emailSearch : false;
-}
+const checkEmail = require("./checkEmail");
 
 function createCrypto(password) {
   const salt = crypto.randomBytes(64).toString("hex");
@@ -27,7 +23,7 @@ async function signup(req, res) {
   try {
     const { name, email, password, weather } = req.body;
 
-    if (await resultUserbyEmail(email)) {
+    if (await checkEmail.resultUserByEmail(email)) {
       return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
     }
 
@@ -48,13 +44,12 @@ async function signup(req, res) {
       .json({ date: result, message: "회원가입이 완료되었습니다" });
   } catch (err) {
     console.log("err", err);
-    return res.status(400).json({ message: "서버 에러입니다." });
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
 }
 
 module.exports = {
   createCrypto,
-  resultUserbyEmail,
   createMapUserWeather,
   signup,
 };

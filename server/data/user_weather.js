@@ -4,15 +4,15 @@ async function createUserWeather(userId, weatherId) {
   return user_weather.create({ userId, weatherId });
 }
 
-async function deleteUserWeather(userId) {
-  return user_weather.destroy({ where: { userId: userId } });
-}
-
 async function putUserWeather(userId, weatherId) {
   return user_weather.update(
     { weatherId: weatherId },
     { where: { userId: userId } },
   );
+}
+
+async function deleteUserWeather(userId) {
+  return user_weather.destroy({ where: { userId: userId } });
 }
 
 async function likeWeatherCount() {
@@ -33,7 +33,7 @@ async function likeWeatherCount() {
 
 module.exports = {
   createUserWeather,
-  deleteUserWeather,
   putUserWeather,
+  deleteUserWeather,
   likeWeatherCount,
 };

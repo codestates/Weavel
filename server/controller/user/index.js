@@ -4,7 +4,7 @@ module.exports = {
   logout: require("./logout"),
   delete: require("./delete"),
   put: require("./put"),
-  email: require("./email"),
+  checkEmail: require("./checkEmail"),
   get: require("./get"),
   weather: require("./weather"),
 };

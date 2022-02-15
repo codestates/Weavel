@@ -1,4 +1,5 @@
 const { user } = require("../models");
+const { user_weather } = require("../models");
 
 async function findUserById(id) {
   return user.findOne({
@@ -29,9 +30,29 @@ async function putUser(userId, salt, password) {
   );
 }
 
+async function deleteUser(userId) {
+  return user.destroy({ where: { id: userId } });
+}
+
+async function findUserInfo(userId) {
+  return user.findAll({
+    where: { id: userId },
+    attributes: ["id", "email", "name"],
+    include: [
+      {
+        model: user_weather,
+        required: false,
+        attributes: ["weatherId"],
+      },
+    ],
+  });
+}
+
 module.exports = {
   findUserByEmail,
   findUserById,
   createUser,
   putUser,
+  deleteUser,
+  findUserInfo,
 };

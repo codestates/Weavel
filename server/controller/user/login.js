@@ -1,6 +1,4 @@
-const userDB = require("../../data/user");
-const userWeatherDB = require("../../data/user_weather");
-const signup = require("./signup");
+const checkEmail = require("./checkEmail");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -31,7 +29,7 @@ function createAccessToken(user) {
 async function login(req, res) {
   try {
     const { email, password } = req.body;
-    const user = await signup.resultUserbyEmail(email);
+    const user = await checkEmail.resultUserByEmail(email);
 
     if (!user) {
       return res.status(404).json({ message: "회원을 찾을수 없습니다." });
@@ -50,10 +48,11 @@ async function login(req, res) {
     });
   } catch (err) {
     console.log("err", err);
-    return res.status(400).json({ message: "서버 에러입니다." });
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
 }
 
 module.exports = {
+  checkUserPassword,
   login,
 };
