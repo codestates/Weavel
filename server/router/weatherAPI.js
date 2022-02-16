@@ -17,7 +17,7 @@ router.get(
     validateError,
   ],
   cityarea,
-  weatherAPIController.weather_data,
+  weatherAPIController.weather_data.weatherData,
 );
 
 router.get(
@@ -32,7 +32,7 @@ router.get(
     validateError,
   ],
   cityarea,
-  weatherAPIController.recovery_data,
+  weatherAPIController.recovery_data.recoverData,
 );
 
 module.exports = router;
