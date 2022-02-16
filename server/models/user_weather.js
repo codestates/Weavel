@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       user_weather.belongsTo(models.user, {
-        onDelete: "CASCADE",
         foreignKey: "userId",
+        onDelete: "CASCADE",
+        hooks: true,
       });
       user_weather.belongsTo(models.weather, {
-        onDelete: "CASCADE",
         foreignKey: "weatherId",
+        onDelete: "CASCADE",
+        hooks: true,
       });
     }
   }
