@@ -34,7 +34,7 @@ router.get(
       .withMessage("query에 weatherCode 번호를 입력해주세요"),
     validateError,
   ],
-  weatherController.city,
+  weatherController.city.cityWeather,
 );
 
 // area
@@ -55,7 +55,7 @@ router.get(
       .withMessage("query에 nx좌표 Code번호를 입력해주세요"),
     validateError,
   ],
-  weatherController.area,
+  weatherController.area.areaWeather,
 );
 
 module.exports = router;
