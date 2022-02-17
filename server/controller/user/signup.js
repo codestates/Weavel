@@ -34,10 +34,10 @@ async function signup(req, res) {
       salt,
       encryptedPassword,
     );
-    const createUserId = createUserData.id;
-    const result = { createUserId, name, email, weather };
+    const userId = createUserData.id;
+    const result = { userId, name, email, weather };
 
-    createMapUserWeather(createUserId, weather);
+    createMapUserWeather(userId, weather);
 
     return res
       .status(201)
