@@ -16,11 +16,11 @@ async function get(req, res) {
 
     const findUserInfo = await userDB.findUserInfo(userId);
     const { id, email, name, user_weathers } = findUserInfo[0].dataValues;
-    const weather = user_weathers.map((el) => {
+    const weatherDB = user_weathers.map((el) => {
       return el.dataValues.weatherId - 1;
     });
 
-    const result = { id, email, name, weather };
+    const result = { id, email, name, weatherDB };
 
     return res.status(200).json({ data: result });
   } catch (err) {
