@@ -6,6 +6,10 @@ export const LoginPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 5px 0 5px;
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
 `;
 
 export const LoginContainer = styled.div`
