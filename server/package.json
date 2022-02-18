@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --verbose"
   },
   "author": "",
   "license": "ISC",

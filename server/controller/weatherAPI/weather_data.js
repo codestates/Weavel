@@ -96,7 +96,7 @@ async function weatherData(req, res) {
     const cityId = req.query.id;
     const areaArray = req.body;
     const day = moment(new Date().getTime()).format("YYYYMMDD");
-    const base_time = "1100";
+    const base_time = "2300";
     weatherDataDB.deleteCityWeatherData(cityId);
 
     await Promise.all(

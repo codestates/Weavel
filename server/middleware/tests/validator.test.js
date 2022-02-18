@@ -6,7 +6,7 @@ const validator = require("express-validator");
 jest.mock("express-validator");
 
 describe("Validator Middleware", () => {
-  it(``, () => {
+  it(`validator 통과시 next`, () => {
     const request = httpMocks.createRequest();
     const response = httpMocks.createResponse();
     const next = jest.fn();
@@ -20,7 +20,7 @@ describe("Validator Middleware", () => {
     expect(next).toBeCalled();
   });
 
-  it(``, () => {
+  it(`validator 실패시 에러`, () => {
     const request = httpMocks.createRequest();
     const response = httpMocks.createResponse();
     const next = jest.fn();
