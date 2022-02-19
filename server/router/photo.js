@@ -105,7 +105,7 @@ router.patch(
     validateError,
   ],
   accessToken,
-  photoController.put_info.putPhotoInfo,
+  photoController.patch_info.patch_info,
 );
 
 // DELETE	/photo	사진 삭제

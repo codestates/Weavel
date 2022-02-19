@@ -55,22 +55,8 @@ router.post(
 // 회원탈퇴 DELETE /user
 router.delete("/", accessToken, usersController.delete.deleteUser);
 
-// 유저정보수정 PUT /user
-router.put(
-  "/",
-  [
-    body("email").isEmail().withMessage("이메일을 입력해주세요"),
-    body("password")
-      .notEmpty()
-      .withMessage("비밀번호를 입력해주세요")
-      .isLength({ min: 8, max: 16 })
-      .withMessage("8~16자리 비밀번호를 입력해주세요"),
-    body("weather").isArray().withMessage("배열에 날씨코드를 입력해주세요"),
-    validateError,
-  ],
-  accessToken,
-  usersController.put.put,
-);
+// 유저정보수정 PATCH /user
+router.patch("/", accessToken, usersController.patch.patch);
 
 // 이메일중복검사 GET /user/email?={email}
 router.get(
