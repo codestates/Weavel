@@ -88,8 +88,8 @@ router.put(
   photoController.put.put,
 );
 
-// PUT	/photo/info 사진 정보 수정
-router.put(
+// PATCH	/photo/info 사진 정보 수정
+router.patch(
   "/info",
   [
     body("id")
@@ -98,24 +98,6 @@ router.put(
       .withMessage("photoId 정보가 없습니다.")
       .isInt()
       .withMessage("photoId 번호를 입력해주세요."),
-    body("weather")
-      .trim()
-      .notEmpty()
-      .withMessage("photo.weather 정보가 없습니다.")
-      .isInt()
-      .withMessage("photo.weather 번호를 입력해주세요."),
-    body("date")
-      .trim()
-      .notEmpty()
-      .withMessage("photo.date 정보를 입력해주세요."),
-    body("area")
-      .trim()
-      .notEmpty()
-      .withMessage("photo.area 정보를 입력해주세요."),
-    body("comment")
-      .trim()
-      .notEmpty()
-      .withMessage("photo.comment 정보를 입력해주세요."),
     body("filename")
       .trim()
       .notEmpty()
