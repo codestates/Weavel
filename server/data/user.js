@@ -20,9 +20,10 @@ async function createUser(name, email, salt, password) {
   });
 }
 
-async function putUser(userId, salt, password) {
+async function putUser(email, userId, salt, password) {
   return user.update(
     {
+      email: email,
       salt: salt,
       password: password,
     },

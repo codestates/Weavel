@@ -1,5 +1,11 @@
 const { user_weather } = require("../models");
 
+async function findUserWeather(userId, weatherId) {
+  return user_weather.findOne({
+    where: { userId: userId, weatherId: weatherId },
+  });
+}
+
 async function createUserWeather(userId, weatherId) {
   return user_weather.create({ userId, weatherId });
 }
@@ -32,6 +38,7 @@ async function likeWeatherCount() {
 }
 
 module.exports = {
+  findUserWeather,
   createUserWeather,
   putUserWeather,
   deleteUserWeather,

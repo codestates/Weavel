@@ -3,7 +3,7 @@ module.exports = {
   login: require("./login"),
   logout: require("./logout"),
   delete: require("./delete"),
-  put: require("./put"),
+  patch: require("./patch"),
   checkEmail: require("./checkEmail"),
   get: require("./get"),
   weather: require("./weather"),

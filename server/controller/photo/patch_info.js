@@ -1,6 +1,6 @@
 const photoDB = require("../../data/photo");
 
-async function putPhotoInfo(req, res) {
+async function patch_info(req, res) {
   try {
     //! 기존 이미지 이름이 같아야 수정(fileName)
     const userId = req.userId;
@@ -34,5 +34,5 @@ async function putPhotoInfo(req, res) {
 }
 
 module.exports = {
-  putPhotoInfo,
+  patch_info,
 };

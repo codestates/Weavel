@@ -5,5 +5,5 @@ module.exports = {
   delete: require("./delete"),
   get_info: require("./get_info"),
   post_info: require("./post_info"),
-  put_info: require("./put_info"),
+  patch_info: require("./patch_info"),
 };
