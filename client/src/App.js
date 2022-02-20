@@ -12,7 +12,7 @@ import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
-import MyPage from "./pages/MyPage/MyPage";
+import MyPage from "./pages/MyPageNew/MyPageNew";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import { ModalContainer } from "./pages/MyPage/MyPage.style";
 import {
@@ -54,8 +54,13 @@ function App() {
     weather: [],
   });
 
-  const [allUserWeather, setAllUserWeather] = useState([]);
-  const [allPhotoInfo, setAllPhotoInfo] = useState([]);
+  const [allUserWeather, setAllUserWeather] = useState({
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+  });
+
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -65,7 +70,7 @@ function App() {
     rain: false,
     snow: false,
   });
-
+  const [allPhotoInfo, setAllPhotoInfo] = useState([]);
   const weatherHandle = (weather) => {
     setIsWeather(weather);
   };
@@ -143,9 +148,9 @@ function App() {
       },
       withCredentials: true,
     }).then((res) => {
-      const { id, email, name, weather } = res.data.data;
+      const { id, email, name, weatherDB } = res.data.data;
 
-      weather.map((weather) => {
+      weatherDB.map((weather) => {
         if (weather === 0) {
           isWeather.sunny = true;
         } else if (weather === 1) {
@@ -156,7 +161,7 @@ function App() {
           isWeather.snow = true;
         }
       });
-      setLoginUserInfo({ id, email, name, weather });
+      setLoginUserInfo({ id, email, name, weatherDB });
     });
   };
 
@@ -189,7 +194,7 @@ function App() {
   };
 
   // 모든 회원 날씨 정보
-  const getAllUserWeather = () => {
+  const getAllUserWeather = (token) => {
     axios({
       method: "get",
       url: `${process.env.REACT_APP_API_URL}/user/weather`,
@@ -210,39 +215,39 @@ function App() {
     snow: false,
   });
 
-  const filterPhotoHandler = (num) => {
-    let filterPhotoInfo = [];
+  // const filterPhotoHandler = (num) => {
+  //   let filterPhotoInfo = [];
 
-    allPhotoInfo.map((el) => {
-      const newEl = { ...el };
-      filterPhotoInfo.push(newEl);
-    });
-    const newFilterPhotoInfo = filterPhotoInfo.filter((el) => {
-      return el.weather === num;
-    });
-    setAllPhotoInfo(newFilterPhotoInfo);
-  };
+  //   allPhotoInfo.map((el) => {
+  //     const newEl = { ...el };
+  //     filterPhotoInfo.push(newEl);
+  //   });
+  //   const newFilterPhotoInfo = filterPhotoInfo.filter((el) => {
+  //     return el.weather === num;
+  //   });
+  //   setAllPhotoInfo(newFilterPhotoInfo);
+  // };
   const [allPhotoSearch, setAllPhotoSearch] = useState(null);
   const [searchInputValue, setSearchInputValue] = useState(null);
 
-  const handleInputChange = (e) => {
-    if (e.target.value) {
-      setSearchInputValue(e.target.value);
-    }
+  // const handleInputChange = (e) => {
+  //   if (e.target.value) {
+  //     setSearchInputValue(e.target.value);
+  //   }
 
-    let filterPhotoInfo = [];
+  //   let filterPhotoInfo = [];
 
-    allPhotoInfo.map((el) => {
-      const newEl = { ...el };
-      filterPhotoInfo.push(newEl);
-    });
-    const newSearchPhotoInfo = filterPhotoInfo.filter((el) => {
-      if (el.area.indexOf(searchInputValue > -1)) {
-        return true;
-      }
-    });
-    setAllPhotoInfo(newSearchPhotoInfo);
-  };
+  //   allPhotoInfo.map((el) => {
+  //     const newEl = { ...el };
+  //     filterPhotoInfo.push(newEl);
+  //   });
+  //   const newSearchPhotoInfo = filterPhotoInfo.filter((el) => {
+  //     if (el.area.indexOf(searchInputValue > -1)) {
+  //       return true;
+  //     }
+  //   });
+  //   setAllPhotoInfo(newSearchPhotoInfo);
+  // };
 
   return (
     <BrowserRouter>
@@ -308,11 +313,10 @@ function App() {
             <Route path="/mypage">
               <MyPage
                 DeleteUser={DeleteUser}
-                getAllPhotosInfo={getAllPhotosInfo}
-                handleInputChange={handleInputChange}
+                // handleInputChange={handleInputChange}
                 SearchWeatherPhoto={SearchWeatherPhoto}
                 setSearchWeatherPhoto={setSearchWeatherPhoto}
-                filterPhotoHandler={filterPhotoHandler}
+                // filterPhotoHandler={filterPhotoHandler}
                 allUserWeather={allUserWeather}
                 allPhotoInfo={allPhotoInfo}
                 isLogin={isLogin}
