@@ -1,40 +1,33 @@
-const { user } = require("../../models");
-const { user_weather } = require("../../models");
+const userDB = require("../../data/user");
+const userWeatherDB = require("../../data/user_weather");
+const checkEmail = require("./checkEmail");
 const crypto = require("crypto");
 
-module.exports = async (req, res) => {
+async function put(req, res) {
   try {
-    const header = req.headers;
-    if (!header) {
-      return res.status(403).json({ message: "잘못된 요청입니다." });
-    } else {
-      const { email, password, weather } = req.body;
-      const findUser = await user.findOne({ where: { email: email } });
-      const userId = findUser.id;
+    const { email, password, weather } = req.body;
+    const findUser = await checkEmail.resultUserByEmail(email);
 
-      await user_weather.destroy({ where: { userId: userId } });
-      const createRelation = async (userId, weatherId) => {
-        return await user_weather.create({ userId, weatherId });
-      };
-
-      const proWeather = weather.map((weatherCode) => createRelation(userId, weatherCode + 1));
-      Promise.all(proWeather);
-
-      // 비밀번호 변경
-      const salt = crypto.randomBytes(64).toString("hex");
-      const encryptedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, "sha512").toString("base64");
-
-      await user.update(
-        {
-          salt: salt,
-          password: encryptedPassword,
-        },
-        { where: { id: userId } },
-      );
-
-      return res.status(200).json({ message: "정보 수정이 완료되었습니다" });
+    if (!findUser) {
+      return res
+        .status(409)
+        .json({ message: `수정하고자 하는 유저가 존재하지않습니다.` });
     }
+
+    const userId = findUser.id;
+    userWeatherDB.deleteUserWeather(userId);
+    checkEmail.createMapUserWeather(userId, weather);
+
+    const [salt, encryptedPassword] = checkEmail.createCrypto(password);
+    userDB.putUser(userId, salt, encryptedPassword);
+
+    return res.status(200).json({ message: "정보 수정이 완료되었습니다" });
   } catch (err) {
-    console.log(err);
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  put,
 };

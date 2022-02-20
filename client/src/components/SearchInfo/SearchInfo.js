@@ -3,7 +3,7 @@ import {
   InfoContainer,
   InfoContentsContainer,
   InfoContents,
-  // LoginButton,
+  InfoImgContainer,
   InfoImg,
 } from "./SearchInfo.style";
 
@@ -13,21 +13,21 @@ function SearchInfo() {
       <InfoContentsContainer>
         <InfoContents>
           <div className={"infoTitle"}>
-            즉흥적으로 떠나는 여행
-            <br />
-            날씨를 선택해서 가보는건 어떨까요?
+            <div>즉흥적으로 떠나는 여행</div>
+            <div>날씨를 선택해서 가보는건 어떨까요?</div>
           </div>
           <div className={"infoComment"}>
-            구름 한점없이 맑은 곳, 시원한 비가 내리는 곳, 펑펑 눈이 내리는 곳
-            <br />
-            날씨를 느끼러 떠나보세요
+            <div>
+              구름 한점없이 맑은 곳, 시원한 비가 내리는 곳, 펑펑 눈이 내리는 곳
+            </div>
+            <div>날씨를 느끼러 떠나보세요</div>
           </div>
           {/* <LoginButton>로그인</LoginButton> */}
         </InfoContents>
       </InfoContentsContainer>
-      <InfoImg>
-        <img src="./images/info.svg" alt="./images/info.png" />
-      </InfoImg>
+      <InfoImgContainer>
+        <InfoImg src="./images/info.png" alt="info" />
+      </InfoImgContainer>
     </InfoContainer>
   );
 }

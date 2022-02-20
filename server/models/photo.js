@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      photo.belongsTo(models.user, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      });
     }
   }
   photo.init(

@@ -34,7 +34,6 @@ function MyPagePhotos({
   isPhotoWeather,
   OnlyOneWeatherHandle,
 }) {
-  console.log("dyrlrlrlrl", allPhotoInfo);
   function photoEditHandler(e) {
     openCloseModalHandler(e);
   }
@@ -58,13 +57,21 @@ function MyPagePhotos({
               name={"clickPhoto"}
               id={idx}
             >
-              <Photo src={`http://localhost:4000/${photo.image}`} />
+              <Photo
+                src={`${process.env.REACT_APP_API_URL}/${photo.image}`}
+                alt="photo"
+              />
               <PhotoInfoContainer>
                 <PhotoDate>
-                  {photo.date === "날짜 정보가 없습니다" ? "날짜 정보가 없습니다" : photo.date}
+                  {photo.date === "날짜 정보가 없습니다"
+                    ? "날짜 정보가 없습니다"
+                    : photo.date}
                 </PhotoDate>
                 <PhotoAreaWeather>
-                  {photo.area === "위치 정보가 없습니다" ? "위치 정보가 없습니다" : photo.area},{" "}
+                  {photo.area === "위치 정보가 없습니다"
+                    ? "위치 정보가 없습니다"
+                    : photo.area}
+                  ,{" "}
                   {photo.weather === "1"
                     ? "맑음"
                     : photo.weather === "2"
@@ -108,7 +115,10 @@ function MyPagePhotos({
         {isModal.clickPhoto ? (
           <ModalContainer onClick={openCloseModalHandler}>
             <ClickPhotoModal openCloseModalHandler={openCloseModalHandler}>
-              <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} />
+              <img
+                src={`${process.env.REACT_APP_API_URL}/${allPhotoInfo[photoIdx].image}`}
+                alt="clickPhoto"
+              />
             </ClickPhotoModal>
           </ModalContainer>
         ) : null}

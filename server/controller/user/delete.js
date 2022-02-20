@@ -1,18 +1,18 @@
-const { user } = require("../../models");
-const { user_weather } = require("../../models");
+const userDB = require("../../data/user");
 
-module.exports = async (req, res) => {
+async function deleteUser(req, res) {
   try {
-    const header = req.headers;
-    if (!header) {
-      return res.status(403).json({ message: "잘못된 요청입니다." });
-    } else {
-      const id = req.userId;
-      await user_weather.destroy({ where: { userId: id } });
-      await user.destroy({ where: { id: id } });
-      return res.status(200).json({ message: "회원탈퇴가 완료 되었습니다." });
-    }
+    const userId = req.userId;
+
+    userDB.deleteUser(userId);
+
+    return res.status(200).json({ message: "회원탈퇴가 완료 되었습니다." });
   } catch (err) {
-    console.log(err);
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  deleteUser,
 };

@@ -1,21 +1,30 @@
-const { photo } = require("../../models");
+const photoDB = require("../../data/photo");
 var fs = require("fs");
-module.exports = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const id = req.query.id;
-    // 로그인된 아이디 정보 찾기
 
-    const image = await photo.findOne({ where: { id: id, userId: userId } });
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", image);
-    fs.readFile(image.image, function (err, data) {
+async function getPhoto(req, res) {
+  try {
+    const photoId = req.query.id;
+    const userId = req.userId;
+    const findPhoto = await photoDB.findPhoto(photoId, userId);
+
+    if (!findPhoto) {
+      return res.status(404).json({ message: "해당 사진을 찾을 수 없습니다." });
+    }
+
+    const photoPath = findPhoto.image;
+    fs.readFile(photoPath, function (err, data) {
       if (err) {
-        throw err;
+        console.log("err", err);
+        return res.status(404).json({ message: "사진을 읽을수가 없습니다." });
       }
-      res.status(200).end(data); // send로 보내면 파일자체를 보내게 됨
+      return res.status(200).end(data); // send로 보내면 파일자체를 보내게 됨
     });
   } catch (err) {
-    console.log("err");
-    res.status(400).json({ message: "사진을 조회할 수 없습니다." });
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  getPhoto,
 };

@@ -1,3 +1,5 @@
+// npx sequelize-cli db:migrate
+// npx sequelize-cli db:seed:all
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("user", [

@@ -1,43 +1,56 @@
-const { photo } = require("../../models");
-var fs = require("fs");
+const photoDB = require("../../data/photo");
+let fs = require("fs");
 
-module.exports = async (req, res) => {
-  const userId = req.userId;
-  const { id, weather, date, area, filename } = req.body;
-
-  // 각 필요한 데이터가 없을때 결과값
-  if (!id) {
-    return res.status(409).json({ message: "지우려는 사진 id 정보가 없습니다." });
-  } else if (!weather) {
-    return res.status(409).json({ message: "지우려는 날씨 정보가 없습니다." });
-  } else if (!date) {
-    return res.status(409).json({ message: "지우려는 날짜 정보가 없습니다." });
-  } else if (!area) {
-    return res.status(409).json({ message: "지우려는 지역 정보가 없습니다." });
-  } else if (!filename) {
-    return res.status(409).json({ message: "지우려는 사진파일 이름 정보가 없습니다." });
+async function deleteExistsPhoto(photoPath) {
+  const existsPhoto = fs.existsSync(photoPath);
+  if (existsPhoto) {
+    fs.unlinkSync(photoPath);
+    return true;
   }
+  return false;
+}
 
-  // DB 데이터 검색
-  const path = await photo.findOne({ where: { id: id, userId: userId, weather: weather, date: date, area: area, filename: filename } });
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", path);
-  if (!path) {
-    return res.status(409).json({ massage: "삭제 되었거나, 존재하지않는 정보입니다." });
+async function deletePhotoWithInfo(req, res) {
+  try {
+    const userId = req.userId;
+    const { id: photoId, weather, date, area, filename } = req.body;
+
+    const findPhoto = await photoDB.findPhoto(photoId, userId);
+    if (!findPhoto) {
+      return res
+        .status(409)
+        .json({ massage: "삭제 되었거나, 존재하지않는 이미지입니다." });
+    }
+
+    const findPhotoPath = findPhoto.image;
+    const deletePhotoResult = await deleteExistsPhoto(findPhotoPath);
+    const deleteImageInfo = await photoDB.deletePhotoInfo(
+      photoId,
+      userId,
+      weather,
+      date,
+      area,
+      filename,
+    );
+
+    if (!deletePhotoResult) {
+      return res.status(404).json({
+        massage: "이미 삭제 되었거나, 존재하지 않는 이미지 파일 입니다.",
+      });
+    }
+
+    if (!deleteImageInfo) {
+      return res.status(404).json({ massage: "이미 삭제된 이미지정보입니다." });
+    }
+
+    return res.status(200).json({ massage: "이미지가 삭제되었습니다." });
+  } catch (err) {
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러 입니다." });
   }
+}
 
-  // 파일 삭제 = 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-  if (fs.existsSync(path.image)) {
-    fs.unlinkSync(path.image); // unlinkSync 파일 삭제
-  } else {
-    return res.status(409).json({ massage: "삭제 되었거나, 존재하지 않는 파일입니다." });
-  }
-
-  // 파일 정보 삭제
-  const info = await photo.destroy({ where: { id: id, userId: userId, weather: weather, date: date, area: area, filename: filename } });
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", info);
-  if (!info) {
-    return res.status(404).json({ massage: "이미 삭제된 정보입니다." });
-  }
-
-  return res.status(200).json({ massage: "삭제되었습니다." });
+module.exports = {
+  deleteExistsPhoto,
+  deletePhotoWithInfo,
 };

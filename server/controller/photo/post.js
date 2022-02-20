@@ -1,23 +1,38 @@
-const { photo } = require("../../models");
+const photoDB = require("../../data/photo");
 
-module.exports = async (req, res) => {
+async function postPhoto(req, res) {
   try {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", req.file);
-    const path = req.file.path;
-    const filename = req.file.originalname;
+    if (!req.file) {
+      return res.status(404).json({ message: "사진파일이 존재하지 않습니다." });
+    }
+
+    const photoPath = req.file.path;
+    const photoFilename = req.file.originalname;
     const userId = req.userId;
 
-    // 사진저장
-    const where = await photo.create({ userId: userId, image: path, filename: filename });
-    const id = where.id;
+    const savePhoto = await photoDB.createPhoto(
+      userId,
+      photoPath,
+      photoFilename,
+    );
+    const photoId = savePhoto.id;
 
-    if (!where) {
-      return res.status(409).json({ message: "사진을 저장하지 못하였습니다." });
+    if (!savePhoto) {
+      return res.status(500).json({ message: "사진을 저장하지 못하였습니다." });
     }
-    return res.status(200).json({ data: { id: id, filename: filename }, message: "사진이 저장 완료 되었습니다." });
+
+    return res.status(200).json({
+      data: { id: photoId, filename: photoFilename },
+      message: "사진이 저장 완료 되었습니다.",
+    });
   } catch (err) {
-    console.log("err");
+    console.log(err);
+    return res.status(500).json({ message: "서버 에러 입니다." });
   }
+}
+
+module.exports = {
+  postPhoto,
 };
 
 // ("폼에 정의된 필드명 : ", fieldname);

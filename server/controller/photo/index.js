@@ -3,7 +3,7 @@ module.exports = {
   post: require("./post"),
   put: require("./put"),
   delete: require("./delete"),
-  info_get: require("./info_get"),
-  info_post: require("./info_post"),
-  info_put: require("./info_put"),
+  get_info: require("./get_info"),
+  post_info: require("./post_info"),
+  put_info: require("./put_info"),
 };

@@ -31,10 +31,16 @@ const dropzone = {
   position: "relative",
 };
 
-function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token, loginUserInfo }) {
+function EditUploadCopy({
+  fileInfo,
+  setFileHandle,
+  photoIdx,
+  allPhotoInfo,
+  token,
+  loginUserInfo,
+}) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(false);
-  console.log(token);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
@@ -43,8 +49,8 @@ function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });
@@ -80,7 +86,10 @@ function EditUploadCopy({ fileInfo, setFileHandle, photoIdx, allPhotoInfo, token
           <aside>
             <div style={thumb}>
               <div style={thumbInner}>
-                <img src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`} style={img} />
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/${allPhotoInfo[photoIdx].image}`}
+                  style={img}
+                />
               </div>
             </div>
           </aside>

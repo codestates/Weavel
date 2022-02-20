@@ -88,7 +88,7 @@ function EditUpload({
               <div style={thumb} key={file.name}>
                 <div style={thumbInner}>
                   <img
-                    src={`http://localhost:4000/${allPhotoInfo[photoIdx].image}`}
+                    src={`${process.env.REACT_APP_API_URL}/${allPhotoInfo[photoIdx].image}`}
                     style={img}
                   />
                 </div>

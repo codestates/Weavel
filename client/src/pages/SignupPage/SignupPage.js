@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
+  SignupPageContainer,
   SignupContainer,
   SignupTitle,
   NameContainer,
@@ -25,7 +26,7 @@ import {
   SubmitSignup,
 } from "./SignupPage.style";
 import axios from "axios";
-
+import { useHistory } from "react-router";
 import { UnderLine } from "../LoginPage/LoginPage.style";
 
 function SignupPage() {
@@ -35,7 +36,7 @@ function SignupPage() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [isSubmitValid, setIsSubmitValid] = useState(false);
-
+  const history = useHistory();
   const isValidInput = {
     isEmail: null,
     isPassword: null,
@@ -90,7 +91,7 @@ function SignupPage() {
 
   useEffect(() => {
     if (
-      name.length > 5 &&
+      name.length >= 2 &&
       isCheckInput.isEmail &&
       isCheckInput.isPassword &&
       isCheckInput.isPasswordConfirm
@@ -168,7 +169,7 @@ function SignupPage() {
   const handlesignin = (e, arrEditWeather) => {
     axios
       .post(
-        "http://localhost:4000/user/signup",
+        `${process.env.REACT_APP_API_URL}/user/signup`,
         {
           name: name,
           email: email,
@@ -181,6 +182,7 @@ function SignupPage() {
       .then((res) => {
         if (res.status === 201) {
           // 메인 페이지로 이동
+          history.push("/login");
         }
       })
       .catch((error) => console.log("Error", error.message));
@@ -189,14 +191,13 @@ function SignupPage() {
   const handleConfirmEmail = (e) => {
     axios
       .get(
-        `http://localhost:4000/user/email?email=${email}`,
+        `${process.env.REACT_APP_API_URL}/user/email?email=${email}`,
         {
           email: email,
         },
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
         if (res.data.message === "이메일이 중복되지 않습니다.") {
           isCheckEmail.isSuccess = true;
           isCheckEmail.isFail = false;
@@ -211,123 +212,125 @@ function SignupPage() {
   };
 
   return (
-    <SignupContainer>
-      <SignupTitle>회원가입</SignupTitle>
-      <NameContainer>
-        <span>이름</span>
-        <NameInput id="name" onChange={(e) => inputValueHandle(e)} />
-      </NameContainer>
-      <EmailContainer>
-        <span>이메일</span>
-        <EmailInputBox>
-          <EmailInput
-            id="email"
+    <SignupPageContainer>
+      <SignupContainer>
+        <SignupTitle>회원가입</SignupTitle>
+        <NameContainer>
+          <span>이름</span>
+          <NameInput id="name" onChange={(e) => inputValueHandle(e)} />
+        </NameContainer>
+        <EmailContainer>
+          <span>이메일</span>
+          <EmailInputBox>
+            <EmailInput
+              id="email"
+              onChange={(e) => inputValueHandle(e)}
+              onKeyUp={(e) => inputValidHandle(e)}
+            />
+
+            <CheckEmail
+              onClick={(e) => handleConfirmEmail(e)}
+              disabled={!isCheckInput.isEmail}
+              isButtonValid={isCheckInput.isEmail}
+            >
+              중복 확인
+            </CheckEmail>
+          </EmailInputBox>
+          <EmailConfirmMessage
+            isSuccess={isCheckEmail.isSuccess}
+            isFail={isCheckEmail.isFail}
+            isEmail={isCheckInput.isEmail}
+          >
+            {isCheckEmail.isSuccess
+              ? "사용 가능한 이메일입니다."
+              : isCheckEmail.isFail
+              ? "이미 가입 된 이메일입니다."
+              : isCheckInput.isEmail === null
+              ? null
+              : isCheckInput.isEmail
+              ? null
+              : "올바른 이메일을 입력해주세요."}
+          </EmailConfirmMessage>
+        </EmailContainer>
+        <WeatherContainer>
+          <span>좋아하는 날씨</span>
+          <WeatherChoiceBox>
+            <Sunny
+              isSunny={isWeather.sunny}
+              id="0"
+              onClick={(e) => weatherCheckHandle(e)}
+            >
+              맑음
+            </Sunny>
+            <Cloud
+              isCloud={isWeather.cloud}
+              id="1"
+              onClick={(e) => weatherCheckHandle(e)}
+            >
+              구름
+            </Cloud>
+            <Rain
+              isRain={isWeather.rain}
+              id="2"
+              onClick={(e) => weatherCheckHandle(e)}
+            >
+              비
+            </Rain>
+            <Snow
+              isSnow={isWeather.snow}
+              id="3"
+              onClick={(e) => weatherCheckHandle(e)}
+            >
+              눈
+            </Snow>
+          </WeatherChoiceBox>
+        </WeatherContainer>
+        <PasswordContainer>
+          <span>비밀번호</span>
+          <PasswordInput
+            type="password"
+            id="password"
             onChange={(e) => inputValueHandle(e)}
             onKeyUp={(e) => inputValidHandle(e)}
           />
-
-          <CheckEmail
-            onClick={(e) => handleConfirmEmail(e)}
-            disabled={!isCheckInput.isEmail}
-            isButtonValid={isCheckInput.isEmail}
+          <PasswordMessage isPassword={isCheckInput.isPassword}>
+            {isCheckInput.isPassword === null
+              ? null
+              : isCheckInput.isPassword
+              ? "사용 가능한 비밀번호입니다"
+              : "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요"}
+          </PasswordMessage>
+        </PasswordContainer>
+        <PasswordConfirmContainer>
+          <span>비밀번호 확인</span>
+          <PasswordConfirmInput
+            type="password"
+            id="passwordConfirm"
+            onChange={(e) => inputValueHandle(e)}
+            onKeyUp={(e) => inputValidHandle(e)}
+          />
+          <PasswordConfirmMessage
+            isPasswordConfirm={isCheckInput.isPasswordConfirm}
           >
-            중복 확인
-          </CheckEmail>
-        </EmailInputBox>
-        <EmailConfirmMessage
-          isSuccess={isCheckEmail.isSuccess}
-          isFail={isCheckEmail.isFail}
-          isEmail={isCheckInput.isEmail}
+            {isCheckInput.isPasswordConfirm === null
+              ? null
+              : isCheckInput.isPasswordConfirm
+              ? "비밀번호가 일치합니다"
+              : "비밀번호를 다시 확인해 주세요"}
+          </PasswordConfirmMessage>
+        </PasswordConfirmContainer>
+        <SubmitSignup
+          onClick={(e) => editInfohandler(e)}
+          disabled={!isSubmitValid}
+          isButtonValid={isSubmitValid}
         >
-          {isCheckEmail.isSuccess
-            ? "사용 가능한 이메일입니다."
-            : isCheckEmail.isFail
-            ? "이미 가입 된 이메일입니다."
-            : isCheckInput.isEmail === null
-            ? null
-            : isCheckInput.isEmail
-            ? null
-            : "올바른 이메일을 입력해주세요."}
-        </EmailConfirmMessage>
-      </EmailContainer>
-      <WeatherContainer>
-        <span>좋아하는 날씨</span>
-        <WeatherChoiceBox>
-          <Sunny
-            isSunny={isWeather.sunny}
-            id="0"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
-            맑음
-          </Sunny>
-          <Cloud
-            isCloud={isWeather.cloud}
-            id="1"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
-            구름
-          </Cloud>
-          <Rain
-            isRain={isWeather.rain}
-            id="2"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
-            비
-          </Rain>
-          <Snow
-            isSnow={isWeather.snow}
-            id="3"
-            onClick={(e) => weatherCheckHandle(e)}
-          >
-            눈
-          </Snow>
-        </WeatherChoiceBox>
-      </WeatherContainer>
-      <PasswordContainer>
-        <span>비밀번호</span>
-        <PasswordInput
-          type="password"
-          id="password"
-          onChange={(e) => inputValueHandle(e)}
-          onKeyUp={(e) => inputValidHandle(e)}
-        />
-        <PasswordMessage isPassword={isCheckInput.isPassword}>
-          {isCheckInput.isPassword === null
-            ? null
-            : isCheckInput.isPassword
-            ? "사용 가능한 비밀번호입니다"
-            : "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요"}
-        </PasswordMessage>
-      </PasswordContainer>
-      <PasswordConfirmContainer>
-        <span>비밀번호 확인</span>
-        <PasswordConfirmInput
-          type="password"
-          id="passwordConfirm"
-          onChange={(e) => inputValueHandle(e)}
-          onKeyUp={(e) => inputValidHandle(e)}
-        />
-        <PasswordConfirmMessage
-          isPasswordConfirm={isCheckInput.isPasswordConfirm}
-        >
-          {isCheckInput.isPasswordConfirm === null
-            ? null
-            : isCheckInput.isPasswordConfirm
-            ? "비밀번호가 일치합니다"
-            : "비밀번호를 다시 확인해 주세요"}
-        </PasswordConfirmMessage>
-      </PasswordConfirmContainer>
-      <SubmitSignup
-        onClick={(e) => editInfohandler(e)}
-        disabled={!isSubmitValid}
-        isButtonValid={isSubmitValid}
-      >
-        가입
-      </SubmitSignup>
-      <Link to="/login">
-        가입하신 이메일이 있으신가요? <UnderLine>로그인 하러가기</UnderLine>
-      </Link>
-    </SignupContainer>
+          가입
+        </SubmitSignup>
+        <Link to="/login">
+          가입하신 이메일이 있으신가요? <UnderLine>로그인 하러가기</UnderLine>
+        </Link>
+      </SignupContainer>
+    </SignupPageContainer>
   );
 }
 

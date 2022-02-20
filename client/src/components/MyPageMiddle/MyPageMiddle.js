@@ -80,7 +80,7 @@ function MyPageMiddle({
           placeholder="지역을 검색해 보세요"
           onChange={(e) => handleInputChange(e)}
         />
-        <AreaSearchIcon src="../../images/search.svg" />
+        <AreaSearchIcon src="../../images/search.svg" alt="areaSearchIcon" />
       </AreaSearchBar>
     </MiddleBar>
   );

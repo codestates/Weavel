@@ -1,46 +1,58 @@
-const { user } = require("../../models");
+const checkEmail = require("./checkEmail");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
-module.exports = async (req, res) => {
+function checkUserPassword(user, password) {
+  const dbPassword = user.password;
+  const salt = user.salt;
+  const hashedPassword = crypto
+    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
+    .toString("base64");
+
+  return hashedPassword === dbPassword ? true : false;
+}
+
+function createAccessToken(user) {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+  const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
+    expiresIn: "1d",
+  });
+
+  return accessToken;
+}
+
+async function login(req, res) {
   try {
     const { email, password } = req.body;
-    const findUser = await user.findOne({
-      where: { email: email },
-    });
+    const user = await checkEmail.resultUserByEmail(email);
 
-    // 이메일이 없을 때
-    if (!findUser) {
+    if (!user) {
       return res.status(404).json({ message: "회원을 찾을수 없습니다." });
     }
 
-    const dbPassword = findUser.password;
-    const salt = findUser.salt;
-
-    const hashedPassword = crypto
-      .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-      .toString("base64");
-
-    if (hashedPassword !== dbPassword) {
+    const resultCheckPassword = checkUserPassword(user, password);
+    if (!resultCheckPassword) {
       return res.status(403).json({ message: "비밀번호가 틀렸습니다." });
-    } else {
-      const payload = {
-        id: findUser.id,
-        email: findUser.email,
-        createdAt: findUser.createdAt,
-        updatedAt: findUser.updatedAt,
-      };
-
-      const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
-        expiresIn: "1d",
-      });
-
-      return res.status(200).json({
-        data: { accessToken, id: findUser.id },
-        message: "로그인에 성공하였습니다.",
-      });
     }
+
+    const accessToken = createAccessToken(user);
+
+    return res.status(200).json({
+      data: { accessToken: accessToken, id: user.id },
+      message: "로그인에 성공하였습니다.",
+    });
   } catch (err) {
-    console.log(err);
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  checkUserPassword,
+  login,
 };

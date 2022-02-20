@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const MapContainer = styled.div`
-  width: 1044px;
-  height: 600px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

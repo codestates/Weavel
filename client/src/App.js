@@ -5,16 +5,14 @@ import {
   Route,
   Switch,
   useHistory,
-  Redirect,
   Link,
 } from "react-router-dom";
 
 import axios from "axios";
 import LogOutModal from "./components/Modal/LogoutModal";
-import DeleteUserModalModal from "./components/Modal/DeleteUserModal";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MainPage from "./pages/MainPage/MainPage";
-import MyPage from "./pages/MyPage/MyPage";
+import MyPage from "./pages/MyPageNew/MyPageNew";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import { ModalContainer } from "./pages/MyPage/MyPage.style";
 import {
@@ -36,19 +34,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth, setLogOut } from "./reducers/authReducer";
 
 function App() {
-  // const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.authReducer.isLogin);
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   useEffect(() => {
     setToken(accessToken);
     getUserInfo(accessToken);
-    getPhotos(accessToken);
+    // getPhotos(accessToken);
     getAllPhotosInfo(accessToken);
     getAllUserWeather(accessToken);
   }, [accessToken]);
 
   const [token, setToken] = useState("");
-  const [isValid, setIsValid] = useState(null);
   const history = useHistory();
   const [loginUserInfo, setLoginUserInfo] = useState({
     id: "guest",
@@ -56,11 +53,14 @@ function App() {
     name: "코드몬",
     weather: [],
   });
-  console.log(`loginUserInfo`, loginUserInfo);
 
-  const [allUserWeather, setAllUserWeather] = useState([]);
-  const [allPhotoInfo, setAllPhotoInfo] = useState([]);
-  const [photo, setPhoto] = useState([]);
+  const [allUserWeather, setAllUserWeather] = useState({
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+  });
+
   const [isModal, setIsModal] = useState({
     logOut: false,
   });
@@ -70,7 +70,7 @@ function App() {
     rain: false,
     snow: false,
   });
-
+  const [allPhotoInfo, setAllPhotoInfo] = useState([]);
   const weatherHandle = (weather) => {
     setIsWeather(weather);
   };
@@ -99,7 +99,7 @@ function App() {
     axios(
       {
         method: "post",
-        url: "http://localhost:4000/user/logout",
+        url: `${process.env.REACT_APP_API_URL}/user/logout`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -108,87 +108,49 @@ function App() {
       { withCredentials: true }
     )
       .then((res) => {
-        // setIsLogin(false);
-        // replace by redux
         dispatch(setLogOut());
         openCloseModalHandler(e);
-        // test();
         history.push("/home");
       })
       .catch((error) => console.log("Error", error.message));
   };
 
-  // const test = () => {
-  //   history.push("/home");
-  // };
-
   const putUserInfo = (weather, password, email) => {
-    axios
-      .put(
-        "http://localhost:4000/user",
-        {
-          email: email,
-          password: password,
-          weather: weather,
+    axios.put(
+      `${process.env.REACT_APP_API_URL}/user`,
+      {
+        email: email,
+        password: password,
+        weather: weather,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => console.log(res));
+      }
+    );
   };
-
-  const dispatch = useDispatch();
 
   const handleLoginButton = (e, email, password) => {
     e.preventDefault();
 
-    // axios
-    //   .post(
-    //     "http://localhost:4000/user/login",
-    //     {
-    //       email: inputId,
-    //       password: inputPw,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((res) => {
-    //     setIsLogin(true);
-    // setToken(res.data.data.accessToken);
-    // getUserInfo(res.data.data.accessToken);
-    // getPhotos(res.data.data.accessToken);
-    // getAllPhotosInfo(res.data.data.accessToken);
-    // getAllUserWeather(res.data.data.accessToken);
-    //   })
-    //   .catch((err) => {
-    //     console.error(`signin error: ${err.message}`);
-    //     setIsValid(true);
-    //   });
-
     dispatch(setAuth({ email: email, password: password }));
-    // setToken(accessToken);
-    // getUserInfo(accessToken);
-    // getPhotos(accessToken);
-    // getAllPhotosInfo(accessToken);
-    // getAllUserWeather(accessToken);
   };
 
   const getUserInfo = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       withCredentials: true,
     }).then((res) => {
-      const { id, email, name, weather } = res.data.data;
+      const { id, email, name, weatherDB } = res.data.data;
 
-      weather.map((weather) => {
+      weatherDB.map((weather) => {
         if (weather === 0) {
           isWeather.sunny = true;
         } else if (weather === 1) {
@@ -199,26 +161,20 @@ function App() {
           isWeather.snow = true;
         }
       });
-      setLoginUserInfo({ id, email, name, weather });
+      setLoginUserInfo({ id, email, name, weatherDB });
     });
   };
-
-  // const DeleteUserHandler = (token) => {
-  //   DeleteUser(token);
-  // };
 
   // 회원 탈퇴
   const DeleteUser = () => {
     axios({
       method: "delete",
-      url: "http://localhost:4000/user",
+      url: `${process.env.REACT_APP_API_URL}/user`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       withCredentials: true,
-    }).then((res) => {
-      console.log(res);
     });
   };
 
@@ -226,7 +182,7 @@ function App() {
   const getAllPhotosInfo = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/photo/info",
+      url: `${process.env.REACT_APP_API_URL}/photo/info`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -234,32 +190,14 @@ function App() {
       withCredentials: true,
     }).then((res) => {
       setAllPhotoInfo(res.data);
-      console.log(allPhotoInfo);
-      console.log("사진정보받기~~~~~", res.data);
-    });
-  };
-
-  //사진 받기
-  const getPhotos = (token) => {
-    axios({
-      method: "get",
-      url: "http://localhost:4000/photo?id=1",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "image/jpg",
-      },
-      withCredentials: true,
-    }).then((res) => {
-      console.log("afdadfd", res.data);
-      setPhoto(res.data);
     });
   };
 
   // 모든 회원 날씨 정보
-  const getAllUserWeather = () => {
+  const getAllUserWeather = (token) => {
     axios({
       method: "get",
-      url: "http://localhost:4000/user/weather",
+      url: `${process.env.REACT_APP_API_URL}/user/weather`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -277,52 +215,56 @@ function App() {
     snow: false,
   });
 
-  const filterPhotoHandler = (num) => {
-    let filterPhotoInfo = [];
+  // const filterPhotoHandler = (num) => {
+  //   let filterPhotoInfo = [];
 
-    allPhotoInfo.map((el) => {
-      const newEl = { ...el };
-      filterPhotoInfo.push(newEl);
-    });
-    const newFilterPhotoInfo = filterPhotoInfo.filter((el) => {
-      return el.weather === num;
-    });
-    setAllPhotoInfo(newFilterPhotoInfo);
-  };
+  //   allPhotoInfo.map((el) => {
+  //     const newEl = { ...el };
+  //     filterPhotoInfo.push(newEl);
+  //   });
+  //   const newFilterPhotoInfo = filterPhotoInfo.filter((el) => {
+  //     return el.weather === num;
+  //   });
+  //   setAllPhotoInfo(newFilterPhotoInfo);
+  // };
   const [allPhotoSearch, setAllPhotoSearch] = useState(null);
   const [searchInputValue, setSearchInputValue] = useState(null);
 
-  const handleInputChange = (e) => {
-    if (e.target.value) {
-      setSearchInputValue(e.target.value);
-    }
+  // const handleInputChange = (e) => {
+  //   if (e.target.value) {
+  //     setSearchInputValue(e.target.value);
+  //   }
 
-    let filterPhotoInfo = [];
+  //   let filterPhotoInfo = [];
 
-    allPhotoInfo.map((el) => {
-      const newEl = { ...el };
-      filterPhotoInfo.push(newEl);
-    });
-    const newSearchPhotoInfo = filterPhotoInfo.filter((el) => {
-      if (el.area.indexOf(searchInputValue > -1)) {
-        return true;
-      }
-    });
-    setAllPhotoInfo(newSearchPhotoInfo);
-  };
+  //   allPhotoInfo.map((el) => {
+  //     const newEl = { ...el };
+  //     filterPhotoInfo.push(newEl);
+  //   });
+  //   const newSearchPhotoInfo = filterPhotoInfo.filter((el) => {
+  //     if (el.area.indexOf(searchInputValue > -1)) {
+  //       return true;
+  //     }
+  //   });
+  //   setAllPhotoInfo(newSearchPhotoInfo);
+  // };
 
   return (
     <BrowserRouter>
       <Container>
         <Header>
           <HeaderBox logo={"logo"}>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <Logo src="./images/logo.svg"></Logo>
-            </Link>
+            <Logo
+              src="./images/logo.svg"
+              alt="logo"
+              onClick={() => {
+                window.location.replace("/");
+              }}
+            ></Logo>
           </HeaderBox>
           <MenuContainer>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Menu>홈</Menu>
+              <Menu margin="0 20.5px 0 20.5px">홈</Menu>
             </Link>
             <Link to="/mypage" style={{ textDecoration: "none" }}>
               <Menu>마이페이지</Menu>
@@ -361,9 +303,6 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginPage
-                setIsValid={setIsValid}
-                isValid={isValid}
-                // isLogin={isLogin}
                 loginUserInfo={loginUserInfo}
                 handleLoginButton={handleLoginButton}
               />
@@ -374,11 +313,10 @@ function App() {
             <Route path="/mypage">
               <MyPage
                 DeleteUser={DeleteUser}
-                getAllPhotosInfo={getAllPhotosInfo}
-                handleInputChange={handleInputChange}
+                // handleInputChange={handleInputChange}
                 SearchWeatherPhoto={SearchWeatherPhoto}
                 setSearchWeatherPhoto={setSearchWeatherPhoto}
-                filterPhotoHandler={filterPhotoHandler}
+                // filterPhotoHandler={filterPhotoHandler}
                 allUserWeather={allUserWeather}
                 allPhotoInfo={allPhotoInfo}
                 isLogin={isLogin}
@@ -399,7 +337,7 @@ function App() {
         <FooterContents>
           <a href="https://github.com/codestates/Weavel/wiki" target="_blank">
             <FooterProjectLink>
-              <img src="./images/githubLogo.svg" />
+              <img src="./images/githubLogo.svg" alt="githubLogo" />
               <span>Codemon</span>
             </FooterProjectLink>
           </a>

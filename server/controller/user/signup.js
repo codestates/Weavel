@@ -1,40 +1,55 @@
-const { user } = require("../../models");
-const { user_weather } = require("../../models");
 const crypto = require("crypto");
+const userDB = require("../../data/user");
+const userWeatherDB = require("../../data/user_weather");
+const checkEmail = require("./checkEmail");
 
-module.exports = async (req, res) => {
+function createCrypto(password) {
+  const salt = crypto.randomBytes(64).toString("hex");
+  const encryptedPassword = crypto
+    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
+    .toString("base64");
+
+  return [salt, encryptedPassword];
+}
+
+function createMapUserWeather(createUserId, weather) {
+  const afewCreateWeather = weather.map(async (weatherCode) =>
+    userWeatherDB.createUserWeather(createUserId, weatherCode + 1),
+  );
+  Promise.all(afewCreateWeather);
+}
+
+async function signup(req, res) {
   try {
     const { name, email, password, weather } = req.body;
-    const findUser = await user.findOne({ where: { email: email } });
-    const salt = crypto.randomBytes(64).toString("hex");
-    const encryptedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, "sha512").toString("base64");
 
-    if (findUser) {
+    if (await checkEmail.resultUserByEmail(email)) {
       return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
-    } else {
-      // user 생성
-      const newUser = await user.create({
-        name,
-        email,
-        salt,
-        password: encryptedPassword,
-      });
-
-      // email로 생성한 유저 조회
-      const userId = newUser.id;
-
-      const createRelation = async (userId, weatherId) => {
-        return await user_weather.create({ userId, weatherId });
-      };
-
-      const proWeather = weather.map((weatherCode) => createRelation(userId, weatherCode + 1));
-      Promise.all(proWeather);
-
-      const result = { userId, name, email, weather };
-
-      return res.status(201).json({ date: result, message: "회원가입이 완료되었습니다" });
     }
+
+    const [salt, encryptedPassword] = createCrypto(password);
+    const createUserData = await userDB.createUser(
+      name,
+      email,
+      salt,
+      encryptedPassword,
+    );
+    const createUserId = createUserData.id;
+    const result = { createUserId, name, email, weather };
+
+    createMapUserWeather(createUserId, weather);
+
+    return res
+      .status(201)
+      .json({ date: result, message: "회원가입이 완료되었습니다" });
   } catch (err) {
-    console.log(err);
+    console.log("err", err);
+    return res.status(500).json({ message: "서버 에러입니다." });
   }
+}
+
+module.exports = {
+  createCrypto,
+  createMapUserWeather,
+  signup,
 };
