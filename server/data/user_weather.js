@@ -10,6 +10,13 @@ async function createUserWeather(userId, weatherId) {
   return user_weather.create({ userId, weatherId });
 }
 
+function createMapUserWeather(createUserId, weather) {
+  const afewCreateWeather = weather.map(async (weatherCode) =>
+    createUserWeather(createUserId, weatherCode + 1),
+  );
+  Promise.all(afewCreateWeather);
+}
+
 async function putUserWeather(userId, weatherId) {
   return user_weather.update(
     { weatherId: weatherId },
@@ -40,6 +47,7 @@ async function likeWeatherCount() {
 module.exports = {
   findUserWeather,
   createUserWeather,
+  createMapUserWeather,
   putUserWeather,
   deleteUserWeather,
   likeWeatherCount,
