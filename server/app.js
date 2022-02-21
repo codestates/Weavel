@@ -4,6 +4,10 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 
+const { userController } = require("./controller/user.js");
+const userDB = require("./data/user.js");
+const userWeatherDB = require("./data/user_weather.js");
+
 const corsOption = {
   Headers: { "content-type": "application/json" },
   origin: true,
@@ -28,7 +32,7 @@ const photorouter = require("./router/photo");
 const weatherrouter = require("./router/weather");
 const weatherAPIrouter = require("./router/weatherAPI");
 
-app.use("/user", userrouter);
+app.use("/user", userrouter(new userController(userDB, userWeatherDB)));
 app.use("/photo", photorouter);
 app.use("/weather", weatherrouter);
 app.use("/weatherAPI", weatherAPIrouter);
