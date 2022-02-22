@@ -1,6 +1,13 @@
 const { weather_data } = require("../models");
 const { Sequelize } = require("sequelize");
 const { or, and, gt, lt } = Sequelize.Op;
+const request = require("request");
+const cheerio = require("cheerio");
+
+function sleepTime(ms) {
+  const wakeUpTime = Date.now() + ms;
+  while (Date.now() < wakeUpTime) {}
+}
 
 async function createCityWeatherData(
   nxFindXML,
@@ -22,19 +29,73 @@ async function createCityWeatherData(
   });
 }
 
+function downloadWeatherDataAPI(URL, cityId) {
+  request(URL, async (err, res, body) => {
+    $ = cheerio.load(body);
+    $("item").each(function (idx) {
+      const nxFindXML = $(this).find("nx").text();
+      const nyFindXML = $(this).find("ny").text();
+      const dateFindXML = $(this).find("fcstDate").text();
+      const timeFindXML = $(this).find("fcstTime").text();
+      const categoryFindXML = $(this).find("category").text();
+      const valueFindXML = $(this).find("fcstValue").text();
+
+      if (
+        categoryFindXML === "POP" ||
+        categoryFindXML === "PTY" ||
+        categoryFindXML === "REH" ||
+        categoryFindXML === "SKY" ||
+        categoryFindXML === "TMP"
+      ) {
+        createCityWeatherData(
+          nxFindXML,
+          nyFindXML,
+          cityId,
+          dateFindXML,
+          timeFindXML,
+          categoryFindXML,
+          valueFindXML,
+        );
+      }
+    });
+  });
+  sleepTime(1000);
+}
+
+async function checkWeatherData(nx, ny, cityId, URL) {
+  let count = new Promise((resolve, reject) => {
+    resolve(countAreaWeatherData(cityId, nx, ny));
+  });
+
+  count
+    .then((value) => {
+      console.log("countdata=>>>>>", value);
+      countCheckWeatherData(value, nx, ny, cityId, URL);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function countCheckWeatherData(count, nx, ny, cityId, URL) {
+  if (count !== 365) {
+    if (count !== 0) deleteAreaWeatherData(nx, ny);
+    downloadWeatherDataAPI(URL, cityId);
+  }
+}
+function countAreaWeatherData(cityId, nx, ny) {
+  return weather_data.count({
+    distinct: true,
+    where: { city: cityId, nx: nx, ny: ny },
+  });
+}
+
 function deleteCityWeatherData(cityId) {
   weather_data.destroy({ where: { city: cityId } });
 }
 
 function deleteAreaWeatherData(nx, ny) {
   weather_data.destroy({ where: { nx: nx, ny: ny } });
-}
-
-function countAreaWeatherData(cityId, nx, ny) {
-  return weather_data.count({
-    distinct: true,
-    where: { city: cityId, nx: nx, ny: ny },
-  });
 }
 
 async function filterTmpPopReh(nxCoordinate, nyCoordinate) {
@@ -71,9 +132,12 @@ async function fillterSkyPty(
 
 module.exports = {
   createCityWeatherData,
+  downloadWeatherDataAPI,
+  checkWeatherData,
+  countCheckWeatherData,
+  countAreaWeatherData,
   deleteCityWeatherData,
   deleteAreaWeatherData,
-  countAreaWeatherData,
   filterTmpPopReh,
   fillterSkyPty,
 };

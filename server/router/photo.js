@@ -3,7 +3,6 @@ const router = express.Router();
 const { accessToken } = require("../middleware/accessToken");
 const { body, header, query } = require("express-validator");
 const { validateError } = require("../middleware/vaildator");
-const { photoController } = require("../controller");
 const { upload } = require("../middleware/multer");
 
 function photoRouter(photoController) {
