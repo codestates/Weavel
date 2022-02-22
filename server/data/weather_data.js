@@ -4,6 +4,7 @@ const { or, and, gt, lt } = Sequelize.Op;
 const request = require("request");
 const cheerio = require("cheerio");
 
+// weatherData
 function sleepTime(ms) {
   const wakeUpTime = Date.now() + ms;
   while (Date.now() < wakeUpTime) {}
@@ -62,6 +63,7 @@ function downloadWeatherDataAPI(URL, cityId) {
   sleepTime(1000);
 }
 
+// recoverData
 async function checkWeatherData(nx, ny, cityId, URL) {
   let count = new Promise((resolve, reject) => {
     resolve(countAreaWeatherData(cityId, nx, ny));
@@ -89,6 +91,7 @@ function countAreaWeatherData(cityId, nx, ny) {
     where: { city: cityId, nx: nx, ny: ny },
   });
 }
+// ~ recoverData
 
 function deleteCityWeatherData(cityId) {
   weather_data.destroy({ where: { city: cityId } });
@@ -131,11 +134,8 @@ async function fillterSkyPty(
 }
 
 module.exports = {
-  createCityWeatherData,
   downloadWeatherDataAPI,
   checkWeatherData,
-  countCheckWeatherData,
-  countAreaWeatherData,
   deleteCityWeatherData,
   deleteAreaWeatherData,
   filterTmpPopReh,
