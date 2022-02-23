@@ -202,4 +202,5 @@ function createAccessToken(user) {
 
 module.exports = {
   userController,
+  createCrypto,
 };

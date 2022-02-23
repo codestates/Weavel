@@ -2,7 +2,6 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const app = express();
 
 //router
 const userrouter = require("./router/user");
@@ -27,24 +26,44 @@ const corsOption = {
   method: ["post", "get", "put", "patch", "delete", "options"],
 };
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOption));
-app.use(
-  express.urlencoded({
-    extended: true,
-  }),
-);
+async function startServer(PORT) {
+  const app = express();
 
-app.use("/user", userrouter(new userController(userDB, userWeatherDB)));
-app.use("/photo", photorouter(new photoController(photoDB)));
-app.use("/weather", weatherrouter(new weatherController(weatherDB)));
-app.use("/weatherAPI", weatherAPIrouter(new weatherApiController(weatherDB)));
+  app.use(express.json());
+  app.use(cookieParser());
+  app.use(express.static("public"));
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cors(corsOption));
+  app.use(
+    express.urlencoded({
+      extended: true,
+    }),
+  );
 
-app.get("/", (req, res) => {
-  res.status(201).send("Hello World");
-});
+  app.use("/user", userrouter(new userController(userDB, userWeatherDB)));
+  app.use("/photo", photorouter(new photoController(photoDB)));
+  app.use("/weather", weatherrouter(new weatherController(weatherDB)));
+  app.use("/weatherAPI", weatherAPIrouter(new weatherApiController(weatherDB)));
 
-module.exports = app;
+  app.get("/", (req, res) => {
+    res.status(201).send("Hello World");
+  });
+
+  const server = app.listen(PORT);
+  console.log(`Server Listening on ${PORT}`);
+  return server;
+}
+
+async function stopServer(server) {
+  return new Promise((resolve, reject) => {
+    server.close(async () => {
+      try {
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+}
+
+module.exports = { startServer, stopServer };
