@@ -325,6 +325,7 @@ function App() {
                 token={token}
                 isWeather={isWeather}
                 putUserInfo={putUserInfo}
+                setAllPhotoInfo={setAllPhotoInfo}
               />
             </Route>
           </Switch>
