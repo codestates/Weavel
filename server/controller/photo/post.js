@@ -13,7 +13,7 @@ async function postPhoto(req, res) {
     const savePhoto = await photoDB.createPhoto(
       userId,
       photoPath,
-      photoFilename,
+      photoFilename
     );
     const photoId = savePhoto.id;
 
@@ -22,7 +22,7 @@ async function postPhoto(req, res) {
     }
 
     return res.status(200).json({
-      data: { id: photoId, filename: photoFilename },
+      data: { id: photoId, photoPath: photoPath, filename: photoFilename },
       message: "사진이 저장 완료 되었습니다.",
     });
   } catch (err) {
