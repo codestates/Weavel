@@ -28,6 +28,10 @@ import {
   FavWeatherLeft,
   FavWeatherRight,
   Modal,
+  PhotoInfoContainer,
+  PhotoButtonContainer,
+  PhotoButton,
+  NoPhotoContainer,
 } from "./MyPageNew.style";
 
 function MyPageNew({
@@ -37,6 +41,7 @@ function MyPageNew({
   weatherHandle,
   token,
   allUserWeather,
+  setAllPhotoInfo,
   allPhotoInfo,
   filterPhotoHandler,
   SearchWeatherPhoto,
@@ -52,24 +57,29 @@ function MyPageNew({
   const weatherTxt = ["맑음", "구름", "비", "눈"];
 
   const peopleWeather = {
-    1: "맑은 날",
-    2: "구름낀 날",
-    3: "비오는 날",
-    4: "눈오는 날",
+    0: "맑은 날",
+    1: "구름낀 날",
+    2: "비오는 날",
+    3: "눈오는 날",
   };
 
   const weatherIcon = {
-    1: "./images/sunny.svg",
-    2: "./images/cloudy.svg",
-    3: "./images/rainy.svg",
-    4: "./images/snowy.svg",
+    0: "./images/sunny.svg",
+    1: "./images/cloudy.svg",
+    2: "./images/rainy.svg",
+    3: "./images/snowy.svg",
   };
 
   return (
     <>
       {isUpload ? (
         <Modal onClick={uploadHandler}>
-          <PhotoUploadModalNew uploadHandler={uploadHandler} token={token} />
+          <PhotoUploadModalNew
+            uploadHandler={uploadHandler}
+            token={token}
+            setAllPhotoInfo={setAllPhotoInfo}
+            allPhotoInfo={allPhotoInfo}
+          />
         </Modal>
       ) : (
         ""
@@ -168,35 +178,53 @@ function MyPageNew({
           </SearchBar>
         </MyPageContainerMiddle>
         <MyPageContainerBottom>
-          {allPhotoInfo ? (
+          {allPhotoInfo[0] ? (
             allPhotoInfo.map((photo) => {
-              console.log(photo, "@@@");
               return (
-                <MyPhotoContainer>
-                  <img
-                    src={`http://localhost:80/${photo.image.slice(8)}`}
-                    key={photo.id}
-                    alt={photo.image}
-                  />
-                </MyPhotoContainer>
+                <>
+                  <MyPhotoContainer>
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}/${photo.image}`}
+                      key={photo.id}
+                      alt={photo.image}
+                    />
+                    <PhotoInfoContainer>
+                      <div id="photo_date">{photo.date}</div>
+                      <div id="photo_area">
+                        {`${photo.area}, 
+                        ${
+                          photo.weather === "0"
+                            ? "맑음"
+                            : "" || photo.weather === "1"
+                            ? "흐림"
+                            : "" || photo.weather === "2"
+                            ? "비"
+                            : "" || photo.weather === "3"
+                            ? "눈"
+                            : ""
+                        }`}
+                      </div>
+                      <div id="photo_comment">{photo.comment}</div>
+                      <PhotoButtonContainer>
+                        <PhotoButton id="photo_edit">수정</PhotoButton>
+                        <PhotoButton id="photo_delete">삭제</PhotoButton>
+                      </PhotoButtonContainer>
+                    </PhotoInfoContainer>
+                  </MyPhotoContainer>
+                </>
               );
             })
           ) : (
             <>
               <MyPhotoContainer>
-                <img src="./images/search.svg" />
-              </MyPhotoContainer>
-              <MyPhotoContainer>
-                <img src="./images/search.svg" />
-              </MyPhotoContainer>
-              <MyPhotoContainer>
-                <img src="./images/search.svg" />
-              </MyPhotoContainer>{" "}
-              <MyPhotoContainer>
-                <img src="./images/search.svg" />
-              </MyPhotoContainer>{" "}
-              <MyPhotoContainer>
-                <img src="./images/search.svg" />
+                <NoPhotoContainer>
+                  기록하고 싶은 날씨가 있으신가요?
+                  <br />
+                  사진을 찍어 올려보세요
+                  <TopButtonBlue onClick={uploadHandler}>
+                    사진 업로드
+                  </TopButtonBlue>
+                </NoPhotoContainer>
               </MyPhotoContainer>
             </>
           )}
