@@ -178,10 +178,10 @@ function checkUserPassword(user, password) {
 }
 
 function createCrypto(password) {
-  const salt = crypto.randomBytes(64).toString("hex");
-  const encryptedPassword = crypto
-    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-    .toString("base64");
+  const salt = (crypto.randomBytes(64) || "").toString("hex");
+  const encryptedPassword = (
+    crypto.pbkdf2Sync(password, salt, 9999, 64, "sha512") || ""
+  ).toString("base64");
 
   return [salt, encryptedPassword];
 }
@@ -202,5 +202,7 @@ function createAccessToken(user) {
 
 module.exports = {
   userController,
+  checkUserPassword,
   createCrypto,
+  createAccessToken,
 };
