@@ -29,7 +29,7 @@ class userController {
 
       return res
         .status(201)
-        .json({ date: result, message: "회원가입이 완료되었습니다" });
+        .json({ date: result, message: "회원가입이 완료되었습니다." });
     } catch (err) {
       console.log("err", err);
       return res.status(500).json({ message: "서버 에러입니다." });

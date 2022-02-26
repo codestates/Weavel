@@ -51,7 +51,7 @@ describe("user Controller", () => {
       );
     });
 
-    it("이미 존재하는 이메일이 있는 경우 409 리턴한다.", async () => {
+    it("회원가입을 완료하고 201을 리턴한다.", async () => {
       const request = httpMocks.createRequest({
         body: {
           name: name,
@@ -62,22 +62,48 @@ describe("user Controller", () => {
       });
       userDB.resultUserByEmail = jest.fn(() => undefined);
       user.createCrypto = jest.fn(() => [salt, encryptedPassword]);
-      // userDB.createUser = jest.fn((name, email, salt, encryptedPassword) => ({
-      //   name: name,
-      //   email: email,
-      //   salt: salt,
-      //   password: encryptedPassword,
-      // }));
-      // userWeatherDB.createMapUserWeather = jest.fn((userId, weather) => {
-      //   userId, weather;
-      // });
+      userDB.createUser = jest.fn((name, email, salt, encryptedPassword) => ({
+        name: name,
+        email: email,
+        salt: salt,
+        password: encryptedPassword,
+      }));
+      userWeatherDB.createMapUserWeather = jest.fn((userId, weather) => ({
+        userId: userId,
+        weather: weather,
+      }));
 
       await UserController.signup(request, response);
 
       expect(response.statusCode).toBe(201);
       expect(response._getJSONData().message).toBe(
-        "이미 존재하는 이메일입니다.",
+        "회원가입이 완료되었습니다.",
       );
+    });
+  });
+
+  describe("login", () => {
+    let email, password;
+    beforeEach(() => {
+      email = faker.internet.email();
+      password = faker.internet.password();
+      response = httpMocks.createResponse();
+    });
+
+    it("존재하지 않는 이메일로 로그인을 할 경우 404 리턴한다.", async () => {
+      const request = httpMocks.createRequest({
+        body: {
+          email: email,
+          password: password,
+        },
+      });
+
+      userDB.resultUserByEmail = jest.fn(() => undefined);
+
+      await UserController.login(request, response);
+
+      expect(response.statusCode).toBe(404);
+      expect(response._getJSONData().message).toBe("회원을 찾을수 없습니다.");
     });
   });
 });
