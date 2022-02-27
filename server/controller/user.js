@@ -86,9 +86,9 @@ class userController {
 
       const findUserInfo = await this.user.findUserInfo(userId);
       const { id, email, name, user_weathers } = findUserInfo[0].dataValues;
-      const weatherDB = user_weathers.map((el) => {
-        return el.dataValues.weatherId - 1;
-      });
+      const weatherDB = await this.userWeather.returnMapUserWeather(
+        user_weathers,
+      );
 
       const result = { id, email, name, weatherDB };
 
