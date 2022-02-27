@@ -1,20 +1,19 @@
 const faker = require("faker");
 const { userController } = require("../user.js");
-const user = require("../user.js");
 const httpMocks = require("node-mocks-http");
-const jwt = require("jsonwebtoken");
-
-jest.mock("jsonwebtoken");
-jest.mock("crypto");
 
 describe("user Controller", () => {
   let UserController;
   let userDB;
   let userWeatherDB;
+  let crypto;
+  let jwt;
   beforeEach(() => {
     userDB = {};
     userWeatherDB = {};
-    UserController = new userController(userDB, userWeatherDB);
+    crypto = {};
+    jwt = {};
+    UserController = new userController(userDB, userWeatherDB, crypto, jwt);
   });
 
   describe("signup", () => {
@@ -61,7 +60,7 @@ describe("user Controller", () => {
         },
       });
       userDB.resultUserByEmail = jest.fn(() => undefined);
-      user.createCrypto = jest.fn(() => [salt, encryptedPassword]);
+      crypto.createCrypto = jest.fn(() => [salt, encryptedPassword]);
       userDB.createUser = jest.fn((name, email, salt, encryptedPassword) => ({
         name: name,
         email: email,
@@ -83,10 +82,11 @@ describe("user Controller", () => {
   });
 
   describe("login", () => {
-    let email, password;
+    let email, password, userId;
     beforeEach(() => {
       email = faker.internet.email();
       password = faker.internet.password();
+      userId = faker.random.alphaNumeric(16);
       response = httpMocks.createResponse();
     });
 
@@ -98,12 +98,51 @@ describe("user Controller", () => {
         },
       });
 
-      userDB.resultUserByEmail = jest.fn(() => undefined);
+      userDB.resultUserByEmail = jest.fn(() => false);
 
       await UserController.login(request, response);
 
       expect(response.statusCode).toBe(404);
       expect(response._getJSONData().message).toBe("회원을 찾을수 없습니다.");
+    });
+
+    it("비밀번호가 틀렸을때 403을 리턴한다.", async () => {
+      const request = httpMocks.createRequest({
+        body: {
+          email: email,
+          password: password,
+        },
+      });
+
+      userDB.resultUserByEmail = jest.fn(() => true);
+      crypto.checkUserPassword = jest.fn(() => false);
+
+      await UserController.login(request, response);
+
+      expect(response.statusCode).toBe(403);
+      expect(response._getJSONData().message).toBe("비밀번호가 틀렸습니다.");
+    });
+
+    it("로그인에 완료", async () => {
+      const token = faker.random.alphaNumeric(128);
+      const request = httpMocks.createRequest({
+        body: {
+          email: email,
+          password: password,
+        },
+      });
+
+      userDB.resultUserByEmail = jest.fn(() => userId);
+      crypto.checkUserPassword = jest.fn(() => true);
+      jwt.createAccessToken = jest.fn(() => token);
+
+      await UserController.login(request, response);
+
+      expect(response.statusCode).toBe(200);
+      expect(response._getJSONData().message).toBe("로그인에 성공하였습니다.");
+      expect(response._getJSONData().data).toMatchObject({
+        accessToken: token,
+      });
     });
   });
 });
