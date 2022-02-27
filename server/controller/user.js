@@ -1,10 +1,9 @@
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-
 class userController {
-  constructor(userDB, userWeatherDB) {
+  constructor(userDB, userWeatherDB, crypto, jwt) {
     this.user = userDB;
     this.userWeather = userWeatherDB;
+    this.crypto = crypto;
+    this.jwt = jwt;
   }
 
   signup = async (req, res) => {
@@ -15,7 +14,7 @@ class userController {
         return res.status(409).json({ message: `이미 존재하는 이메일입니다.` });
       }
 
-      const [salt, encryptedPassword] = createCrypto(password);
+      const [salt, encryptedPassword] = this.crypto.createCrypto(password);
       const createUserData = await this.user.createUser(
         name,
         email,
@@ -29,7 +28,7 @@ class userController {
 
       return res
         .status(201)
-        .json({ date: result, message: "회원가입이 완료되었습니다" });
+        .json({ date: result, message: "회원가입이 완료되었습니다." });
     } catch (err) {
       console.log("err", err);
       return res.status(500).json({ message: "서버 에러입니다." });
@@ -45,12 +44,12 @@ class userController {
         return res.status(404).json({ message: "회원을 찾을수 없습니다." });
       }
 
-      const resultCheckPassword = checkUserPassword(user, password);
+      const resultCheckPassword = this.crypto.checkUserPassword(user, password);
       if (!resultCheckPassword) {
         return res.status(403).json({ message: "비밀번호가 틀렸습니다." });
       }
 
-      const accessToken = createAccessToken(user);
+      const accessToken = this.jwt.createAccessToken(user);
 
       return res.status(200).json({
         data: { accessToken: accessToken, id: user.id },
@@ -106,7 +105,7 @@ class userController {
       const { email, password, weather } = req.body;
 
       if (password) {
-        const [salt, encryptedPassword] = createCrypto(password);
+        const [salt, encryptedPassword] = this.crypto.createCrypto(password);
         this.user.putUser(email, userId, salt, encryptedPassword);
       }
 
@@ -165,39 +164,6 @@ class userController {
       return res.status(500).json({ message: "서버 에러입니다." });
     }
   };
-}
-
-function checkUserPassword(user, password) {
-  const dbPassword = user.password;
-  const salt = user.salt;
-  const hashedPassword = crypto
-    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-    .toString("base64");
-
-  return hashedPassword === dbPassword ? true : false;
-}
-
-function createCrypto(password) {
-  const salt = crypto.randomBytes(64).toString("hex");
-  const encryptedPassword = crypto
-    .pbkdf2Sync(password, salt, 9999, 64, "sha512")
-    .toString("base64");
-
-  return [salt, encryptedPassword];
-}
-
-function createAccessToken(user) {
-  const payload = {
-    id: user.id,
-    email: user.email,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-  };
-  const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
-    expiresIn: "1d",
-  });
-
-  return accessToken;
 }
 
 module.exports = {
