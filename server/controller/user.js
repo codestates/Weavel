@@ -50,9 +50,10 @@ class userController {
       }
 
       const accessToken = this.jwt.createAccessToken(user);
+      const userId = user.id;
 
       return res.status(200).json({
-        data: { accessToken: accessToken, id: user.id },
+        data: { accessToken: accessToken, id: userId },
         message: "로그인에 성공하였습니다.",
       });
     } catch (err) {
@@ -86,9 +87,9 @@ class userController {
 
       const findUserInfo = await this.user.findUserInfo(userId);
       const { id, email, name, user_weathers } = findUserInfo[0].dataValues;
-      const weatherDB = user_weathers.map((el) => {
-        return el.dataValues.weatherId - 1;
-      });
+      const weatherDB = await this.userWeather.returnMapUserWeather(
+        user_weathers,
+      );
 
       const result = { id, email, name, weatherDB };
 
@@ -110,6 +111,11 @@ class userController {
       }
 
       if (email) {
+        if (await this.user.resultUserByEmail(email)) {
+          return res
+            .status(409)
+            .json({ message: `이미 존재하는 이메일입니다.` });
+        }
         this.user.putUser(email, userId);
       }
 
@@ -144,7 +150,7 @@ class userController {
       const useEmail = await this.user.resultUserByEmail(email);
 
       if (useEmail) {
-        return res.status(200).json({ message: `이메일이 중복됩니다.` });
+        return res.status(409).json({ message: `이메일이 중복됩니다.` });
       }
 
       return res.status(200).json({ message: `이메일이 중복되지 않습니다.` });
