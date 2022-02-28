@@ -50,9 +50,10 @@ class userController {
       }
 
       const accessToken = this.jwt.createAccessToken(user);
+      const userId = user.id;
 
       return res.status(200).json({
-        data: { accessToken: accessToken, id: user.id },
+        data: { accessToken: accessToken, id: userId },
         message: "로그인에 성공하였습니다.",
       });
     } catch (err) {
@@ -110,6 +111,11 @@ class userController {
       }
 
       if (email) {
+        if (await this.user.resultUserByEmail(email)) {
+          return res
+            .status(409)
+            .json({ message: `이미 존재하는 이메일입니다.` });
+        }
         this.user.putUser(email, userId);
       }
 
@@ -144,7 +150,7 @@ class userController {
       const useEmail = await this.user.resultUserByEmail(email);
 
       if (useEmail) {
-        return res.status(200).json({ message: `이메일이 중복됩니다.` });
+        return res.status(409).json({ message: `이메일이 중복됩니다.` });
       }
 
       return res.status(200).json({ message: `이메일이 중복되지 않습니다.` });

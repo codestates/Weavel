@@ -72,7 +72,7 @@ function userRouter(userController) {
   router.get("/", accessToken, userController.get);
 
   // 날씨정보요청 GET /user/weather
-  router.get("/weather", accessToken, userController.weatherCount);
+  router.get("/weather", userController.weatherCount);
 
   return router;
 }
