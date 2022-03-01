@@ -20,7 +20,7 @@ const { weatherController } = require("./controller/weather.js");
 const weatherAPIrouter = require("./router/weatherAPI");
 const { weatherApiController } = require("./controller/weatherAPI.js");
 const weatherDB = require("./data/weather_data.js");
-const { request } = require("express");
+const { sequelize } = require("./models");
 
 const corsOption = {
   Headers: { "content-type": "application/json" },
