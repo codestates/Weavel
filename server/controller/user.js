@@ -166,7 +166,6 @@ class userController {
 
       return res.status(200).json({ data: weatherCountData });
     } catch (err) {
-      console.log("err", err);
       return res.status(500).json({ message: "서버 에러입니다." });
     }
   };
