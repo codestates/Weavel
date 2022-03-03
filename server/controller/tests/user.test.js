@@ -106,7 +106,7 @@ describe("user Controller", () => {
       expect(response._getJSONData().message).toBe("회원을 찾을수 없습니다.");
     });
 
-    it("비밀번호가 틀렸을때 403을 리턴한다.", async () => {
+    it("비밀번호가 틀렸을때 401을 리턴한다.", async () => {
       const request = httpMocks.createRequest({
         body: {
           email: email,
@@ -119,7 +119,7 @@ describe("user Controller", () => {
 
       await UserController.login(request, response);
 
-      expect(response.statusCode).toBe(403);
+      expect(response.statusCode).toBe(401);
       expect(response._getJSONData().message).toBe("비밀번호가 틀렸습니다.");
     });
 

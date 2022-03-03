@@ -101,6 +101,43 @@ describe("user APIs", () => {
       expect(res.status).toBe(200);
     });
 
+    it("returns 201 ", async () => {
+      const user = await createNewUserAccount(request);
+
+      const res = await request.post("/user/login", {
+        email: user.email,
+        password: user.password,
+      });
+
+      expect(res.status).toBe(200);
+    });
+
+    it("returns 404 해당하는 유저가 없는 email을 입력했을 때", async () => {
+      const user = await createNewUserAccount(request);
+      const wrongEamil = "321" + user.email;
+
+      const res = await request.post("/user/login", {
+        email: wrongEamil,
+        password: user.password,
+      });
+
+      expect(res.status).toBe(404);
+      expect(res.data.message).toMatch("회원을 찾을수 없습니다.");
+    });
+
+    it("returns 401 올바른 비밀번호를 입력하지 않았을 때", async () => {
+      const user = await createNewUserAccount(request);
+      const wrongPassword = user.password.toUpperCase();
+
+      const res = await request.post("/user/login", {
+        email: user.email,
+        password: wrongPassword,
+      });
+
+      expect(res.status).toBe(401);
+      expect(res.data.message).toMatch("비밀번호가 틀렸습니다.");
+    });
+
     test.each([
       {
         missingFieldName: "email",
@@ -111,7 +148,7 @@ describe("user APIs", () => {
         expectedMessage: "비밀번호를 입력해주세요",
       },
     ])(
-      `returns 400 when $missingFieldName filed is missing`,
+      `returns 400 $missingFieldName 내용이 없을 때`,
       async ({ missingFieldName, expectedMessage }) => {
         const fakeUser = faker.helpers.userCard();
         const user = {
@@ -126,5 +163,29 @@ describe("user APIs", () => {
         expect(res.data.message).toBe(expectedMessage);
       },
     );
+
+    it("returns 400 email을 입력하지 않았을 때", async () => {
+      const user = {
+        ...makeValidUserDetails(),
+        email: "123",
+      };
+
+      const res = await request.post("/user/signup", user);
+
+      expect(res.status).toBe(400);
+      expect(res.data.message).toBe("이메일을 입력해주세요");
+    });
+
+    it("returns 400 패스워드가 8~16자리가 아닐 때", async () => {
+      const user = {
+        ...makeValidUserDetails(),
+        password: "123",
+      };
+
+      const res = await request.post("/user/signup", user);
+
+      expect(res.status).toBe(400);
+      expect(res.data.message).toBe("8~16자리 비밀번호를 입력해주세요");
+    });
   });
 });
