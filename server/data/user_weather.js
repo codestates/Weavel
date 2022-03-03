@@ -10,14 +10,14 @@ async function createUserWeather(userId, weatherId) {
   return user_weather.create({ userId, weatherId });
 }
 
-function createMapUserWeather(createUserId, weather) {
+async function createMapUserWeather(createUserId, weather) {
   const afewCreateWeather = weather.map(async (weatherCode) =>
     createUserWeather(createUserId, weatherCode + 1),
   );
   Promise.all(afewCreateWeather);
 }
 
-function returnMapUserWeather(user_weathers) {
+async function returnMapUserWeather(user_weathers) {
   const afewCreateWeather = user_weathers.map((el) => {
     return el.dataValues.weatherId - 1;
   });

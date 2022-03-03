@@ -2,7 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-
+const { sequelize } = require("./models/index.js");
 //router
 const userrouter = require("./router/user");
 const { userController } = require("./controller/user.js");
@@ -20,7 +20,6 @@ const { weatherController } = require("./controller/weather.js");
 const weatherAPIrouter = require("./router/weatherAPI");
 const { weatherApiController } = require("./controller/weatherAPI.js");
 const weatherDB = require("./data/weather_data.js");
-const { request } = require("express");
 
 const corsOption = {
   Headers: { "content-type": "application/json" },

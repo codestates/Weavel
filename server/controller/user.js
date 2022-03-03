@@ -46,7 +46,7 @@ class userController {
 
       const resultCheckPassword = this.crypto.checkUserPassword(user, password);
       if (!resultCheckPassword) {
-        return res.status(403).json({ message: "비밀번호가 틀렸습니다." });
+        return res.status(401).json({ message: "비밀번호가 틀렸습니다." });
       }
 
       const accessToken = this.jwt.createAccessToken(user);
@@ -166,7 +166,6 @@ class userController {
 
       return res.status(200).json({ data: weatherCountData });
     } catch (err) {
-      console.log("err", err);
       return res.status(500).json({ message: "서버 에러입니다." });
     }
   };
