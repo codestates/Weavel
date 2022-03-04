@@ -1,8 +1,11 @@
 const { startServer, stopServer } = require("../../app.js");
 const axios = require("axios");
 const faker = require("faker");
-const { createNewUserAccount, makeValidUserDetails } = require("./userObject");
-const { sequelize } = require("../../models/index.js");
+const {
+  createNewUserLogin,
+  createNewUser,
+  makeValidUserDetails,
+} = require("./userObject");
 
 describe("user APIs", () => {
   let server;
@@ -90,8 +93,8 @@ describe("user APIs", () => {
   });
 
   describe("POST to /user/login", () => {
-    it("returns 201 ", async () => {
-      const user = await createNewUserAccount(request);
+    it("returns 201 accessToken 로그인에 성공할 때", async () => {
+      const user = await createNewUser(request);
 
       const res = await request.post("/user/login", {
         email: user.email,
@@ -99,21 +102,11 @@ describe("user APIs", () => {
       });
 
       expect(res.status).toBe(200);
-    });
-
-    it("returns 201 ", async () => {
-      const user = await createNewUserAccount(request);
-
-      const res = await request.post("/user/login", {
-        email: user.email,
-        password: user.password,
-      });
-
-      expect(res.status).toBe(200);
+      expect(res.data.data.accessToken.length).toBeGreaterThan(0);
     });
 
     it("returns 404 해당하는 유저가 없는 email을 입력했을 때", async () => {
-      const user = await createNewUserAccount(request);
+      const user = await createNewUser(request);
       const wrongEamil = "321" + user.email;
 
       const res = await request.post("/user/login", {
@@ -126,7 +119,7 @@ describe("user APIs", () => {
     });
 
     it("returns 401 올바른 비밀번호를 입력하지 않았을 때", async () => {
-      const user = await createNewUserAccount(request);
+      const user = await createNewUser(request);
       const wrongPassword = user.password.toUpperCase();
 
       const res = await request.post("/user/login", {
@@ -186,6 +179,96 @@ describe("user APIs", () => {
 
       expect(res.status).toBe(400);
       expect(res.data.message).toBe("8~16자리 비밀번호를 입력해주세요");
+    });
+  });
+
+  describe("Get to /user", () => {
+    it("returns 201 유저데이터 불러오기", async () => {
+      const user = await createNewUserLogin(request);
+
+      const res = await request.get("/user", {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data.data).toMatchObject({
+        id: res.data.data.id,
+        email: user.email,
+        name: user.name,
+        weatherDB: user.weather,
+      });
+    });
+  });
+
+  describe("Patch to /user", () => {
+    it("returns 200 유저데이터 email, password, weather 수정하기", async () => {
+      const user = await createNewUserLogin(request);
+
+      const res = await request.patch(
+        "/user",
+        {
+          email: faker.internet.email(),
+          password: faker.internet.password(),
+          weather: [2, 3],
+        },
+        {
+          headers: { Authorization: `Bearer ${user.accessToken}` },
+        },
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.data.message).toBe("정보 수정이 완료되었습니다");
+    });
+  });
+
+  describe("delete to /user", () => {
+    it("returns 200 회원탈퇴", async () => {
+      const user = await createNewUserLogin(request);
+
+      const res = await request.delete("/user", {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data.message).toBe("회원탈퇴가 완료 되었습니다.");
+    });
+  });
+
+  describe("get to /user/email", () => {
+    it("returns 409 이메일 중복시", async () => {
+      const user = await createNewUser(request);
+
+      const res = await request.get("/user/email", {
+        params: { email: user.email },
+      });
+
+      expect(res.status).toBe(409);
+      expect(res.data.message).toBe("이메일이 중복됩니다.");
+    });
+
+    it("returns 200 이메일 중복아닐시", async () => {
+      const user = await createNewUser(request);
+
+      const res = await request.get("/user/email", {
+        params: { email: "123" + user.email },
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.data.message).toBe("이메일이 중복되지 않습니다.");
+    });
+  });
+
+  describe("get to /user/weather", () => {
+    it("returns 200 선호하는 날씨 데이터 출력", async () => {
+      const res = await request.get("/user/weather");
+
+      expect(res.status).toBe(200);
+      expect(res.data.data).toMatchObject({
+        0: expect.any(Number),
+        1: expect.any(Number),
+        2: expect.any(Number),
+        3: expect.any(Number),
+      });
     });
   });
 });

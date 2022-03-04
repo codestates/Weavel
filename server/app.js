@@ -67,7 +67,7 @@ async function startServer(PORT) {
   });
 
   const server = app.listen(PORT);
-  console.log(`Server Listening on ${PORT}`);
+  console.log(`Server Listening`);
 
   return server;
 }
