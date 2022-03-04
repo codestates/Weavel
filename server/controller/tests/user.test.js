@@ -287,6 +287,7 @@ describe("user Controller", () => {
       await UserController.deleteUser(request, response);
 
       expect(response.statusCode).toBe(200);
+      expect(userDB.deleteUser).toHaveBeenCalled();
       expect(response._getJSONData().message).toBe(
         "회원탈퇴가 완료 되었습니다.",
       );
