@@ -353,18 +353,5 @@ describe("user Controller", () => {
       expect(response.statusCode).toBe(200);
       expect(response._getJSONData().data).toMatchObject({ 0: weatherCount });
     });
-
-    it("tests error ", async () => {
-      const request = httpMocks.createRequest();
-
-      userWeatherDB.likeWeatherCount = jest.fn().mockImplementationOnce(() => {
-        throw new Error("💣");
-      });
-
-      await UserController.weatherCount(request, response);
-
-      expect(response.statusCode).toBe(500);
-      expect(response._getJSONData().message).toBe("서버 에러입니다.");
-    });
   });
 });
