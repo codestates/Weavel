@@ -1,12 +1,20 @@
 const faker = require("faker");
 
-async function createNewUserAccount(request) {
+async function createNewUserLogin(request) {
   const userDetails = makeValidUserDetails();
   const prepareUserResponse = await request.post("/user/signup", userDetails);
   return {
     ...userDetails,
-    // accessToken: prepareUserResponse.data.accessToken,
-    // id: prepareUserResponse.data.id,
+    accessToken: prepareUserResponse.data.accessToken,
+    id: prepareUserResponse.data.id,
+  };
+}
+
+async function createNewUserAccount(request) {
+  const userDetails = makeValidUserDetails();
+  await request.post("/user/signup", userDetails);
+  return {
+    ...userDetails,
   };
 }
 
@@ -21,6 +29,7 @@ function makeValidUserDetails() {
 }
 
 module.exports = {
+  createNewUserLogin,
   createNewUserAccount,
   makeValidUserDetails,
 };

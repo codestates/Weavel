@@ -8,79 +8,69 @@ class weatherController {
   }
 
   areaWeather = async (req, res) => {
-    try {
-      const nxCoordinate = req.query.nx;
-      const nyCoordinate = req.query.ny;
+    const nxCoordinate = req.query.nx;
+    const nyCoordinate = req.query.ny;
 
-      // POP 강수확률, REH 습도, TMP 1시간 기온
-      const findAllTimeWeatherData = await this.weather.filterTmpPopReh(
-        nxCoordinate,
-        nyCoordinate,
-      );
-      if (findAllTimeWeatherData.length === 0) {
-        return res.status(404).json({ message: "조회된 데이터가 없습니다." });
-      }
-
-      const resultWeather = findAllTimeWeatherData.filter((data) => {
-        const result = [];
-        result.push(data.date);
-        result.push(data.time);
-        result.push(data.category);
-        result.push(data.value);
-        return result;
-      });
-
-      return res.status(200).json(resultWeather);
-    } catch (err) {
-      console.log("err", err);
-      return res.status(501).json({ message: "서버 에러 입니다." });
+    // POP 강수확률, REH 습도, TMP 1시간 기온
+    const findAllTimeWeatherData = await this.weather.filterTmpPopReh(
+      nxCoordinate,
+      nyCoordinate,
+    );
+    if (findAllTimeWeatherData.length === 0) {
+      return res.status(404).json({ message: "조회된 데이터가 없습니다." });
     }
+
+    const resultWeather = findAllTimeWeatherData.filter((data) => {
+      const result = [];
+      result.push(data.date);
+      result.push(data.time);
+      result.push(data.category);
+      result.push(data.value);
+      return result;
+    });
+
+    return res.status(200).json(resultWeather);
   };
 
   cityWeather = async (req, res) => {
-    try {
-      const cityCode = req.query.city;
-      const dayCode = req.query.day;
-      const timeCode4 = req.query.time;
-      const weatherCode = req.query.weather;
-      let dateCode8 = await changeDayCode(dayCode);
-      let skyValueCode = skyValue(weatherCode);
-      let ptyValueCode = ptyValue(weatherCode);
+    const cityCode = req.query.city;
+    const dayCode = req.query.day;
+    const timeCode4 = req.query.time;
+    const weatherCode = req.query.weather;
+    let dateCode8 = await changeDayCode(dayCode);
+    let skyValueCode = skyValue(weatherCode);
+    let ptyValueCode = ptyValue(weatherCode);
 
-      const filterSkyPtyData = await this.weather.fillterSkyPty(
-        cityCode,
-        dateCode8,
-        timeCode4,
-        skyValueCode,
-        ptyValueCode,
-      );
+    const filterSkyPtyData = await this.weather.fillterSkyPty(
+      cityCode,
+      dateCode8,
+      timeCode4,
+      skyValueCode,
+      ptyValueCode,
+    );
 
-      const coordinateAllResult = filterSkyPtyData.map((coordinate) => {
-        let xy = [];
-        xy.push(coordinate.nx);
-        xy.push(coordinate.ny);
-        return xy;
-      });
+    const coordinateAllResult = filterSkyPtyData.map((coordinate) => {
+      let xy = [];
+      xy.push(coordinate.nx);
+      xy.push(coordinate.ny);
+      return xy;
+    });
 
-      if (coordinateAllResult.length === 0) {
+    if (coordinateAllResult.length === 0) {
+      return res.status(200).json({ message: "데이터가 없습니다." });
+    }
+
+    if (weatherCode === "0" || weatherCode === "1") {
+      //맑음 흐림은 좌표가 중복된 데이터만 유효
+      const result = filterOverlapCoordinate(coordinateAllResult);
+      if (result.length === 0) {
         return res.status(200).json({ message: "데이터가 없습니다." });
       }
 
-      if (weatherCode === "0" || weatherCode === "1") {
-        //맑음 흐림은 좌표가 중복된 데이터만 유효
-        const result = filterOverlapCoordinate(coordinateAllResult);
-        if (result.length === 0) {
-          return res.status(200).json({ message: "데이터가 없습니다." });
-        }
-
-        return res.status(200).send(result);
-      }
-
-      return res.status(200).send(coordinateAllResult);
-    } catch (err) {
-      console.log("err", err);
-      return res.status(501).json({ message: "서버 에러 입니다." });
+      return res.status(200).send(result);
     }
+
+    return res.status(200).send(coordinateAllResult);
   };
 }
 

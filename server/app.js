@@ -1,8 +1,11 @@
 require("dotenv").config();
+require("express-async-errors");
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const { sequelize } = require("./models/index.js");
+
 //router
 const userrouter = require("./router/user");
 const { userController } = require("./controller/user.js");
@@ -51,11 +54,21 @@ async function startServer(PORT) {
   app.use("/weatherAPI", weatherAPIrouter(new weatherApiController(weatherDB)));
 
   app.get("/", (req, res) => {
-    res.status(201).send("Hello World");
+    res.status(201).send("Hello Weavel World");
+  });
+
+  app.use((req, res, next) => {
+    return res.status(404).json({ message: "Not Found" });
+  });
+
+  app.use((error, req, res, next) => {
+    console.error(error);
+    return res.status(500).json({ message: "서버 에러 입니다." });
   });
 
   const server = app.listen(PORT);
   console.log(`Server Listening on ${PORT}`);
+
   return server;
 }
 

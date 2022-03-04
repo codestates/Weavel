@@ -8,58 +8,44 @@ class weatherApiController {
   }
 
   weatherData = async (req, res) => {
-    try {
-      const cityId = req.query.id;
-      const areaArray = req.body;
-      const day = moment(new Date().getTime())
-        .add("-1", "d")
-        .format("YYYYMMDD");
-      const base_time = "2300";
-      this.weather.deleteCityWeatherData(cityId);
+    const cityId = req.query.id;
+    const areaArray = req.body;
+    const day = moment(new Date().getTime()).add("-1", "d").format("YYYYMMDD");
+    const base_time = "2300";
+    this.weather.deleteCityWeatherData(cityId);
 
-      await Promise.all(
-        areaArray.map((area) => {
-          const nx = area[0];
-          const ny = area[1];
-          let URL = weatherDataURL(nx, ny, day, base_time);
-          this.weather.downloadWeatherDataAPI(URL, cityId);
-        }),
-      );
+    await Promise.all(
+      areaArray.map((area) => {
+        const nx = area[0];
+        const ny = area[1];
+        let URL = weatherDataURL(nx, ny, day, base_time);
+        this.weather.downloadWeatherDataAPI(URL, cityId);
+      }),
+    );
 
-      return res
-        .status(201)
-        .json({ message: "해당 city의 모든 날씨를 받아왔습니다" });
-    } catch (err) {
-      console.log("err", err);
-      return res.status(501).json({ message: "서버 에러 입니다." });
-    }
+    return res
+      .status(201)
+      .json({ message: "해당 city의 모든 날씨를 받아왔습니다" });
   };
 
   recoverData = async (req, res) => {
-    try {
-      const cityId = req.query.id;
-      const areaArray = req.body;
-      const day = moment(new Date().getTime())
-        .add("-1", "d")
-        .format("YYYYMMDD");
-      const base_time = "2300";
+    const cityId = req.query.id;
+    const areaArray = req.body;
+    const day = moment(new Date().getTime()).add("-1", "d").format("YYYYMMDD");
+    const base_time = "2300";
 
-      await Promise.all(
-        areaArray.map(async (area) => {
-          const nx = area[0];
-          const ny = area[1];
-          const URL = weatherDataURL(nx, ny, day, base_time);
-          this.weather.checkWeatherData(nx, ny, cityId, URL);
-        }),
-      );
+    await Promise.all(
+      areaArray.map(async (area) => {
+        const nx = area[0];
+        const ny = area[1];
+        const URL = weatherDataURL(nx, ny, day, base_time);
+        this.weather.checkWeatherData(nx, ny, cityId, URL);
+      }),
+    );
 
-      return res
-        .status(201)
-        .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
-    } catch (err) {
-      console.log("err", err);
-      return res.status(501).json({ message: "서버 에러 입니다." });
-    }
+    return res
+      .status(201)
+      .json({ message: "해당 city의 비어있는 날씨 데이터를 받아왔습니다." });
   };
 }
 
