@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PhotoUploadModalNew from "../../components/PhotoUploadModalNew/PhotoUploadModalNew";
-import SearchData from "../../components/PhotoUploadModal/SearchData";
+import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
+import EditUserInfo from "../../components/EditUserInfoNew/EditUserInfoNew";
 import axios from "axios";
 
 import {
@@ -33,6 +34,7 @@ import {
   PhotoButton,
   NoPhotoContainer,
 } from "./MyPageNew.style";
+import EditUserInfoNew from "../../components/EditUserInfoNew/EditUserInfoNew";
 
 function MyPageNew({
   loginUserInfo,
@@ -50,8 +52,21 @@ function MyPageNew({
   DeleteUser,
 }) {
   const [isUpload, setIsUpload] = useState(false);
+  const [isPhotoDelete, setIsPhotoDelete] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isSelectInfo, setIsSelectInfo] = useState("");
+
+  const editHandler = () => {
+    setIsEdit(!isEdit);
+  };
+
   const uploadHandler = () => {
     setIsUpload(!isUpload);
+  };
+
+  const photoDeleteHandler = (e) => {
+    setIsPhotoDelete(!isPhotoDelete);
+    photoInfoFinder(e.target.name);
   };
 
   const weatherTxt = ["맑음", "구름", "비", "눈"];
@@ -70,8 +85,65 @@ function MyPageNew({
     3: "./images/snowy.svg",
   };
 
+  function photoInfoFinder(id) {
+    let photoIdFinder = allPhotoInfo.filter((el) => {
+      return el.id === Number(id);
+    });
+    // photoIdFinder.filename = photoIdFinder.image;
+    setIsSelectInfo(photoIdFinder);
+  }
+
+  // 사진 삭제
+  function handleDeletePhoto(e) {
+    axios
+      .delete(
+        `${process.env.REACT_APP_API_URL}/photo`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+          data: isSelectInfo[0],
+        }
+      )
+      .then((res) => {
+        let photoDeleteRefresh = allPhotoInfo.filter((el) => {
+          return el.id !== Number(isSelectInfo[0].id);
+        });
+        setAllPhotoInfo(photoDeleteRefresh);
+        photoDeleteHandler();
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
+
   return (
     <>
+      {isEdit ? (
+        <Modal onClick={(e) => e.stopPropagation()}>
+          <EditUserInfoNew
+            editHandler={editHandler}
+            loginUserInfo={loginUserInfo}
+            putUserInfo={putUserInfo}
+          />
+        </Modal>
+      ) : (
+        ""
+      )}
+      {isPhotoDelete ? (
+        <Modal onClick={(e) => photoDeleteHandler(e)}>
+          <DeletePhotoModal
+            photoDeleteHandler={photoDeleteHandler}
+            handleDeletePhoto={handleDeletePhoto}
+            message={"사진을 삭제하시겠습니까?"}
+          />
+        </Modal>
+      ) : (
+        ""
+      )}
       {isUpload ? (
         <Modal onClick={uploadHandler}>
           <PhotoUploadModalNew
@@ -98,7 +170,9 @@ function MyPageNew({
                   사진 업로드
                 </TopButtonBlue>
                 <TopRightButtonContainer>
-                  <TopButtonWhite>프로필 수정</TopButtonWhite>
+                  <TopButtonWhite onClick={editHandler}>
+                    프로필 수정
+                  </TopButtonWhite>
                   <TopButtonWhite>회원 탈퇴</TopButtonWhite>
                 </TopRightButtonContainer>
               </TopButtonContainer>
@@ -182,10 +256,9 @@ function MyPageNew({
             allPhotoInfo.map((photo) => {
               return (
                 <>
-                  <MyPhotoContainer>
+                  <MyPhotoContainer key={photo.id}>
                     <img
                       src={`${process.env.REACT_APP_API_URL}/${photo.image}`}
-                      key={photo.id}
                       alt={photo.image}
                     />
                     <PhotoInfoContainer>
@@ -207,7 +280,13 @@ function MyPageNew({
                       <div id="photo_comment">{photo.comment}</div>
                       <PhotoButtonContainer>
                         <PhotoButton id="photo_edit">수정</PhotoButton>
-                        <PhotoButton id="photo_delete">삭제</PhotoButton>
+                        <PhotoButton
+                          id="photo_delete"
+                          onClick={photoDeleteHandler}
+                          name={photo.id}
+                        >
+                          삭제
+                        </PhotoButton>
                       </PhotoButtonContainer>
                     </PhotoInfoContainer>
                   </MyPhotoContainer>
@@ -216,16 +295,14 @@ function MyPageNew({
             })
           ) : (
             <>
-              <MyPhotoContainer>
-                <NoPhotoContainer>
-                  기록하고 싶은 날씨가 있으신가요?
-                  <br />
-                  사진을 찍어 올려보세요
-                  <TopButtonBlue onClick={uploadHandler}>
-                    사진 업로드
-                  </TopButtonBlue>
-                </NoPhotoContainer>
-              </MyPhotoContainer>
+              <NoPhotoContainer>
+                기록하고 싶은 날씨가 있으신가요?
+                <br />
+                사진을 찍어 올려보세요
+                <TopButtonBlue onClick={uploadHandler}>
+                  사진 업로드
+                </TopButtonBlue>
+              </NoPhotoContainer>
             </>
           )}
         </MyPageContainerBottom>

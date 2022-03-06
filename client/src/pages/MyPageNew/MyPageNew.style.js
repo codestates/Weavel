@@ -399,7 +399,8 @@ export const Modal = styled.div`
 `;
 
 export const NoPhotoContainer = styled.div`
-  min-width: 1260px;
+  position: absolute;
+  max-width: 1260px;
   min-height: 389px;
   width: 100%;
   background: rgba(255, 255, 255, 0.4);

@@ -100,7 +100,6 @@ function PhotoUploadModalNew({
       )
       .then((res) => {
         handlePhotoInfoUpload(e, res.data.data);
-        console.log(e, "@sdfas@@", res.data.data.photoPath);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
@@ -129,13 +128,13 @@ function PhotoUploadModalNew({
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(JSON.parse(res.config.data), "@@@");
         uploadHandler(e);
 
         setAllPhotoInfo([
           {
             id: photo.id,
             image: photo.photoPath,
+            filename: photo.filename,
             date,
             area,
             comment,

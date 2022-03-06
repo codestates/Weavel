@@ -189,7 +189,7 @@ function App() {
       },
       withCredentials: true,
     }).then((res) => {
-      setAllPhotoInfo(res.data);
+      setAllPhotoInfo(res.data.reverse());
     });
   };
 
