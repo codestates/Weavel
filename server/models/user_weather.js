@@ -9,16 +9,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user_weather.belongsTo(models.user, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
+      user_weather.belongsTo(models.weather, {
+        foreignKey: "weatherId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
   user_weather.init(
     {
-      userId: DataTypes.STRING,
-      weaterId: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+      weatherId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "user_weather",
+      freezeTableName: true,
     },
   );
   return user_weather;
