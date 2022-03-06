@@ -115,11 +115,10 @@ function App() {
       .catch((error) => console.log("Error", error.message));
   };
 
-  const putUserInfo = (weather, password, email) => {
-    axios.put(
+  const putUserInfo = (weather, password) => {
+    axios.patch(
       `${process.env.REACT_APP_API_URL}/user`,
       {
-        email: email,
         password: password,
         weather: weather,
       },
@@ -326,6 +325,7 @@ function App() {
                 isWeather={isWeather}
                 putUserInfo={putUserInfo}
                 setAllPhotoInfo={setAllPhotoInfo}
+                setLoginUserInfo={setLoginUserInfo}
               />
             </Route>
           </Switch>

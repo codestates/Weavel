@@ -17,7 +17,7 @@ class photoController {
     const savePhoto = await this.photo.createPhoto(
       userId,
       photoPath,
-      photoFilename,
+      photoFilename
     );
     const photoId = savePhoto.id;
 
@@ -26,7 +26,7 @@ class photoController {
     }
 
     return res.status(200).json({
-      data: { id: photoId, filename: photoFilename },
+      data: { id: photoId, filename: photoFilename, photoPath: photoPath },
       message: "사진이 저장 완료 되었습니다.",
     });
   };
@@ -42,7 +42,7 @@ class photoController {
       area,
       comment,
       photoId,
-      filename,
+      filename
     );
 
     if (!saveInfoByPhoto[0]) {
@@ -80,7 +80,7 @@ class photoController {
       newImagePath,
       newImageName,
       photoId,
-      userId,
+      userId
     );
     if (!updateImagePath) {
       return res
@@ -108,7 +108,7 @@ class photoController {
       comment,
       photoId,
       userId,
-      filename,
+      filename
     );
 
     if (!newImageInfoUpdate) {
@@ -170,7 +170,7 @@ class photoController {
       weather,
       date,
       area,
-      filename,
+      filename
     );
 
     if (!deletePhotoResult) {
