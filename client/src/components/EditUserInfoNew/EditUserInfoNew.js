@@ -12,7 +12,12 @@ import {
   PasswordConfirmMessage,
 } from "./EditUserInfoNew.style";
 
-function EditUserInfoNew({ editHandler, loginUserInfo, putUserInfo }) {
+function EditUserInfoNew({
+  editHandler,
+  loginUserInfo,
+  putUserInfo,
+  setLoginUserInfo,
+}) {
   const weatherArr = ["맑음", "구름", "비", "눈"];
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -92,6 +97,10 @@ function EditUserInfoNew({ editHandler, loginUserInfo, putUserInfo }) {
       }
     }
     putUserInfo(weather, password);
+    let loginUserInfoCopy = { ...loginUserInfo };
+    loginUserInfoCopy.weatherDB = weather;
+    console.log(loginUserInfoCopy, loginUserInfo);
+    setLoginUserInfo(loginUserInfoCopy);
     editHandler();
   };
 

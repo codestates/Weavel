@@ -50,6 +50,7 @@ function MyPageNew({
   setSearchWeatherPhoto,
   handleInputChange,
   DeleteUser,
+  setLoginUserInfo,
 }) {
   const [isUpload, setIsUpload] = useState(false);
   const [isPhotoDelete, setIsPhotoDelete] = useState(false);
@@ -128,6 +129,7 @@ function MyPageNew({
             editHandler={editHandler}
             loginUserInfo={loginUserInfo}
             putUserInfo={putUserInfo}
+            setLoginUserInfo={setLoginUserInfo}
           />
         </Modal>
       ) : (
