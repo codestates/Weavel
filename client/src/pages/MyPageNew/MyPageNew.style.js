@@ -176,7 +176,6 @@ export const MyPhotoContainer = styled.div`
   display: flex;
   margin-bottom: 32px;
   cursor: pointer;
-  border: 1px solid purple;
   max-width: 396px;
   max-height: 396px;
   width: 100%;
@@ -193,6 +192,63 @@ export const MyPhotoContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+`;
+
+export const PhotoInfoContainer = styled.div`
+  position: absolute;
+  opacity: 0;
+  color: #ffffff;
+  display: flex;
+  margin-bottom: 32px;
+  cursor: pointer;
+  max-width: 396px;
+  max-height: 396px;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+  #photo_date {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  #photo_area {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+  }
+`;
+
+export const PhotoButtonContainer = styled.div`
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+  #photo_edit {
+    &:active {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  }
+  #photo_delete {
+    &:active {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  }
+`;
+
+export const PhotoButton = styled.button`
+  width: 45px;
+  height: 30px;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  color: #ffffff;
+  z-index: 1;
 `;
 
 export const TopFirstText = styled.div`
@@ -340,4 +396,24 @@ export const Modal = styled.div`
   background: rgba(0, 0, 0, 0.5);
   font-family: "Roboto";
   z-index: 999;
+`;
+
+export const NoPhotoContainer = styled.div`
+  position: absolute;
+  max-width: 1260px;
+  min-height: 389px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(204, 204, 204, 0.4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  color: #444444;
 `;

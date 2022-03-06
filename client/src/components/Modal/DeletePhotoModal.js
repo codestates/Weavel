@@ -6,11 +6,7 @@ import {
   ConfirmButton,
   CancelButton,
 } from "./Modal.style";
-function DeletePhotoModal({
-  message,
-  openCloseModalHandler,
-  handleDeletePhoto,
-}) {
+function DeletePhotoModal({ message, photoDeleteHandler, handleDeletePhoto }) {
   return (
     <ModalContainer onClick={(e) => e.stopPropagation()}>
       <ModalMessage>{message}</ModalMessage>
@@ -18,7 +14,7 @@ function DeletePhotoModal({
         <ConfirmButton onClick={(e) => handleDeletePhoto(e)}>
           확인
         </ConfirmButton>
-        <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
+        <CancelButton onClick={photoDeleteHandler}>취소</CancelButton>
       </ButtonContainer>
     </ModalContainer>
   );

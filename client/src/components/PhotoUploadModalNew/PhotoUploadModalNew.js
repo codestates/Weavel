@@ -12,7 +12,12 @@ import {
   CancelButton,
 } from "./PhotoUploadModalNew.style";
 
-function PhotoUploadModalNew({ uploadHandler, token }) {
+function PhotoUploadModalNew({
+  uploadHandler,
+  token,
+  setAllPhotoInfo,
+  allPhotoInfo,
+}) {
   const weatherArr = ["맑음", "구름", "비", "눈"];
   const [isClick, setIsClick] = useState({
     0: false,
@@ -124,6 +129,19 @@ function PhotoUploadModalNew({ uploadHandler, token }) {
       )
       .then((res) => {
         uploadHandler(e);
+
+        setAllPhotoInfo([
+          {
+            id: photo.id,
+            image: photo.photoPath,
+            filename: photo.filename,
+            date,
+            area,
+            comment,
+            weather,
+          },
+          ...allPhotoInfo,
+        ]);
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);

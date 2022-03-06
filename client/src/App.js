@@ -189,7 +189,7 @@ function App() {
       },
       withCredentials: true,
     }).then((res) => {
-      setAllPhotoInfo(res.data);
+      setAllPhotoInfo(res.data.reverse());
     });
   };
 
@@ -325,6 +325,7 @@ function App() {
                 token={token}
                 isWeather={isWeather}
                 putUserInfo={putUserInfo}
+                setAllPhotoInfo={setAllPhotoInfo}
               />
             </Route>
           </Switch>
