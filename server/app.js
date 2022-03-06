@@ -33,21 +33,20 @@ const corsOption = {
 
 async function startServer(PORT) {
   const app = express();
-
   app.use(express.json());
   app.use(cookieParser());
-  app.use(express.static("public"));
+  app.use(express.static("./"));
   app.use(express.urlencoded({ extended: false }));
   app.use(cors(corsOption));
   app.use(
     express.urlencoded({
       extended: true,
-    }),
+    })
   );
 
   app.use(
     "/user",
-    userrouter(new userController(userDB, userWeatherDB, crypto, jwt)),
+    userrouter(new userController(userDB, userWeatherDB, crypto, jwt))
   );
   app.use("/photo", photorouter(new photoController(photoDB)));
   app.use("/weather", weatherrouter(new weatherController(weatherDB)));

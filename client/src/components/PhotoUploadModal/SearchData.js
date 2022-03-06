@@ -1,4 +1,4 @@
-export const area = [
+export const areaData = [
   "서울특별시 강남구",
   "서울특별시 강동구",
   "서울특별시 강북구",
