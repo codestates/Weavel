@@ -21,7 +21,7 @@ const photoDB = require("./data/photo.js");
 const weatherrouter = require("./router/weather");
 const { weatherController } = require("./controller/weather.js");
 const weatherAPIrouter = require("./router/weatherAPI");
-const { weatherApiController } = require("./controller/weatherAPI.js");
+const { weatherApiController } = require("./controller/weatherApi.js");
 const weatherDB = require("./data/weather_data.js");
 
 const corsOption = {
@@ -41,12 +41,12 @@ async function startServer(PORT) {
   app.use(
     express.urlencoded({
       extended: true,
-    })
+    }),
   );
 
   app.use(
     "/user",
-    userrouter(new userController(userDB, userWeatherDB, crypto, jwt))
+    userrouter(new userController(userDB, userWeatherDB, crypto, jwt)),
   );
   app.use("/photo", photorouter(new photoController(photoDB)));
   app.use("/weather", weatherrouter(new weatherController(weatherDB)));
