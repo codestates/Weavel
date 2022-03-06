@@ -91,7 +91,7 @@ function EditUserInfoNew({ editHandler, loginUserInfo, putUserInfo }) {
         weather.push(Number(key));
       }
     }
-    putUserInfo(weather, password, loginUserInfo.email);
+    putUserInfo(weather, password);
     editHandler();
   };
 
