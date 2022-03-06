@@ -99,7 +99,6 @@ function EditUserInfoNew({
     putUserInfo(weather, password);
     let loginUserInfoCopy = { ...loginUserInfo };
     loginUserInfoCopy.weatherDB = weather;
-    console.log(loginUserInfoCopy, loginUserInfo);
     setLoginUserInfo(loginUserInfoCopy);
     editHandler();
   };
