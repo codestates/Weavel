@@ -4,9 +4,8 @@ export const InfoContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 72px;
+  margin: 50px 0;
   @media screen and (max-width: 1060px) {
-    margin-top: 50px;
     flex-direction: column;
     align-items: center;
   }

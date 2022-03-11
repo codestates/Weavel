@@ -34,9 +34,7 @@ function WeatherSearch({
     isOpen.isLender = false;
     setIsActivation(isOpen);
     setNowWeather([]);
-    setTimeout(() => {
-      setIsInfoImg(!isOpen.isOpen);
-    }, 500);
+    setIsInfoImg(!isOpen.isOpen);
     searchWeatherHandle(false);
   };
 
@@ -131,15 +129,15 @@ function WeatherSearch({
             selectTitle={selectTitle}
             setIsActivation={setIsActivation}
             showAreaHandle={showAreaHandle}
+            isActivation={isActivation}
             getSearchHandle={getSearchHandle}
             dateTime={dateTime}
           />
-        ) : isInfoImg ? (
-          <SearchInfo />
         ) : (
           <></>
         )}
       </WeatherSelectContainer>
+      {isActivation.isLender ? <></> : isInfoImg ? <SearchInfo /> : <></>}
     </SearchContainer>
   );
 }

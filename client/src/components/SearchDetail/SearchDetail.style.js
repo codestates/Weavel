@@ -2,10 +2,19 @@ import styled from "styled-components";
 
 export const SelectListContainer = styled.div`
   width: 100%;
-  height: 312px;
+  height: ${(props) =>
+    props.isActivation.isLender
+      ? "auto"
+      : props.isActivation.isOpen
+      ? "310px"
+      : "0px"};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #fbfbfb;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 50px 50px;
+
   @media screen and (max-width: 500px) {
     height: 240px;
   }
