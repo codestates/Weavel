@@ -190,25 +190,22 @@ function SignupPage() {
 
   const handleConfirmEmail = (e) => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/user/email?email=${email}`,
-        {
-          email: email,
-        },
-        { withCredentials: true }
-      )
+      .get(`${process.env.REACT_APP_API_URL}/user/email?email=${email}`, {
+        withCredentials: true,
+      })
       .then((res) => {
-        if (res.data.message === "이메일이 중복되지 않습니다.") {
+        if (res.status === 200) {
           isCheckEmail.isSuccess = true;
           isCheckEmail.isFail = false;
+          SetIsCheckEmail({ ...isCheckEmail });
         }
-        if (res.data.message === "이메일이 중복됩니다.") {
-          isCheckEmail.isFail = true;
-          isCheckEmail.isSuccess = false;
-        }
-        SetIsCheckEmail({ ...isCheckEmail });
       })
-      .catch((error) => console.log("Error", error.message));
+      .catch((error) => {
+        isCheckEmail.isSuccess = false;
+        isCheckEmail.isFail = true;
+        SetIsCheckEmail({ ...isCheckEmail });
+        console.log("Error", error.message);
+      });
   };
 
   return (

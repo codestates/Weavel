@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SearchContainer = styled.div`
   width: 100%;
-  padding-top: 69px;
+  padding: 69px 0;
 `;
 
 export const SelectContainer = styled.div`
@@ -26,7 +26,6 @@ export const SelectContainer = styled.div`
         : props.isClose
         ? "20px 20px 0 0 "
         : "20px"};
-    /* border-radius: 20px; */
   }
 `;
 
@@ -56,20 +55,10 @@ export const SelectContents = styled.div`
 
 export const WeatherSelectContainer = styled.div`
   width: 100%;
-  height: ${(props) =>
-    props.isActivation.isLender
-      ? "auto"
-      : props.isActivation.isOpen
-      ? "310px"
-      : "0px"};
-  background: #fbfbfb;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 50px 50px;
   font-family: "Roboto";
   display: ${(props) => (props.isActivation.isLender ? "flex" : "")};
   justify-content: ${(props) => (props.isActivation.isLender ? "center" : "")};
   align-items: ${(props) => (props.isActivation.isLender ? "center" : "")};
-  transition: 0.5s all;
 
   @media screen and (max-width: 500px) {
     font-size: 11px;

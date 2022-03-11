@@ -16,6 +16,7 @@ function SearchDetail({
   setSelectTitle,
   selectTitle,
   setIsActivation,
+  isActivation,
   showAreaHandle,
   getSearchHandle,
 }) {
@@ -183,28 +184,24 @@ function SearchDetail({
   };
 
   const weatherSelectHandle = (e) => {
-    // const targetId = e.target.id;
     weather[e.target.id].isSelect = true;
     setWeatherSelect([...weather]);
     allSelectHandle(weather[e.target.id].isSelect, null, null, null);
   };
 
   const daySelectHandle = (e) => {
-    // const targetId = e.target.id;
     day[e.target.id].isSelect = true;
     setDaySelect([...day]);
     allSelectHandle(null, day[e.target.id].isSelect, null, null);
   };
 
   const timeSelectHandle = (e) => {
-    // const targetId = e.target.id;
     time[parseInt(e.target.id)].isSelect = true;
     setTimeSelect([...time]);
     allSelectHandle(null, null, time[parseInt(e.target.id)].isSelect, null);
   };
 
   const areaSelectHandle = (e) => {
-    // const targetId = e.target.id;
     area[parseInt(e.target.id) - 1].isSelect = true;
     setAreaSelect([...area]);
     allSelectHandle(null, null, null, area[parseInt(e.target.id) - 1].isSelect);
@@ -235,7 +232,7 @@ function SearchDetail({
 
   return (
     <>
-      <SelectListContainer>
+      <SelectListContainer isActivation={isActivation}>
         <SelectListBox width="true">
           <SideArea />
           <SelectList width="true">
