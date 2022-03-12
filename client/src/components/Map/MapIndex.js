@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Map01 from "./Map01";
+import Map from "./Map";
+import { pathData } from "./MapData";
 import Map02 from "./Map02";
 import Map03 from "./Map03";
 import Map04 from "./Map04";
@@ -73,7 +74,14 @@ function MapIndex({
 
   return (
     <MapContainer>
-      {showArea === "01" ? (
+      <Map
+        weatherColor={weatherColor}
+        lenderMap={lenderMap}
+        pickMap={pickMap}
+        showArea={showArea}
+        pathData={pathData[showArea]}
+      />
+      {/* {showArea === "01" ? (
         <Map01
           weatherColor={weatherColor}
           lenderMap={lenderMap}
@@ -191,7 +199,7 @@ function MapIndex({
           lenderMap={lenderMap}
           pickMap={pickMap}
         />
-      ) : null}
+      ) : null} */}
     </MapContainer>
   );
 }

@@ -2,10 +2,36 @@ import React from "react";
 import { Path } from "./MapIndex.style";
 import { MapSVG } from "./MapNumber.style";
 
-function Map01({ pickMap, lenderMap, weatherColor }) {
+function Map({ pickMap, lenderMap, weatherColor, showArea, pathData }) {
   return (
-    <MapSVG width="800px" height="600px" viewBox="10 -20 800 600">
-      <Path
+    <MapSVG width="800px" height="600px" viewBox={pathData.view}>
+      {pathData.path.map((data, idx) => {
+        return (
+          <Path
+            weatherColor={weatherColor}
+            lenderMap={lenderMap[idx].isShow}
+            id={idx}
+            outline={pathData.outline || ""}
+            onClick={(e) => pickMap(showArea, e)}
+            d={data}
+          />
+        );
+      })}
+      {pathData.text.map((textData, idx) => {
+        return (
+          <text
+            id={idx}
+            onClick={(e) => pickMap(showArea, e)}
+            x={textData.x}
+            y={textData.y}
+            fill="#B0AFAF"
+            fontSize={pathData.font}
+          >
+            {textData.name}
+          </text>
+        );
+      })}
+      {/* <Path
         weatherColor={weatherColor}
         lenderMap={lenderMap["0"].isShow}
         id={0}
@@ -179,8 +205,8 @@ function Map01({ pickMap, lenderMap, weatherColor }) {
         id={24}
         onClick={(e) => pickMap("01", e)}
         d="m665.83 197.43l-5.43-1.45-1.58-.72-10.83.6-1.15.62-.06.03-6.11 1.05-1.52.13-3.87-1.87-8.2 2.61-.03.01-5.78.09-3.14-1.06-6.87-1.46-8.31 2.11-11.07 3.62-4.89 1.12-2.34.23-.22.03-.4.11-.46.11-.34.16-.05.02-1.86 1.63-.25.03 3.11 3.61-1.23 11.11.03.48.01.08.06.48.01.08.1.64.41 2.44.28 1.42.23.53.05.11.22.49.21.47.98 1.89.83 2.75 0 .13 0 .35-.06.2-.05.15-.03.1-.1.2-.17.33-.28.51-.04.09-.92 1.15 0 0-.03.04-.37.4-.53.56-.52.43-.14.11-.88.51-2.38 6.06 2.12 5.27 0 .01.04 3.11 1.98 5.43 1.06 5.59 5.78 7.57 1.06.12.12.18.06.09.1.16.12.21.11.21.06.12.05.1.08.17.02.05.09.22.09.22.07.22.07.23.06.23.05.22.04.23.03.18.79 5.96 1.57 7.12.9.96.03.04 4.55.44 10.43 1.51 3.82-.02.14.39.06.18.22.68.11.03 3.84.88 6.16-1.65 2.7-.25 8.01-3.83 2.36-1.61.37-.32.05-.83.43-3.52 1.53-2.79.68-.93 1.34-1.63-.22-1.66-.03-.22.45-.58.58-.72 3.42-1.83 4.07-1.75 2.93-1.67.77-1.34.67-2.18.4-1.34.4-2.78 4.25-8.34 1.37-2.02 3.56-1.06.73-.08.05-.01.09-.02.07-.02.31-.13 1.84-.73.4-2.79-.82-1.31-1.35-2.12-.45-.64-1.92-2.64-.7-2.03 2.74-2.89 4.7-5.54.04-.54.01-.09.05-.96 0-.05-2.64-6.37.34-1.28.77-3.11.17-2.01-.69-3.71-.4-1.4-.18-1.44-.06-.56.39-.58.22-.25.49-.53-2-4.16-2.21-1.12z"
-      />
-      <text
+      /> */}
+      {/* <text
         id={0}
         onClick={(e) => pickMap("01", e)}
         x="540"
@@ -429,9 +455,9 @@ function Map01({ pickMap, lenderMap, weatherColor }) {
         fontSize="13"
       >
         중랑구
-      </text>
+      </text> */}
     </MapSVG>
   );
 }
 
-export default Map01;
+export default Map;

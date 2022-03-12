@@ -4,7 +4,7 @@ import { MapSVG } from "./MapNumber.style";
 
 function Map12({ pickMap, lenderMap, weatherColor }) {
   return (
-    <MapSVG width="850px" height="600px" viewBox="0 -70 700 700">
+    <MapSVG width="800px" height="600px" viewBox="0 -70 700 700">
       <Path
         weatherColor={weatherColor}
         lenderMap={lenderMap["0"].isShow}
