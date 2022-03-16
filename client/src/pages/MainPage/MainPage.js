@@ -144,7 +144,6 @@ function MainPage() {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.message) {
           alert("조건에 맞는 정보가 없습니다.");
         } else {

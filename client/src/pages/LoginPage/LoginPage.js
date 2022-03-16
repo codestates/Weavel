@@ -47,7 +47,7 @@ function LoginPage({ handleLoginButton }) {
       setIsDisabled(true);
     }
   };
-  console.log(isValid);
+  // console.log(isValid);
   return (
     <>
       {isLogin ? (
