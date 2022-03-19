@@ -6,13 +6,13 @@ import {
   ConfirmButton,
   CancelButton,
 } from "./Modal.style";
-function DeleteUserModal({ message, openCloseModalHandler, DeleteUser }) {
+function DeleteUserModal({ message, userDeleteHandler, DeleteUser }) {
   return (
     <ModalContainer onClick={(e) => e.stopPropagation()}>
       <ModalMessage>{message}</ModalMessage>
       <ButtonContainer>
-        <ConfirmButton onClick={(e) => DeleteUser(e)}>확인</ConfirmButton>
-        <CancelButton onClick={openCloseModalHandler}>취소</CancelButton>
+        <ConfirmButton onClick={DeleteUser}>확인</ConfirmButton>
+        <CancelButton onClick={userDeleteHandler}>취소</CancelButton>
       </ButtonContainer>
     </ModalContainer>
   );

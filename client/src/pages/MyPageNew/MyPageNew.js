@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import PhotoUploadModalNew from "../../components/PhotoUploadModalNew/PhotoUploadModalNew";
 import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 import EditUserInfo from "../../components/EditUserInfoNew/EditUserInfoNew";
+import PhotoEditModalNew from "../../components/PhotoEditModalNew/PhotoEditModalNew";
+import DeleteUserModal from "../../components/Modal/DeleteUserModal";
 import axios from "axios";
-
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogOut } from "../../reducers/authReducer";
 import {
   MyPageContainer,
   MyPageContainerTop,
@@ -49,13 +53,20 @@ function MyPageNew({
   SearchWeatherPhoto,
   setSearchWeatherPhoto,
   handleInputChange,
-  DeleteUser,
   setLoginUserInfo,
 }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
   const [isUpload, setIsUpload] = useState(false);
   const [isPhotoDelete, setIsPhotoDelete] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isSelectInfo, setIsSelectInfo] = useState("");
+  const [isPhotoEdit, setIsPhotoEdit] = useState(false);
+  const [isUserDelete, setIsUserDelete] = useState(false);
+  const userDeleteHandler = () => {
+    setIsUserDelete(!isUserDelete);
+  };
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -67,6 +78,11 @@ function MyPageNew({
 
   const photoDeleteHandler = (e) => {
     setIsPhotoDelete(!isPhotoDelete);
+    photoInfoFinder(e.target.name);
+  };
+
+  const photoEditHandler = (e) => {
+    setIsPhotoEdit(!isPhotoEdit);
     photoInfoFinder(e.target.name);
   };
 
@@ -120,6 +136,22 @@ function MyPageNew({
         console.error(err.message);
       });
   }
+  // 회원 탈퇴
+  const DeleteUser = () => {
+    axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}/user`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then((res) => {
+      dispatch(setLogOut());
+      userDeleteHandler();
+      history.push("/");
+    });
+  };
 
   return (
     <>
@@ -146,6 +178,16 @@ function MyPageNew({
       ) : (
         ""
       )}
+      {isPhotoEdit ? (
+        <Modal onClick={(e) => photoEditHandler(e)}>
+          <PhotoEditModalNew
+            photoEditHandler={photoEditHandler}
+            isSelectInfo={isSelectInfo}
+          />
+        </Modal>
+      ) : (
+        ""
+      )}
       {isUpload ? (
         <Modal onClick={uploadHandler}>
           <PhotoUploadModalNew
@@ -154,6 +196,17 @@ function MyPageNew({
             setAllPhotoInfo={setAllPhotoInfo}
             allPhotoInfo={allPhotoInfo}
           />
+        </Modal>
+      ) : (
+        ""
+      )}
+      {isUserDelete ? (
+        <Modal onClick={userDeleteHandler}>
+          <DeleteUserModal
+            message={"정말 탈퇴하시겠습니까?"}
+            userDeleteHandler={userDeleteHandler}
+            DeleteUser={DeleteUser}
+          ></DeleteUserModal>
         </Modal>
       ) : (
         ""
@@ -175,7 +228,9 @@ function MyPageNew({
                   <TopButtonWhite onClick={editHandler}>
                     프로필 수정
                   </TopButtonWhite>
-                  <TopButtonWhite>회원 탈퇴</TopButtonWhite>
+                  <TopButtonWhite onClick={userDeleteHandler}>
+                    회원 탈퇴
+                  </TopButtonWhite>
                 </TopRightButtonContainer>
               </TopButtonContainer>
             </TopAllContainer>
@@ -281,7 +336,13 @@ function MyPageNew({
                       </div>
                       <div id="photo_comment">{photo.comment}</div>
                       <PhotoButtonContainer>
-                        <PhotoButton id="photo_edit">수정</PhotoButton>
+                        <PhotoButton
+                          id="photo_edit"
+                          onClick={photoEditHandler}
+                          name={photo.id}
+                        >
+                          수정
+                        </PhotoButton>
                         <PhotoButton
                           id="photo_delete"
                           onClick={photoDeleteHandler}

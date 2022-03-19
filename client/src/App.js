@@ -164,19 +164,6 @@ function App() {
     });
   };
 
-  // 회원 탈퇴
-  const DeleteUser = () => {
-    axios({
-      method: "delete",
-      url: `${process.env.REACT_APP_API_URL}/user`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
-  };
-
   // 사진 정보 받기
   const getAllPhotosInfo = (token) => {
     axios({
@@ -311,8 +298,6 @@ function App() {
             </Route>
             <Route path="/mypage">
               <MyPage
-                DeleteUser={DeleteUser}
-                // handleInputChange={handleInputChange}
                 SearchWeatherPhoto={SearchWeatherPhoto}
                 setSearchWeatherPhoto={setSearchWeatherPhoto}
                 // filterPhotoHandler={filterPhotoHandler}
