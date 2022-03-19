@@ -88,7 +88,10 @@ class photoController {
         .json({ massage: "이미지가 새로 업데이트 되지 않았습니다." });
     }
 
-    return res.status(201).json({ massage: "이미지가 수정되었습니다." });
+    return res.status(201).json({
+      data: { id: photoId, filename: newImageName, photoPath: newImagePath },
+      massage: "이미지가 수정되었습니다.",
+    });
   };
 
   patch_info = async (req, res) => {
