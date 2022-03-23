@@ -183,6 +183,8 @@ function MyPageNew({
           <PhotoEditModalNew
             photoEditHandler={photoEditHandler}
             isSelectInfo={isSelectInfo}
+            setAllPhotoInfo={setAllPhotoInfo}
+            allPhotoInfo={allPhotoInfo}
           />
         </Modal>
       ) : (

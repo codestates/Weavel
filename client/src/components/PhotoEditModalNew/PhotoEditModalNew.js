@@ -13,7 +13,12 @@ import {
   CancelButton,
 } from "../PhotoUploadModalNew/PhotoUploadModalNew.style";
 
-function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
+function PhotoEditModalNew({
+  photoEditHandler,
+  isSelectInfo,
+  setAllPhotoInfo,
+  allPhotoInfo,
+}) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.authReducer.accessToken);
   const weatherArr = ["맑음", "구름", "비", "눈"];
@@ -34,13 +39,13 @@ function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
   useEffect(() => {
     const selectedInfo = isSelectInfo[0];
     if (selectedInfo) {
-      console.log(selectedInfo, "@@");
       let comment = selectedInfo.comment;
       let area = selectedInfo.area;
       let weather = selectedInfo.weather;
       let date = selectedInfo.date;
       let file = {
         preview: `${process.env.REACT_APP_API_URL}/${selectedInfo.image}`,
+        filename: selectedInfo.filename,
       };
       let photoId = selectedInfo.id;
       setComment(comment);
@@ -113,11 +118,8 @@ function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
 
   // 사진 수정
   const handlePhotoEdit = (e) => {
-    console.log(formData.values(), "@@@");
     if (formData) {
       for (let pair of formData.entries()) {
-        console.log(pair);
-        console.log(typeof pair[1]);
         //string
         //object
         if (typeof pair[1] === "string") {
@@ -136,7 +138,6 @@ function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
               { withCredentials: true }
             )
             .then((res) => {
-              console.log(res);
               handlePhotoInfoEdit(e, res.data.data);
             })
             .catch((err) => {
@@ -149,16 +150,12 @@ function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
 
   // 사진 정보 수정
   const handlePhotoInfoEdit = (e, photo) => {
-    console.log(photo, "@DAFDF");
-    console.log(photoId);
-    console.log(date);
-    console.log(area);
     axios
       .patch(
         `${process.env.REACT_APP_API_URL}/photo/info`,
         {
           id: photoId,
-          filename: file.preview.slice(20),
+          filename: file.filename,
           date,
           area,
           comment,
@@ -173,19 +170,22 @@ function PhotoEditModalNew({ photoEditHandler, isSelectInfo }) {
         { withCredentials: true }
       )
       .then((res) => {
-        // setAllPhotoInfo([
-        //   {
-        //     id: photo.id,
-        //     image: photo.photoPath,
-        //     filename: photo.filename,
-        //     date,
-        //     area,
-        //     comment,
-        //     weather,
-        //   },
-        //   ...allPhotoInfo,
-        // ]);
-        console.log(res, "####");
+        const filterPhoto = allPhotoInfo.filter((photo) => {
+          return photo.id !== photoId;
+        });
+        setAllPhotoInfo([
+          {
+            id: photoId,
+            image: file.preview.slice(20),
+            filename: file.filename,
+            date,
+            area,
+            comment,
+            weather,
+          },
+          ...filterPhoto,
+        ]);
+        photoEditHandler();
       })
       .catch((err) => {
         console.error(`signin error: ${err.message}`);
