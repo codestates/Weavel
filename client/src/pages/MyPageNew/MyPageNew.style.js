@@ -199,7 +199,6 @@ export const PhotoInfoContainer = styled.div`
   opacity: 0;
   color: #ffffff;
   display: flex;
-  margin-bottom: 32px;
   cursor: pointer;
   max-width: 396px;
   max-height: 396px;
