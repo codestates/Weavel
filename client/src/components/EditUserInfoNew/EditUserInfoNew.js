@@ -36,6 +36,16 @@ function EditUserInfoNew({
   };
   const [isCheckInput, SetIsCheckInput] = useState(isValidInput);
 
+  useEffect(() => {
+    if (loginUserInfo.weatherDB.length > 0) {
+      let previousWeather = { ...isWeather };
+      loginUserInfo.weatherDB.map((el) => {
+        previousWeather[el] = true;
+      });
+      setIsWeather(previousWeather);
+    }
+  }, []);
+
   const weatherBtnHandler = (e) => {
     let newWeather = { ...isWeather };
     newWeather[e.target.name] = !newWeather[e.target.name];
