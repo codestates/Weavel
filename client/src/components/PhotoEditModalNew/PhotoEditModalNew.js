@@ -196,7 +196,12 @@ function PhotoEditModalNew({
             <img src={"./images/upload.svg"} alt="upload" />
           )}
         </div>
-        <input type="file" onChange={(e) => inputHandler(e)} name="file" />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => inputHandler(e)}
+          name="file"
+        />
       </PhotoUploadFileContainer>
       <label>날짜</label>
       <InputContainer>
@@ -261,7 +266,7 @@ function PhotoEditModalNew({
         <UploadButton
           disabled={isFilled}
           isFilled={isFilled}
-          onClick={handlePhotoEdit}
+          onClick={(e) => handlePhotoEdit(e)}
         >
           수정
         </UploadButton>

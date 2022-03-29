@@ -158,7 +158,12 @@ function PhotoUploadModalNew({
             <img src="./images/upload.svg" alt="upload" />
           )}
         </div>
-        <input type="file" onChange={(e) => inputHandler(e)} name="file" />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => inputHandler(e)}
+          name="file"
+        />
       </PhotoUploadFileContainer>
       <label>날짜</label>
       <InputContainer>
