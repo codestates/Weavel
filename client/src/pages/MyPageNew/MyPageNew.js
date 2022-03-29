@@ -64,6 +64,13 @@ function MyPageNew({
   const [isSelectInfo, setIsSelectInfo] = useState("");
   const [isPhotoEdit, setIsPhotoEdit] = useState(false);
   const [isUserDelete, setIsUserDelete] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const clickHandler = (e) => {
+    setIsClicked(!isClicked);
+    photoInfoFinder(e.target.id);
+  };
+
   const userDeleteHandler = () => {
     setIsUserDelete(!isUserDelete);
   };
@@ -77,13 +84,19 @@ function MyPageNew({
   };
 
   const photoDeleteHandler = (e) => {
+    if (e) {
+      e.stopPropagation();
+      photoInfoFinder(e.target.name);
+    }
     setIsPhotoDelete(!isPhotoDelete);
-    photoInfoFinder(e.target.name);
   };
 
   const photoEditHandler = (e) => {
+    if (e) {
+      e.stopPropagation();
+      photoInfoFinder(e.target.name);
+    }
     setIsPhotoEdit(!isPhotoEdit);
-    photoInfoFinder(e.target.name);
   };
 
   const weatherTxt = ["맑음", "구름", "비", "눈"];
@@ -130,7 +143,7 @@ function MyPageNew({
           return el.id !== Number(isSelectInfo[0].id);
         });
         setAllPhotoInfo(photoDeleteRefresh);
-        photoDeleteHandler();
+        photoDeleteHandler(e);
       })
       .catch((err) => {
         console.error(err.message);
@@ -209,6 +222,18 @@ function MyPageNew({
             userDeleteHandler={userDeleteHandler}
             DeleteUser={DeleteUser}
           ></DeleteUserModal>
+        </Modal>
+      ) : (
+        ""
+      )}
+      {isClicked ? (
+        <Modal onClick={(e) => clickHandler(e)}>
+          <img
+            onClick={(e) => e.stopPropagation()}
+            id="clicked_img"
+            src={`${process.env.REACT_APP_API_URL}/${isSelectInfo[0].image}`}
+            alt={isSelectInfo.image}
+          />
         </Modal>
       ) : (
         ""
@@ -315,12 +340,16 @@ function MyPageNew({
             allPhotoInfo.map((photo) => {
               return (
                 <>
-                  <MyPhotoContainer key={photo.id}>
+                  <MyPhotoContainer
+                    key={photo.id}
+                    name={photo.id}
+                    onClick={clickHandler}
+                  >
                     <img
                       src={`${process.env.REACT_APP_API_URL}/${photo.image}`}
                       alt={photo.image}
                     />
-                    <PhotoInfoContainer>
+                    <PhotoInfoContainer id={photo.id}>
                       <div id="photo_date">{photo.date}</div>
                       <div id="photo_area">
                         {`${photo.area}, 

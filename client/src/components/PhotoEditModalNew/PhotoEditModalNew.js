@@ -261,7 +261,7 @@ function PhotoEditModalNew({
         <UploadButton
           disabled={isFilled}
           isFilled={isFilled}
-          onClick={handlePhotoEdit}
+          onClick={(e) => handlePhotoEdit(e)}
         >
           수정
         </UploadButton>

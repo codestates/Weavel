@@ -395,6 +395,10 @@ export const Modal = styled.div`
   background: rgba(0, 0, 0, 0.5);
   font-family: "Roboto";
   z-index: 999;
+  #clicked_img {
+    max-width: 80%;
+    max-height: 80%;
+  }
 `;
 
 export const NoPhotoContainer = styled.div`
